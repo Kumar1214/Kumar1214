@@ -1,0 +1,9 @@
+# DO NOT HAND EDIT THIS FILE
+PassengerAppRoot "/home/gaugyanc/gaugyan-api"
+PassengerAppType node
+PassengerStartupFile app.js
+
+# Redirect all requests to the Node app
+RewriteEngine On
+# Redirect all requests to the Node app
+# Passenger handles the port assignment automatically via process.env.PORT

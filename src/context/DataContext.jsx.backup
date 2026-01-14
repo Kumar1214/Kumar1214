@@ -1,0 +1,713 @@
+import React, { createContext, useContext, useState, useEffect } from 'react';
+
+const DataContext = createContext();
+
+export const useData = () => useContext(DataContext);
+
+export const DataProvider = ({ children }) => {
+    // Helper to load from localStorage or use default
+    const loadState = (key, defaultValue) => {
+        const saved = localStorage.getItem(key);
+        return saved ? JSON.parse(saved) : defaultValue;
+    };
+
+    // Save to localStorage whenever state changes
+    const usePersistedState = (key, defaultValue) => {
+        const [state, setState] = useState(() => loadState(key, defaultValue));
+        useEffect(() => {
+            localStorage.setItem(key, JSON.stringify(state));
+        }, [key, state]);
+        return [state, setState];
+    };
+
+    // Initial Mock Data
+    const DEFAULT_COURSES = [
+        { id: 1, title: 'Complete Ayurveda Masterclass: From Basics to Advanced', instructor: 'Dr. Rajesh Sharma', rating: 4.8, reviews: 12453, students: 45230, duration: '22.5 total hours', level: 'All Levels', updated: 'November 2024', image: 'https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&q=80&w=400', category: 'Ayurveda', bestseller: true, price: 0, originalPrice: 3499, description: 'Unlock the secrets of ancient Indian mathematics. Learn mental calculation techniques that will increase your speed and accuracy by 10x.', lectures: 45, syllabus: [], status: 'approved' },
+        { id: 2, title: 'Yoga for Complete Beginners: Mind, Body & Spirit', instructor: 'Priya Desai', rating: 4.9, reviews: 28934, students: 89456, duration: '15 total hours', level: 'Beginner', updated: 'October 2024', image: 'https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&q=80&w=400', category: 'Yoga', bestseller: true, price: 0, originalPrice: 2999, description: 'A comprehensive guide to Yoga for beginners.', lectures: 30, syllabus: [], status: 'approved' },
+        { id: 3, title: 'Vedic Mathematics: Fast Calculation Techniques', instructor: 'Acharya Gupta', rating: 4.7, reviews: 8234, students: 34567, duration: '12 total hours', level: 'Intermediate', updated: 'November 2024', image: 'https://images.unsplash.com/photo-1509228468518-180dd4864904?auto=format&fit=crop&q=80&w=400', category: 'Vedic Studies', bestseller: false, price: 0, originalPrice: 1999, description: 'Master Vedic Maths techniques.', lectures: 25, syllabus: [], status: 'approved' },
+    ];
+
+    const DEFAULT_COURSE_CATEGORIES = [
+        { id: 1, name: 'Ayurveda', description: 'Traditional Indian medicine and wellness', icon: '🌿' },
+        { id: 2, name: 'Yoga', description: 'Physical and spiritual practices', icon: '🧘' },
+        { id: 3, name: 'Vedic Studies', description: 'Ancient Indian scriptures and philosophy', icon: '📚' },
+        { id: 4, name: 'Language', description: 'Sanskrit and other Indian languages', icon: '🗣️' },
+        { id: 5, name: 'Spirituality', description: 'Meditation and spiritual growth', icon: '🕉️' },
+        { id: 6, name: 'Agriculture', description: 'Organic and traditional farming', icon: '🌾' }
+    ];
+
+    const DEFAULT_EXAMS = [
+        { id: 1, title: 'Ayurveda Certification Exam', category: 'Ayurveda', duration: 60, passingScore: 70, questions: [{ id: 1, text: 'What is the primary purpose of Ayurveda?', options: ['To cure diseases', 'To maintain health in the healthy and cure disease in the sick', 'To perform surgery', 'To study herbs'], correctAnswer: 1 }] }
+    ];
+
+    const DEFAULT_EXAM_CATEGORIES = [
+        { id: 1, name: 'Ayurveda', icon: '🌿' },
+        { id: 2, name: 'Yoga', icon: '🧘' },
+        { id: 3, name: 'Vedic Studies', icon: '📚' }
+    ];
+
+    const DEFAULT_QUIZZES = [
+        { id: 1, title: 'Daily Yoga Quiz', category: 'Yoga', duration: 10, questions: [{ id: 1, text: 'What does the word "Yoga" mean?', options: ['Exercise', 'Union', 'Stretching', 'Breathing'], correctAnswer: 1 }] }
+    ];
+
+    const DEFAULT_PRODUCT_CATEGORIES = [
+        { id: 1, name: 'Ayurvedic Products', description: 'Natural Ayurvedic remedies and supplements', icon: '🌿' },
+        { id: 2, name: 'Yoga Equipment', description: 'Mats, blocks, and accessories', icon: '🧘' },
+        { id: 3, name: 'Books & Literature', description: 'Spiritual and educational books', icon: '📚' },
+        { id: 4, name: 'Organic Food', description: 'Healthy organic food products', icon: '🌾' }
+    ];
+
+    const DEFAULT_PRODUCTS = [
+        { id: 1, name: 'Organic Turmeric Powder', description: 'Pure organic turmeric powder for health and wellness', price: 299, originalPrice: 399, category: 'Ayurvedic Products', stock: 150, sku: 'AYU-TUR-001', images: ['https://images.unsplash.com/photo-1615485500704-8e990f9900f7?auto=format&fit=crop&q=80&w=400'], vendor: 'Organic Farms India', status: 'approved', rating: 4.5, reviews: 234 },
+        { id: 2, name: 'Premium Yoga Mat', description: 'Eco-friendly non-slip yoga mat', price: 1299, originalPrice: 1799, category: 'Yoga Equipment', stock: 75, sku: 'YOG-MAT-001', images: ['https://images.unsplash.com/photo-1601925260368-ae2f83cf8b7f?auto=format&fit=crop&q=80&w=400'], vendor: 'Yoga Essentials', status: 'approved', rating: 4.8, reviews: 456 },
+        { id: 3, name: 'Bhagavad Gita (English)', description: 'Complete English translation with commentary', price: 499, originalPrice: 699, category: 'Books & Literature', stock: 200, sku: 'BOK-BG-001', images: ['https://images.unsplash.com/photo-1512820790803-83ca734da794?auto=format&fit=crop&q=80&w=400'], vendor: 'Spiritual Books', status: 'approved', rating: 4.9, reviews: 789 },
+        { id: 101, title: 'Pending Test Course', instructor: 'Test Instructor', category: 'Yoga', rating: 0, students: 0, price: 499, image: 'https://images.unsplash.com/photo-1544367563-12123d8965cd?auto=format&fit=crop&q=80&w=400', level: 'Beginner', status: 'pending' },
+    ];
+
+    const DEFAULT_MUSIC = [
+        { id: 1, title: 'Krishna Flute Meditation', artist: 'Pandit Hariprasad Chaurasia', album: 'Divine Melodies', genre: 'Classical', mood: 'Peaceful', duration: '8:45', audioUrl: '/audio/krishna-flute.mp3', coverArt: 'https://images.unsplash.com/photo-1511379938547-c1f69419868d?auto=format&fit=crop&q=80&w=400', plays: 125000, likes: 8500, rating: 4.8, releaseDate: '2024-01-15', lyrics: '', status: 'approved' },
+        { id: 2, title: 'Om Chanting', artist: 'Swami Anand', album: 'Sacred Sounds', genre: 'Meditation', mood: 'Spiritual', duration: '11:20', audioUrl: '/audio/om-chanting.mp3', coverArt: 'https://images.unsplash.com/photo-1528722828814-77b9b83aafb2?auto=format&fit=crop&q=80&w=400', plays: 89000, likes: 6200, rating: 4.7, releaseDate: '2024-02-20', lyrics: 'Om...', status: 'approved' },
+        { id: 3, title: 'Raag Bhairavi', artist: 'Ustad Zakir Hussain', album: 'Classical Ragas', genre: 'Classical', mood: 'Devotional', duration: '15:30', audioUrl: '/audio/raag-bhairavi.mp3', coverArt: 'https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?auto=format&fit=crop&q=80&w=400', plays: 67000, likes: 4800, rating: 4.9, releaseDate: '2024-03-10', lyrics: '', status: 'approved' },
+        { id: 101, title: 'Pending Bhajan - Shri Ram Stuti', artist: 'Pandit Ravi Kumar', album: 'Devotional Collection', genre: 'Devotional', mood: 'Spiritual', duration: '12:30', audioUrl: '/audio/pending-bhajan.mp3', coverArt: 'https://images.unsplash.com/photo-1514320291840-2e0a9bf2a9ae?auto=format&fit=crop&q=80&w=400', plays: 0, likes: 0, rating: 0, releaseDate: '2024-11-29', lyrics: '', status: 'pending', description: 'A soulful devotional bhajan dedicated to Lord Ram' }
+    ];
+
+    const DEFAULT_MUSIC_ALBUMS = [
+        { id: 1, name: 'Divine Melodies', description: 'Sacred flute compositions', artist: 'Pandit Hariprasad Chaurasia' },
+        { id: 2, name: 'Sacred Sounds', description: 'Meditation and chanting', artist: 'Swami Anand' },
+        { id: 3, name: 'Classical Ragas', description: 'Traditional Indian classical music', artist: 'Ustad Zakir Hussain' }
+    ];
+
+    const DEFAULT_MUSIC_GENRES = [
+        { id: 1, name: 'Classical', description: 'Traditional Indian classical music', icon: '🎵' },
+        { id: 2, name: 'Meditation', description: 'Peaceful meditation music', icon: '🧘' },
+        { id: 3, name: 'Devotional', description: 'Devotional and bhajan music', icon: '🙏' },
+        { id: 4, name: 'Folk', description: 'Traditional folk music', icon: '🎶' },
+        { id: 5, name: 'Mantra', description: 'Sacred mantras and chants', icon: '🕉️' }
+    ];
+
+    const DEFAULT_MUSIC_MOODS = [
+        { id: 1, name: 'Peaceful', description: 'Calm and serene', color: '#10B981' },
+        { id: 2, name: 'Spiritual', description: 'Deeply spiritual and devotional', color: '#8B5CF6' },
+        { id: 3, name: 'Energetic', description: 'Uplifting and energizing', color: '#F59E0B' },
+        { id: 4, name: 'Relaxing', description: 'Soothing and relaxing', color: '#3B82F6' },
+        { id: 5, name: 'Devotional', description: 'Devotional and prayerful', color: '#EC4899' }
+    ];
+
+    const DEFAULT_PODCAST_SERIES = [
+        { id: 1, name: 'Wellness Wisdom', description: 'Health and wellness insights' },
+        { id: 2, name: 'Mindful Living', description: 'Meditation and mindfulness practices' },
+        { id: 3, name: 'Spiritual Journey', description: 'Exploring spiritual paths' }
+    ];
+
+    const DEFAULT_PODCAST_CATEGORIES = [
+        { id: 1, name: 'Spirituality', description: 'Spiritual teachings and practices', icon: '🕉️' },
+        { id: 2, name: 'Wellness', description: 'Health and wellness topics', icon: '🌿' },
+        { id: 3, name: 'Culture', description: 'Cultural stories and traditions', icon: '🎭' },
+        { id: 4, name: 'Education', description: 'Educational content', icon: '📚' }
+    ];
+
+    const DEFAULT_PODCASTS = [
+        { id: 1, title: 'The Science of Ayurveda', series: 'Wellness Wisdom', host: 'Dr. Rajesh Sharma', description: 'Exploring the scientific basis of Ayurvedic principles', duration: '45:30', audioUrl: '/audio/ayurveda-science.mp3', coverArt: 'https://images.unsplash.com/photo-1590602847861-f357a9332bbc?auto=format&fit=crop&q=80&w=400', publishDate: '2024-11-20', showNotes: 'In this episode, we discuss...', guests: ['Dr. Priya Patel'], plays: 12500, likes: 890, rating: 4.6, status: 'approved' },
+        { id: 2, title: 'Meditation for Beginners', series: 'Mindful Living', host: 'Swami Anand', description: 'Simple meditation techniques for daily practice', duration: '30:15', audioUrl: '/audio/meditation-basics.mp3', coverArt: 'https://images.unsplash.com/photo-1499209974431-9dddcece7f88?auto=format&fit=crop&q=80&w=400', publishDate: '2024-11-18', showNotes: 'Learn basic meditation...', guests: [], plays: 18900, likes: 1450, rating: 4.8, status: 'approved' }
+    ];
+
+    const DEFAULT_MEDITATION = [
+        { id: 1, title: 'Morning Energy Meditation', description: 'Start your day with positive energy', duration: '10:00', difficulty: 'Beginner', type: 'Guided', audioUrl: '/audio/morning-meditation.mp3', videoUrl: '', backgroundMusic: 'Soft flute', instructor: 'Swami Anand', coverArt: 'https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&q=80&w=400', plays: 45000, likes: 3200, rating: 4.7, featured: true, status: 'approved' },
+        { id: 2, title: 'Deep Sleep Meditation', description: 'Guided meditation for restful sleep', duration: '20:00', difficulty: 'Beginner', type: 'Guided', audioUrl: '/audio/sleep-meditation.mp3', videoUrl: '', backgroundMusic: 'Ocean waves', instructor: 'Priya Desai', coverArt: 'https://images.unsplash.com/photo-1499209974431-9dddcece7f88?auto=format&fit=crop&q=80&w=400', plays: 67000, likes: 5100, rating: 4.9, featured: false, status: 'approved' },
+        { id: 3, title: 'Chakra Balancing', description: 'Advanced chakra meditation practice', duration: '30:00', difficulty: 'Advanced', type: 'Visualization', audioUrl: '/audio/chakra-meditation.mp3', videoUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ', backgroundMusic: 'Tibetan bowls', instructor: 'Guru Mahesh', coverArt: 'https://images.unsplash.com/photo-1545389336-cf090694435e?auto=format&fit=crop&q=80&w=400', plays: 34000, likes: 2800, rating: 4.8, featured: false, status: 'approved' },
+        {
+            id: 4,
+            title: '7-Day Mindfulness Journey',
+            description: 'A complete week of mindfulness practices to ground yourself.',
+            difficulty: 'Intermediate',
+            type: 'Series',
+            instructor: 'Swami Anand',
+            coverArt: 'https://images.unsplash.com/photo-1518241353330-0f7941c2d9b5?auto=format&fit=crop&q=80&w=400',
+            plays: 1200,
+            likes: 95,
+            rating: 4.5,
+            featured: true,
+            status: 'approved',
+            sessions: [
+                { id: 's1', title: 'Day 1: The Breath', duration: '15:00', audioUrl: '', videoUrl: 'https://www.youtube.com/watch?v=inpok4MKVLM' },
+                { id: 's2', title: 'Day 2: Body Scan', duration: '20:00', audioUrl: '/audio/body-scan.mp3', videoUrl: '' },
+                { id: 's3', title: 'Day 3: Sounds', duration: '18:00', audioUrl: '', videoUrl: 'https://www.youtube.com/watch?v=example' }
+            ]
+        }
+    ];
+
+    const DEFAULT_NEWS_CATEGORIES = [
+        { id: 1, name: 'Health', description: 'Health and wellness news', icon: '🌿' },
+        { id: 2, name: 'Events', description: 'Community and cultural events', icon: '🎉' },
+        { id: 3, name: 'Spirituality', description: 'Spiritual insights and teachings', icon: '🕉️' },
+        { id: 4, name: 'Culture', description: 'Cultural news and stories', icon: '🎭' },
+        { id: 5, name: 'Research', description: 'Scientific research and studies', icon: '🔬' }
+    ];
+
+    const DEFAULT_NEWS = [
+        { id: 1, title: 'Ancient Ayurvedic Remedy Shows Promise in Modern Research', content: 'Recent studies have shown that traditional Ayurvedic remedies...', excerpt: 'Recent studies validate ancient wisdom', featuredImage: 'https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&q=80&w=400', category: 'Health', tags: ['Ayurveda', 'Research', 'Health'], author: 'Dr. Rajesh Sharma', publishDate: '2024-11-25', status: 'published', views: 5600 },
+        { id: 2, title: 'International Yoga Day Celebrations Across India', content: 'Millions participated in yoga sessions nationwide...', excerpt: 'Nationwide yoga celebrations', featuredImage: 'https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&q=80&w=400', category: 'Events', tags: ['Yoga', 'Events', 'Culture'], author: 'Priya Desai', publishDate: '2024-11-24', status: 'published', views: 8900 }
+    ];
+
+    const DEFAULT_KNOWLEDGEBASE_CATEGORIES = [
+        { id: 1, name: 'Social Welfare', icon: '🤝', description: 'Social welfare and community initiatives' },
+        { id: 2, name: 'Podcasts', icon: '🎙️', description: 'Audio podcasts and discussions' },
+        { id: 3, name: 'News and Gallery', icon: '📰', description: 'Latest news and photo galleries' },
+        { id: 4, name: 'Interviews', icon: '🎤', description: 'Expert interviews and conversations' },
+        { id: 5, name: 'Yoga and Fitness', icon: '🧘', description: 'Yoga practices and fitness guidance' },
+        { id: 6, name: 'Meditation and Healing', icon: '🕉️', description: 'Meditation techniques and healing practices' },
+        { id: 7, name: 'Sanatan Views', icon: '🙏', description: 'Traditional Sanatan perspectives' },
+        { id: 8, name: 'Great Personalities', icon: '⭐', description: 'Stories of inspiring personalities' },
+        { id: 9, name: 'Ved Puran', icon: '📖', description: 'Vedic scriptures and Puranas' },
+        { id: 10, name: 'Tour and Trekking', icon: '🏔️', description: 'Travel and trekking experiences' },
+        { id: 11, name: 'Stand up and Music', icon: '🎵', description: 'Entertainment and music' },
+        { id: 12, name: 'Cow Holistic View', icon: '🐄', description: 'Holistic perspective on cow welfare' },
+        { id: 13, name: 'Concept of Gaugyan', icon: '💡', description: 'Core concepts of Gaugyan platform' }
+    ];
+
+    const DEFAULT_KNOWLEDGEBASE = [
+        {
+            id: 1,
+            category: 'Social Welfare',
+            title: 'गौज्ञान की मूल अवधारणा और सामाजिक उद्देश्य',
+            videoUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+            videoName: 'Gaugyan Introduction',
+            image: 'https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&q=80&w=400',
+            status: 'active',
+            description: 'गौज्ञान प्लेटफॉर्म का मूल उद्देश्य और सामाजिक प्रभाव की व्याख्या।',
+            author: 'Dr. Rajesh Sharma',
+            lastUpdated: '2024-11-20',
+            views: 12000,
+            helpful: 450
+        },
+        {
+            id: 2,
+            category: 'Yoga and Fitness',
+            title: 'Basic Yoga Poses for Beginners',
+            videoUrl: 'https://www.youtube.com/watch?v=v7AYKMP6rOE',
+            videoName: 'Beginner Yoga Guide',
+            image: 'https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&q=80&w=400',
+            status: 'active',
+            description: 'Start your yoga journey with these fundamental poses and breathing techniques.',
+            author: 'Priya Desai',
+            lastUpdated: '2024-11-22',
+            views: 15600,
+            helpful: 678
+        },
+        {
+            id: 3,
+            category: 'Meditation and Healing',
+            title: 'Understanding Chakra Meditation',
+            videoUrl: 'https://www.youtube.com/watch?v=example3',
+            videoName: 'Chakra Healing Guide',
+            image: 'https://images.unsplash.com/photo-1545389336-cf090694435e?auto=format&fit=crop&q=80&w=400',
+            status: 'active',
+            description: 'Learn about the seven chakras and how to balance them through meditation.',
+            author: 'Swami Anand',
+            lastUpdated: '2024-11-21',
+            views: 9800,
+            helpful: 389
+        }
+    ];
+
+    const DEFAULT_GAUSHALA = [
+        { id: 1, name: 'Nandini', age: 5, breed: 'Gir', healthStatus: 'Healthy', adoptionStatus: 'Available', monthlyCost: 2500, photos: ['https://images.unsplash.com/photo-1570042225831-d98fa7577f1e?auto=format&fit=crop&q=80&w=400'], description: 'Gentle and loving cow.' }
+    ];
+
+    const DEFAULT_QUESTIONS = [
+        { id: 1, text: 'What is the primary purpose of Ayurveda?', type: 'multiple-choice', difficulty: 'Easy', category: 'Ayurveda', options: ['To cure diseases', 'To maintain health in the healthy and cure disease in the sick', 'To perform surgery', 'To study herbs'], correctAnswer: 1, explanation: 'Ayurveda focuses on prevention and holistic health.' },
+        { id: 2, text: 'What does "Yoga" mean?', type: 'multiple-choice', difficulty: 'Easy', category: 'Yoga', options: ['Exercise', 'Union', 'Stretching', 'Breathing'], correctAnswer: 1, explanation: 'Yoga means union of mind, body, and spirit.' },
+        { id: 3, text: 'Which Veda contains Ayurvedic knowledge?', type: 'multiple-choice', difficulty: 'Medium', category: 'Ayurveda', options: ['Rig Veda', 'Sama Veda', 'Yajur Veda', 'Atharva Veda'], correctAnswer: 3, explanation: 'Atharva Veda contains Ayurvedic principles.' }
+    ];
+
+    const DEFAULT_USERS = [
+        { id: 1, firstName: 'Admin', lastName: 'Mediocity', email: 'admin@mediocity.com', mobile: '+917777777', role: 'admin', status: 'active', profilePicture: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&q=80&w=200', loginAsUser: 'admin@mediocity.com', createdAt: '2024-01-15', lastLogin: '2024-11-28', password: 'admin123' },
+        { id: 2, firstName: 'Instructor', lastName: 'Mediocity', email: 'instructor@mediocitygmail.com', mobile: '9876543229', role: 'instructor', status: 'active', profilePicture: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=200', loginAsUser: 'instructor@mediocity.com', createdAt: '2024-02-10', lastLogin: '2024-11-27', password: 'instructor123' },
+        { id: 3, firstName: 'Gary', lastName: 'Oldman', email: 'gary7934@mail.com', mobile: '7894581217', role: 'instructor', status: 'active', profilePicture: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=200', loginAsUser: 'gary@mail.com', createdAt: '2024-03-05', lastLogin: '2024-11-26', password: 'password123' },
+        { id: 4, firstName: 'Shine', lastName: 'Hardy', email: 'Shinehardy@mail.com', mobile: '6589741217', role: 'instructor', status: 'active', profilePicture: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&q=80&w=200', loginAsUser: 'shine@mail.com', createdAt: '2024-03-12', lastLogin: '2024-11-25', password: 'password123' },
+        { id: 5, firstName: 'User', lastName: 'Mediocity', email: 'User.mediocity@mail.com', mobile: '9411111111', role: 'user', status: 'active', profilePicture: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=200', loginAsUser: 'user@mail.com', createdAt: '2024-04-01', lastLogin: '2024-11-28', password: 'password123' },
+        { id: 6, firstName: 'Yog', lastName: 'Raj', email: 'yog@gmail.com', mobile: '', role: 'instructor', status: 'active', profilePicture: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&q=80&w=200', loginAsUser: 'yograj@mail.com', createdAt: '2024-04-15', lastLogin: '2024-11-24', password: 'password123' },
+        { id: 7, firstName: 'Gary', lastName: 'Oldman', email: 'gary7934@mail.com', mobile: '7894581217', role: 'instructor', status: 'active', profilePicture: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=200', loginAsUser: 'gary2@mail.com', createdAt: '2024-05-01', lastLogin: '2024-11-23', password: 'password123' },
+        { id: 8, firstName: 'Shine', lastName: 'Hardy', email: 'Shinehardy@mail.com', mobile: '6589741217', role: 'instructor', status: 'active', profilePicture: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&q=80&w=200', loginAsUser: 'shine2@mail.com', createdAt: '2024-05-10', lastLogin: '2024-11-22', password: 'password123' },
+        { id: 9, firstName: 'User', lastName: 'Mediocity', email: 'User.mediocity@mail.com', mobile: '9411111111', role: 'user', status: 'active', profilePicture: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=200', loginAsUser: 'user2@mail.com', createdAt: '2024-06-01', lastLogin: '2024-11-21', password: 'password123' },
+        { id: 10, firstName: 'Viru', lastName: 'Kumar', email: 'viru@gmail.com', mobile: '', role: 'user', status: 'active', profilePicture: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=200', loginAsUser: 'viru@mail.com', createdAt: '2024-06-15', lastLogin: '2024-11-20', password: 'password123' },
+        { id: 11, firstName: 'User', lastName: 'User', email: 'user@mediocity.co.in', mobile: '9415060585', role: 'user', status: 'active', profilePicture: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&q=80&w=200', loginAsUser: 'user3@mail.com', createdAt: '2024-07-01', lastLogin: '2024-11-19', password: 'password123' }
+    ];
+
+    const DEFAULT_CONTACT_MESSAGES = [
+        {
+            id: 1,
+            name: 'John Doe',
+            email: 'john@example.com',
+            subject: 'Course Inquiry',
+            message: 'I would like to know more about the Ayurveda course and its duration.',
+            date: new Date().toISOString(),
+            status: 'unread'
+        }
+    ];
+
+    const DEFAULT_HOME_SLIDERS = [
+        {
+            id: 1,
+            title: 'Welcome to GauGyan',
+            subtitle: 'Learn, Grow, Transform',
+            description: 'Discover ancient wisdom and modern knowledge on our comprehensive learning platform',
+            image: 'https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&q=80&w=1200',
+            buttonText: 'Explore Courses',
+            buttonLink: '/courses',
+            order: 1,
+            active: true
+        }
+    ];
+
+    // State Management
+    const [courses, setCourses] = usePersistedState('courses_v2', DEFAULT_COURSES);
+    const [courseCategories, setCourseCategories] = usePersistedState('courseCategories', DEFAULT_COURSE_CATEGORIES);
+    const [exams, setExams] = usePersistedState('exams', DEFAULT_EXAMS);
+    const [examCategories, setExamCategories] = usePersistedState('examCategories', DEFAULT_EXAM_CATEGORIES);
+    const [quizzes, setQuizzes] = usePersistedState('quizzes', DEFAULT_QUIZZES);
+    const [results, setResults] = usePersistedState('results', []);
+    const [productCategories, setProductCategories] = usePersistedState('productCategories', DEFAULT_PRODUCT_CATEGORIES);
+    const [products, setProducts] = usePersistedState('products', DEFAULT_PRODUCTS);
+    const [music, setMusic] = usePersistedState('music_v2', DEFAULT_MUSIC);
+    const [musicAlbums, setMusicAlbums] = usePersistedState('musicAlbums', DEFAULT_MUSIC_ALBUMS);
+    const [musicGenres, setMusicGenres] = usePersistedState('musicGenres', DEFAULT_MUSIC_GENRES);
+    const [musicMoods, setMusicMoods] = usePersistedState('musicMoods', DEFAULT_MUSIC_MOODS);
+    const [podcasts, setPodcasts] = usePersistedState('podcasts', DEFAULT_PODCASTS);
+    const [podcastSeries, setPodcastSeries] = usePersistedState('podcastSeries', DEFAULT_PODCAST_SERIES);
+    const [podcastCategories, setPodcastCategories] = usePersistedState('podcastCategories', DEFAULT_PODCAST_CATEGORIES);
+    const [meditation, setMeditation] = usePersistedState('meditation', DEFAULT_MEDITATION);
+    const [news, setNews] = usePersistedState('news', DEFAULT_NEWS);
+    const [newsCategories, setNewsCategories] = usePersistedState('newsCategories', DEFAULT_NEWS_CATEGORIES);
+    const [knowledgebase, setKnowledgebase] = usePersistedState('knowledgebase', DEFAULT_KNOWLEDGEBASE);
+    const [knowledgebaseCategories, setKnowledgebaseCategories] = usePersistedState('knowledgebaseCategories', DEFAULT_KNOWLEDGEBASE_CATEGORIES);
+    const [gaushala, setGaushala] = usePersistedState('gaushala', DEFAULT_GAUSHALA);
+    const [questions, setQuestions] = usePersistedState('questions', DEFAULT_QUESTIONS);
+    const [users, setUsers] = usePersistedState('users', DEFAULT_USERS);
+    const [contactMessages, setContactMessages] = usePersistedState('contactMessages', DEFAULT_CONTACT_MESSAGES);
+    const [homeSliders, setHomeSliders] = usePersistedState('homeSliders', DEFAULT_HOME_SLIDERS);
+
+    // CRUD Operations
+
+    // Courses
+    const addCourse = (course) => setCourses([...courses, { ...course, id: Date.now(), students: 0, lectures: 0 }]);
+    const deleteCourse = (id) => setCourses(courses.filter(c => c.id !== id));
+    const updateCourse = (id, updatedData) => setCourses(courses.map(c => c.id === id ? { ...c, ...updatedData } : c));
+    const addCourseCategory = (category) => setCourseCategories([...courseCategories, { ...category, id: Date.now() }]);
+    const deleteCourseCategory = (id) => setCourseCategories(courseCategories.filter(c => c.id !== id));
+
+    // Exams
+    const addExam = (exam) => setExams([...exams, { ...exam, id: Date.now() }]);
+    const deleteExam = (id) => setExams(exams.filter(e => e.id !== id));
+    const updateExam = (id, updatedData) => setExams(exams.map(e => e.id === id ? { ...e, ...updatedData } : e));
+    const addExamCategory = (category) => setExamCategories([...examCategories, { ...category, id: Date.now() }]);
+    const deleteExamCategory = (id) => setExamCategories(examCategories.filter(c => c.id !== id));
+
+    // Quizzes
+    const addQuiz = (quiz) => setQuizzes([...quizzes, { ...quiz, id: Date.now() }]);
+    const deleteQuiz = (id) => setQuizzes(quizzes.filter(q => q.id !== id));
+    const updateQuiz = (id, updatedData) => setQuizzes(quizzes.map(q => q.id === id ? { ...q, ...updatedData } : q));
+
+    // Products
+    const addProduct = (product) => setProducts([...products, { ...product, id: Date.now() }]);
+    const deleteProduct = (id) => setProducts(products.filter(p => p.id !== id));
+    const updateProduct = (id, updatedData) => setProducts(products.map(p => p.id === id ? { ...p, ...updatedData } : p));
+    const addProductCategory = (category) => setProductCategories([...productCategories, { ...category, id: Date.now() }]);
+    const deleteProductCategory = (id) => setProductCategories(productCategories.filter(c => c.id !== id));
+    const updateProductCategory = (id, updatedData) => setProductCategories(productCategories.map(c => c.id === id ? { ...c, ...updatedData } : c));
+
+    // Music
+    const addMusic = (track) => setMusic([...music, { ...track, id: Date.now(), plays: 0, likes: 0, rating: 0 }]);
+    const deleteMusic = (id) => setMusic(music.filter(m => m.id !== id));
+    const updateMusic = (id, updatedData) => setMusic(music.map(m => m.id === id ? { ...m, ...updatedData } : m));
+
+    // Music Taxonomies
+    const addMusicAlbum = (album) => setMusicAlbums([...musicAlbums, { ...album, id: Date.now() }]);
+    const deleteMusicAlbum = (id) => setMusicAlbums(musicAlbums.filter(a => a.id !== id));
+    const updateMusicAlbum = (id, updatedData) => setMusicAlbums(musicAlbums.map(a => a.id === id ? { ...a, ...updatedData } : a));
+
+    const addMusicGenre = (genre) => setMusicGenres([...musicGenres, { ...genre, id: Date.now() }]);
+    const deleteMusicGenre = (id) => setMusicGenres(musicGenres.filter(g => g.id !== id));
+    const updateMusicGenre = (id, updatedData) => setMusicGenres(musicGenres.map(g => g.id === id ? { ...g, ...updatedData } : g));
+
+    const addMusicMood = (mood) => setMusicMoods([...musicMoods, { ...mood, id: Date.now() }]);
+    const deleteMusicMood = (id) => setMusicMoods(musicMoods.filter(m => m.id !== id));
+    const updateMusicMood = (id, updatedData) => setMusicMoods(musicMoods.map(m => m.id === id ? { ...m, ...updatedData } : m));
+
+    // Podcasts
+    const addPodcast = (podcast) => setPodcasts([...podcasts, { ...podcast, id: Date.now(), plays: 0, likes: 0, rating: 0 }]);
+    const deletePodcast = (id) => setPodcasts(podcasts.filter(p => p.id !== id));
+    const updatePodcast = (id, updatedData) => setPodcasts(podcasts.map(p => p.id === id ? { ...p, ...updatedData } : p));
+
+    // Podcast Taxonomies
+    const addPodcastSeries = (series) => setPodcastSeries([...podcastSeries, { ...series, id: Date.now() }]);
+    const deletePodcastSeries = (id) => setPodcastSeries(podcastSeries.filter(s => s.id !== id));
+    const updatePodcastSeries = (id, updatedData) => setPodcastSeries(podcastSeries.map(s => s.id === id ? { ...s, ...updatedData } : s));
+
+    const addPodcastCategory = (category) => setPodcastCategories([...podcastCategories, { ...category, id: Date.now() }]);
+    const deletePodcastCategory = (id) => setPodcastCategories(podcastCategories.filter(c => c.id !== id));
+    const updatePodcastCategory = (id, updatedData) => setPodcastCategories(podcastCategories.map(c => c.id === id ? { ...c, ...updatedData } : c));
+
+    // Meditation
+    const addMeditation = (session) => setMeditation([...meditation, { ...session, id: Date.now(), plays: 0, likes: 0, rating: 0 }]);
+    const deleteMeditation = (id) => setMeditation(meditation.filter(m => m.id !== id));
+    const updateMeditation = (id, updatedData) => setMeditation(meditation.map(m => m.id === id ? { ...m, ...updatedData } : m));
+
+    // News
+    const addNews = (article) => setNews([...news, { ...article, id: Date.now(), views: 0, publishDate: new Date().toISOString().split('T')[0] }]);
+    const deleteNews = (id) => setNews(news.filter(n => n.id !== id));
+    const updateNews = (id, updatedData) => setNews(news.map(n => n.id === id ? { ...n, ...updatedData } : n));
+
+    // News Categories
+    const addNewsCategory = (category) => setNewsCategories([...newsCategories, { ...category, id: Date.now() }]);
+    const deleteNewsCategory = (id) => setNewsCategories(newsCategories.filter(c => c.id !== id));
+    const updateNewsCategory = (id, updatedData) => setNewsCategories(newsCategories.map(c => c.id === id ? { ...c, ...updatedData } : c));
+
+    // Knowledgebase
+    const addKnowledgebase = (article) => setKnowledgebase([...knowledgebase, { ...article, id: Date.now(), views: 0, helpful: 0, lastUpdated: new Date().toISOString().split('T')[0] }]);
+    const deleteKnowledgebase = (id) => setKnowledgebase(knowledgebase.filter(k => k.id !== id));
+    const updateKnowledgebase = (id, updatedData) => setKnowledgebase(knowledgebase.map(k => k.id === id ? { ...k, ...updatedData } : k));
+    const addKnowledgebaseCategory = (category) => setKnowledgebaseCategories([...knowledgebaseCategories, { ...category, id: Date.now() }]);
+    const deleteKnowledgebaseCategory = (id) => setKnowledgebaseCategories(knowledgebaseCategories.filter(c => c.id !== id));
+
+    // Gaushala
+    const addGaushala = (cow) => setGaushala([...gaushala, { ...cow, id: Date.now() }]);
+    const deleteGaushala = (id) => setGaushala(gaushala.filter(g => g.id !== id));
+    const updateGaushala = (id, updatedData) => setGaushala(gaushala.map(g => g.id === id ? { ...g, ...updatedData } : g));
+
+    // Questions
+    const addQuestion = (question) => setQuestions([...questions, { ...question, id: Date.now() }]);
+    const deleteQuestion = (id) => setQuestions(questions.filter(q => q.id !== id));
+    const updateQuestion = (id, updatedData) => setQuestions(questions.map(q => q.id === id ? { ...q, ...updatedData } : q));
+
+    // Results
+    const submitResult = (result) => setResults([...results, { ...result, id: Date.now(), date: new Date().toISOString() }]);
+
+    // Users
+    const addUser = (user) => setUsers([...users, { ...user, id: Date.now(), createdAt: new Date().toISOString().split('T')[0], status: 'active' }]);
+    const deleteUser = (id) => setUsers(users.filter(u => u.id !== id));
+    const updateUser = (id, updatedData) => setUsers(users.map(u => u.id === id ? { ...u, ...updatedData } : u));
+    const toggleUserStatus = (id) => setUsers(users.map(u => u.id === id ? { ...u, status: u.status === 'active' ? 'inactive' : 'active' } : u));
+
+    // Contact Messages
+    const addContactMessage = (message) => setContactMessages([...contactMessages, { ...message, id: Date.now(), date: new Date().toISOString(), status: 'unread' }]);
+    const deleteContactMessage = (id) => setContactMessages(contactMessages.filter(m => m.id !== id));
+    const updateContactMessage = (id, updatedData) => setContactMessages(contactMessages.map(m => m.id === id ? { ...m, ...updatedData } : m));
+    const markMessageAsRead = (id) => setContactMessages(contactMessages.map(m => m.id === id ? { ...m, status: 'read' } : m));
+
+    // Home Sliders
+    const addHomeSlider = (slider) => setHomeSliders([...homeSliders, { ...slider, id: Date.now() }]);
+    const deleteHomeSlider = (id) => setHomeSliders(homeSliders.filter(s => s.id !== id));
+    const updateHomeSlider = (id, updatedData) => setHomeSliders(homeSliders.map(s => s.id === id ? { ...s, ...updatedData } : s));
+
+    const DEFAULT_NEWS_CATEGORIES = [
+        { id: 1, name: 'Health', description: 'Health and wellness news', icon: '🌿' },
+        { id: 2, name: 'Events', description: 'Community and cultural events', icon: '🎉' },
+        { id: 3, name: 'Spirituality', description: 'Spiritual insights and teachings', icon: '🕉️' },
+        { id: 4, name: 'Culture', description: 'Cultural news and stories', icon: '🎭' },
+        { id: 5, name: 'Research', description: 'Scientific research and studies', icon: '🔬' }
+    ];
+
+    const DEFAULT_NEWS = [
+        { id: 1, title: 'Ancient Ayurvedic Remedy Shows Promise in Modern Research', content: 'Recent studies have shown that traditional Ayurvedic remedies...', excerpt: 'Recent studies validate ancient wisdom', featuredImage: 'https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&q=80&w=400', category: 'Health', tags: ['Ayurveda', 'Research', 'Health'], author: 'Dr. Rajesh Sharma', publishDate: '2024-11-25', status: 'published', views: 5600 },
+        { id: 2, title: 'International Yoga Day Celebrations Across India', content: 'Millions participated in yoga sessions nationwide...', excerpt: 'Nationwide yoga celebrations', featuredImage: 'https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&q=80&w=400', category: 'Events', tags: ['Yoga', 'Events', 'Culture'], author: 'Priya Desai', publishDate: '2024-11-24', status: 'published', views: 8900 }
+    ];
+
+    const DEFAULT_KNOWLEDGEBASE_CATEGORIES = [
+        { id: 1, name: 'Social Welfare', icon: '🤝', description: 'Social welfare and community initiatives' },
+        { id: 2, name: 'Podcasts', icon: '🎙️', description: 'Audio podcasts and discussions' },
+        { id: 3, name: 'News and Gallery', icon: '📰', description: 'Latest news and photo galleries' },
+        { id: 4, name: 'Interviews', icon: '🎤', description: 'Expert interviews and conversations' },
+        { id: 5, name: 'Yoga and Fitness', icon: '🧘', description: 'Yoga practices and fitness guidance' },
+        { id: 6, name: 'Meditation and Healing', icon: '🕉️', description: 'Meditation techniques and healing practices' },
+        { id: 7, name: 'Sanatan Views', icon: '🙏', description: 'Traditional Sanatan perspectives' },
+        { id: 8, name: 'Great Personalities', icon: '⭐', description: 'Stories of inspiring personalities' },
+        { id: 9, name: 'Ved Puran', icon: '📖', description: 'Vedic scriptures and Puranas' },
+        { id: 10, name: 'Tour and Trekking', icon: '🏔️', description: 'Travel and trekking experiences' },
+        { id: 11, name: 'Stand up and Music', icon: '🎵', description: 'Entertainment and music' },
+        { id: 12, name: 'Cow Holistic View', icon: '🐄', description: 'Holistic perspective on cow welfare' },
+        { id: 13, name: 'Concept of Gaugyan', icon: '💡', description: 'Core concepts of Gaugyan platform' }
+    ];
+
+    const DEFAULT_KNOWLEDGEBASE = [
+        {
+            id: 1,
+            category: 'Social Welfare',
+            title: 'गौज्ञान की मूल अवधारणा और सामाजिक उद्देश्य',
+            videoUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+            videoName: 'Gaugyan Introduction',
+            image: 'https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&q=80&w=400',
+            status: 'active',
+            description: 'गौज्ञान प्लेटफॉर्म का मूल उद्देश्य और सामाजिक प्रभाव की व्याख्या।',
+            author: 'Dr. Rajesh Sharma',
+            lastUpdated: '2024-11-20',
+            views: 12000,
+            helpful: 450
+        },
+        {
+            id: 2,
+            category: 'Yoga and Fitness',
+            title: 'Basic Yoga Poses for Beginners',
+            videoUrl: 'https://www.youtube.com/watch?v=v7AYKMP6rOE',
+            videoName: 'Beginner Yoga Guide',
+            image: 'https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&q=80&w=400',
+            status: 'active',
+            description: 'Start your yoga journey with these fundamental poses and breathing techniques.',
+            author: 'Priya Desai',
+            lastUpdated: '2024-11-22',
+            views: 15600,
+            helpful: 678
+        },
+        {
+            id: 3,
+            category: 'Meditation and Healing',
+            title: 'Understanding Chakra Meditation',
+            videoUrl: 'https://www.youtube.com/watch?v=example3',
+            videoName: 'Chakra Healing Guide',
+            image: 'https://images.unsplash.com/photo-1545389336-cf090694435e?auto=format&fit=crop&q=80&w=400',
+            status: 'active',
+            description: 'Learn about the seven chakras and how to balance them through meditation.',
+            author: 'Swami Anand',
+            lastUpdated: '2024-11-21',
+            views: 9800,
+            helpful: 389
+        }
+    ];
+
+    const DEFAULT_GAUSHALA = [
+        { id: 1, name: 'Nandini', age: 5, breed: 'Gir', healthStatus: 'Healthy', adoptionStatus: 'Available', monthlyCost: 2500, photos: ['https://images.unsplash.com/photo-1570042225831-d98fa7577f1e?auto=format&fit=crop&q=80&w=400'], description: 'Gentle and loving cow.' }
+    ];
+
+    const DEFAULT_QUESTIONS = [
+        { id: 1, text: 'What is the primary purpose of Ayurveda?', type: 'multiple-choice', difficulty: 'Easy', category: 'Ayurveda', options: ['To cure diseases', 'To maintain health in the healthy and cure disease in the sick', 'To perform surgery', 'To study herbs'], correctAnswer: 1, explanation: 'Ayurveda focuses on prevention and holistic health.' },
+        { id: 2, text: 'What does "Yoga" mean?', type: 'multiple-choice', difficulty: 'Easy', category: 'Yoga', options: ['Exercise', 'Union', 'Stretching', 'Breathing'], correctAnswer: 1, explanation: 'Yoga means union of mind, body, and spirit.' },
+        { id: 3, text: 'Which Veda contains Ayurvedic knowledge?', type: 'multiple-choice', difficulty: 'Medium', category: 'Ayurveda', options: ['Rig Veda', 'Sama Veda', 'Yajur Veda', 'Atharva Veda'], correctAnswer: 3, explanation: 'Atharva Veda contains Ayurvedic principles.' }
+    ];
+
+    const DEFAULT_USERS = [
+        { id: 1, firstName: 'Admin', lastName: 'Mediocity', email: 'admin@mediocity.com', mobile: '+917777777', role: 'admin', status: 'active', profilePicture: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&q=80&w=200', loginAsUser: 'admin@mediocity.com', createdAt: '2024-01-15', lastLogin: '2024-11-28', password: 'admin123' },
+        { id: 2, firstName: 'Instructor', lastName: 'Mediocity', email: 'instructor@mediocitygmail.com', mobile: '9876543229', role: 'instructor', status: 'active', profilePicture: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=200', loginAsUser: 'instructor@mediocity.com', createdAt: '2024-02-10', lastLogin: '2024-11-27', password: 'instructor123' },
+        { id: 3, firstName: 'Gary', lastName: 'Oldman', email: 'gary7934@mail.com', mobile: '7894581217', role: 'instructor', status: 'active', profilePicture: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=200', loginAsUser: 'gary@mail.com', createdAt: '2024-03-05', lastLogin: '2024-11-26', password: 'password123' },
+        { id: 4, firstName: 'Shine', lastName: 'Hardy', email: 'Shinehardy@mail.com', mobile: '6589741217', role: 'instructor', status: 'active', profilePicture: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&q=80&w=200', loginAsUser: 'shine@mail.com', createdAt: '2024-03-12', lastLogin: '2024-11-25', password: 'password123' },
+        { id: 5, firstName: 'User', lastName: 'Mediocity', email: 'User.mediocity@mail.com', mobile: '9411111111', role: 'user', status: 'active', profilePicture: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=200', loginAsUser: 'user@mail.com', createdAt: '2024-04-01', lastLogin: '2024-11-28', password: 'password123' },
+        { id: 6, firstName: 'Yog', lastName: 'Raj', email: 'yog@gmail.com', mobile: '', role: 'instructor', status: 'active', profilePicture: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&q=80&w=200', loginAsUser: 'yograj@mail.com', createdAt: '2024-04-15', lastLogin: '2024-11-24', password: 'password123' },
+        { id: 7, firstName: 'Gary', lastName: 'Oldman', email: 'gary7934@mail.com', mobile: '7894581217', role: 'instructor', status: 'active', profilePicture: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=200', loginAsUser: 'gary2@mail.com', createdAt: '2024-05-01', lastLogin: '2024-11-23', password: 'password123' },
+        { id: 8, firstName: 'Shine', lastName: 'Hardy', email: 'Shinehardy@mail.com', mobile: '6589741217', role: 'instructor', status: 'active', profilePicture: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&q=80&w=200', loginAsUser: 'shine2@mail.com', createdAt: '2024-05-10', lastLogin: '2024-11-22', password: 'password123' },
+        { id: 9, firstName: 'User', lastName: 'Mediocity', email: 'User.mediocity@mail.com', mobile: '9411111111', role: 'user', status: 'active', profilePicture: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=200', loginAsUser: 'user2@mail.com', createdAt: '2024-06-01', lastLogin: '2024-11-21', password: 'password123' },
+        { id: 10, firstName: 'Viru', lastName: 'Kumar', email: 'viru@gmail.com', mobile: '', role: 'user', status: 'active', profilePicture: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=200', loginAsUser: 'viru@mail.com', createdAt: '2024-06-15', lastLogin: '2024-11-20', password: 'password123' },
+        { id: 11, firstName: 'User', lastName: 'User', email: 'user@mediocity.co.in', mobile: '9415060585', role: 'user', status: 'active', profilePicture: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&q=80&w=200', loginAsUser: 'user3@mail.com', createdAt: '2024-07-01', lastLogin: '2024-11-19', password: 'password123' }
+    ];
+
+    const DEFAULT_CONTACT_MESSAGES = [
+        {
+            id: 1,
+            name: 'John Doe',
+            email: 'john@example.com',
+            subject: 'Course Inquiry',
+            message: 'I would like to know more about the Ayurveda course and its duration.',
+            date: new Date().toISOString(),
+            status: 'unread'
+        }
+    ];
+
+    const DEFAULT_HOME_SLIDERS = [
+        {
+            id: 1,
+            title: 'Welcome to GauGyan',
+            subtitle: 'Learn, Grow, Transform',
+            description: 'Discover ancient wisdom and modern knowledge on our comprehensive learning platform',
+            image: 'https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&q=80&w=1200',
+            buttonText: 'Explore Courses',
+            buttonLink: '/courses',
+            order: 1,
+            active: true
+        }
+    ];
+
+    // State Management
+    const [courses, setCourses] = usePersistedState('courses_v2', DEFAULT_COURSES);
+    const [courseCategories, setCourseCategories] = usePersistedState('courseCategories', DEFAULT_COURSE_CATEGORIES);
+    const [exams, setExams] = usePersistedState('exams', DEFAULT_EXAMS);
+    const [examCategories, setExamCategories] = usePersistedState('examCategories', DEFAULT_EXAM_CATEGORIES);
+    const [quizzes, setQuizzes] = usePersistedState('quizzes', DEFAULT_QUIZZES);
+    const [results, setResults] = usePersistedState('results', []);
+    const [productCategories, setProductCategories] = usePersistedState('productCategories', DEFAULT_PRODUCT_CATEGORIES);
+    const [products, setProducts] = usePersistedState('products', DEFAULT_PRODUCTS);
+    const [music, setMusic] = usePersistedState('music_v2', DEFAULT_MUSIC);
+    const [musicAlbums, setMusicAlbums] = usePersistedState('musicAlbums', DEFAULT_MUSIC_ALBUMS);
+    const [musicGenres, setMusicGenres] = usePersistedState('musicGenres', DEFAULT_MUSIC_GENRES);
+    const [musicMoods, setMusicMoods] = usePersistedState('musicMoods', DEFAULT_MUSIC_MOODS);
+    const [podcasts, setPodcasts] = usePersistedState('podcasts', DEFAULT_PODCASTS);
+    const [podcastSeries, setPodcastSeries] = usePersistedState('podcastSeries', DEFAULT_PODCAST_SERIES);
+    const [podcastCategories, setPodcastCategories] = usePersistedState('podcastCategories', DEFAULT_PODCAST_CATEGORIES);
+    const [meditation, setMeditation] = usePersistedState('meditation', DEFAULT_MEDITATION);
+    const [news, setNews] = usePersistedState('news', DEFAULT_NEWS);
+    const [newsCategories, setNewsCategories] = usePersistedState('newsCategories', DEFAULT_NEWS_CATEGORIES);
+    const [knowledgebase, setKnowledgebase] = usePersistedState('knowledgebase', DEFAULT_KNOWLEDGEBASE);
+    const [knowledgebaseCategories, setKnowledgebaseCategories] = usePersistedState('knowledgebaseCategories', DEFAULT_KNOWLEDGEBASE_CATEGORIES);
+    const [gaushala, setGaushala] = usePersistedState('gaushala', DEFAULT_GAUSHALA);
+    const [questions, setQuestions] = usePersistedState('questions', DEFAULT_QUESTIONS);
+    const [users, setUsers] = usePersistedState('users', DEFAULT_USERS);
+    const [contactMessages, setContactMessages] = usePersistedState('contactMessages', DEFAULT_CONTACT_MESSAGES);
+    const [homeSliders, setHomeSliders] = usePersistedState('homeSliders', DEFAULT_HOME_SLIDERS);
+
+    // CRUD Operations
+
+    // Courses
+    const addCourse = (course) => setCourses([...courses, { ...course, id: Date.now(), students: 0, lectures: 0 }]);
+    const deleteCourse = (id) => setCourses(courses.filter(c => c.id !== id));
+    const updateCourse = (id, updatedData) => setCourses(courses.map(c => c.id === id ? { ...c, ...updatedData } : c));
+    const addCourseCategory = (category) => setCourseCategories([...courseCategories, { ...category, id: Date.now() }]);
+    const deleteCourseCategory = (id) => setCourseCategories(courseCategories.filter(c => c.id !== id));
+
+    // Exams
+    const addExam = (exam) => setExams([...exams, { ...exam, id: Date.now() }]);
+    const deleteExam = (id) => setExams(exams.filter(e => e.id !== id));
+    const updateExam = (id, updatedData) => setExams(exams.map(e => e.id === id ? { ...e, ...updatedData } : e));
+    const addExamCategory = (category) => setExamCategories([...examCategories, { ...category, id: Date.now() }]);
+    const deleteExamCategory = (id) => setExamCategories(examCategories.filter(c => c.id !== id));
+
+    // Quizzes
+    const addQuiz = (quiz) => setQuizzes([...quizzes, { ...quiz, id: Date.now() }]);
+    const deleteQuiz = (id) => setQuizzes(quizzes.filter(q => q.id !== id));
+    const updateQuiz = (id, updatedData) => setQuizzes(quizzes.map(q => q.id === id ? { ...q, ...updatedData } : q));
+
+    // Products
+    const addProduct = (product) => setProducts([...products, { ...product, id: Date.now() }]);
+    const deleteProduct = (id) => setProducts(products.filter(p => p.id !== id));
+    const updateProduct = (id, updatedData) => setProducts(products.map(p => p.id === id ? { ...p, ...updatedData } : p));
+    const addProductCategory = (category) => setProductCategories([...productCategories, { ...category, id: Date.now() }]);
+    const deleteProductCategory = (id) => setProductCategories(productCategories.filter(c => c.id !== id));
+    const updateProductCategory = (id, updatedData) => setProductCategories(productCategories.map(c => c.id === id ? { ...c, ...updatedData } : c));
+
+    // Music
+    const addMusic = (track) => setMusic([...music, { ...track, id: Date.now(), plays: 0, likes: 0, rating: 0 }]);
+    const deleteMusic = (id) => setMusic(music.filter(m => m.id !== id));
+    const updateMusic = (id, updatedData) => setMusic(music.map(m => m.id === id ? { ...m, ...updatedData } : m));
+
+    // Contact Messages
+    const addContactMessage = (message) => setContactMessages([...contactMessages, { ...message, id: Date.now(), date: new Date().toISOString(), status: 'unread' }]);
+    const deleteContactMessage = (id) => setContactMessages(contactMessages.filter(m => m.id !== id));
+    const updateContactMessage = (id, updatedData) => setContactMessages(contactMessages.map(m => m.id === id ? { ...m, ...updatedData } : m));
+    const markMessageAsRead = (id) => setContactMessages(contactMessages.map(m => m.id === id ? { ...m, status: 'read' } : m));
+
+    // Home Sliders
+    const addHomeSlider = (slider) => setHomeSliders([...homeSliders, { ...slider, id: Date.now() }]);
+    const deleteHomeSlider = (id) => setHomeSliders(homeSliders.filter(s => s.id !== id));
+    const updateHomeSlider = (id, updatedData) => setHomeSliders(homeSliders.map(s => s.id === id ? { ...s, ...updatedData } : s));
+
+    // Music Taxonomies
+    const addMusicAlbum = (album) => setMusicAlbums([...musicAlbums, { ...album, id: Date.now() }]);
+    const deleteMusicAlbum = (id) => setMusicAlbums(musicAlbums.filter(a => a.id !== id));
+    const updateMusicAlbum = (id, updatedData) => setMusicAlbums(musicAlbums.map(a => a.id === id ? { ...a, ...updatedData } : a));
+
+    const addMusicGenre = (genre) => setMusicGenres([...musicGenres, { ...genre, id: Date.now() }]);
+    const deleteMusicGenre = (id) => setMusicGenres(musicGenres.filter(g => g.id !== id));
+    const updateMusicGenre = (id, updatedData) => setMusicGenres(musicGenres.map(g => g.id === id ? { ...g, ...updatedData } : g));
+
+    const addMusicMood = (mood) => setMusicMoods([...musicMoods, { ...mood, id: Date.now() }]);
+    const deleteMusicMood = (id) => setMusicMoods(musicMoods.filter(m => m.id !== id));
+    const updateMusicMood = (id, updatedData) => setMusicMoods(musicMoods.map(m => m.id === id ? { ...m, ...updatedData } : m));
+
+    // Podcasts
+    const addPodcast = (podcast) => setPodcasts([...podcasts, { ...podcast, id: Date.now(), plays: 0, likes: 0, rating: 0 }]);
+    const deletePodcast = (id) => setPodcasts(podcasts.filter(p => p.id !== id));
+    const updatePodcast = (id, updatedData) => setPodcasts(podcasts.map(p => p.id === id ? { ...p, ...updatedData } : p));
+
+    // Podcast Taxonomies
+    const addPodcastSeries = (series) => setPodcastSeries([...podcastSeries, { ...series, id: Date.now() }]);
+    const deletePodcastSeries = (id) => setPodcastSeries(podcastSeries.filter(s => s.id !== id));
+    const updatePodcastSeries = (id, updatedData) => setPodcastSeries(podcastSeries.map(s => s.id === id ? { ...s, ...updatedData } : s));
+
+    const addPodcastCategory = (category) => setPodcastCategories([...podcastCategories, { ...category, id: Date.now() }]);
+    const deletePodcastCategory = (id) => setPodcastCategories(podcastCategories.filter(c => c.id !== id));
+    const updatePodcastCategory = (id, updatedData) => setPodcastCategories(podcastCategories.map(c => c.id === id ? { ...c, ...updatedData } : c));
+
+    // Meditation
+    const addMeditation = (session) => setMeditation([...meditation, { ...session, id: Date.now(), plays: 0, likes: 0, rating: 0 }]);
+    const deleteMeditation = (id) => setMeditation(meditation.filter(m => m.id !== id));
+    const updateMeditation = (id, updatedData) => setMeditation(meditation.map(m => m.id === id ? { ...m, ...updatedData } : m));
+
+    // News
+    const addNews = (article) => setNews([...news, { ...article, id: Date.now(), views: 0, publishDate: new Date().toISOString().split('T')[0] }]);
+    const deleteNews = (id) => setNews(news.filter(n => n.id !== id));
+    const updateNews = (id, updatedData) => setNews(news.map(n => n.id === id ? { ...n, ...updatedData } : n));
+
+    // News Categories
+    const addNewsCategory = (category) => setNewsCategories([...newsCategories, { ...category, id: Date.now() }]);
+    const deleteNewsCategory = (id) => setNewsCategories(newsCategories.filter(c => c.id !== id));
+    const updateNewsCategory = (id, updatedData) => setNewsCategories(newsCategories.map(c => c.id === id ? { ...c, ...updatedData } : c));
+
+    // Knowledgebase
+    const addKnowledgebase = (article) => setKnowledgebase([...knowledgebase, { ...article, id: Date.now(), views: 0, helpful: 0, lastUpdated: new Date().toISOString().split('T')[0] }]);
+    const deleteKnowledgebase = (id) => setKnowledgebase(knowledgebase.filter(k => k.id !== id));
+    const updateKnowledgebase = (id, updatedData) => setKnowledgebase(knowledgebase.map(k => k.id === id ? { ...k, ...updatedData } : k));
+    const addKnowledgebaseCategory = (category) => setKnowledgebaseCategories([...knowledgebaseCategories, { ...category, id: Date.now() }]);
+    const deleteKnowledgebaseCategory = (id) => setKnowledgebaseCategories(knowledgebaseCategories.filter(c => c.id !== id));
+
+    // Gaushala
+    const addGaushala = (cow) => setGaushala([...gaushala, { ...cow, id: Date.now() }]);
+    const deleteGaushala = (id) => setGaushala(gaushala.filter(g => g.id !== id));
+    const updateGaushala = (id, updatedData) => setGaushala(gaushala.map(g => g.id === id ? { ...g, ...updatedData } : g));
+
+    // Questions
+    const addQuestion = (question) => setQuestions([...questions, { ...question, id: Date.now() }]);
+    const deleteQuestion = (id) => setQuestions(questions.filter(q => q.id !== id));
+    const updateQuestion = (id, updatedData) => setQuestions(questions.map(q => q.id === id ? { ...q, ...updatedData } : q));
+
+    // Results
+    const submitResult = (result) => setResults([...results, { ...result, id: Date.now(), date: new Date().toISOString() }]);
+
+    // Users
+    const addUser = (user) => setUsers([...users, { ...user, id: Date.now(), createdAt: new Date().toISOString().split('T')[0], status: 'active' }]);
+    const deleteUser = (id) => setUsers(users.filter(u => u.id !== id));
+    const updateUser = (id, updatedData) => setUsers(users.map(u => u.id === id ? { ...u, ...updatedData } : u));
+    const toggleUserStatus = (id) => setUsers(users.map(u => u.id === id ? { ...u, status: u.status === 'active' ? 'inactive' : 'active' } : u));
+
+    return (
+        <DataContext.Provider value={{
+            // Courses
+            courses, addCourse, deleteCourse, updateCourse,
+            courseCategories, addCourseCategory, deleteCourseCategory,
+            // Exams
+            exams, addExam, deleteExam, updateExam,
+            examCategories, addExamCategory, deleteExamCategory,
+            // Quizzes
+            quizzes, addQuiz, deleteQuiz, updateQuiz,
+            // Questions
+            questions, addQuestion, deleteQuestion, updateQuestion,
+            // Results
+            results, submitResult,
+            // Products
+            productCategories, addProductCategory, deleteProductCategory, updateProductCategory,
+            products, addProduct, deleteProduct, updateProduct,
+            // Music
+            music, addMusic, deleteMusic, updateMusic,
+            musicAlbums, addMusicAlbum, deleteMusicAlbum, updateMusicAlbum,
+            musicGenres, addMusicGenre, deleteMusicGenre, updateMusicGenre,
+            musicMoods, addMusicMood, deleteMusicMood, updateMusicMood,
+            // Podcasts
+            podcasts, addPodcast, deletePodcast, updatePodcast,
+            podcastSeries, addPodcastSeries, deletePodcastSeries, updatePodcastSeries,
+            podcastCategories, addPodcastCategory, deletePodcastCategory, updatePodcastCategory,
+            // Meditation
+            meditation, addMeditation, deleteMeditation, updateMeditation,
+            // News
+            news, addNews, deleteNews, updateNews,
+            newsCategories, addNewsCategory, deleteNewsCategory, updateNewsCategory,
+            // Knowledgebase
+            knowledgebase, addKnowledgebase, deleteKnowledgebase, updateKnowledgebase,
+            knowledgebaseCategories, addKnowledgebaseCategory, deleteKnowledgebaseCategory,
+            // Gaushala
+            gaushala, addGaushala, deleteGaushala, updateGaushala,
+            // Users
+            users, addUser, deleteUser, updateUser, toggleUserStatus,
+            // Contact Messages
+            contactMessages, addContactMessage, deleteContactMessage, updateContactMessage, markMessageAsRead,
+            // Home Sliders
+            homeSliders, addHomeSlider, deleteHomeSlider, updateHomeSlider
+        }}>
+            {children}
+        </DataContext.Provider >
+    );
+};

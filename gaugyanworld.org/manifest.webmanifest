@@ -1,0 +1,23 @@
+{
+  "name": "GauGyan - Ancient Wisdom",
+  "short_name": "GauGyan",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#FFB347",
+  "description": "Ancient Wisdom for Modern Living. Learn about Cow Science, Ayurveda, and more.",
+  "icons": [
+    {
+      "src": "/gaugyan-logo.png",
+      "type": "image/png",
+      "sizes": "192x192",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/gaugyan-logo.png",
+      "type": "image/png",
+      "sizes": "512x512",
+      "purpose": "any maskable"
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+{
+    "name": "AI File Manager",
+    "slug": "file-manager",
+    "version": "1.0.0",
+    "description": "AI-Enhanced File Management System",
+    "author": "GauGyan System",
+    "active": true,
+    "mountPath": "/file-manager"
+}

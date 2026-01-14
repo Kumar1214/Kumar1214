@@ -1,0 +1,828 @@
+
+> gaugyan-dev@0.0.0 lint
+> eslint .
+
+(node:32420) ESLintEnvWarning: /* eslint-env */ comments are no longer recognized when linting with flat config and will be reported as errors as of v10.0.0. Replace them with /* global */ comments or define globals in your config file. See https://eslint.org/docs/latest/use/configure/migration-guide#eslint-env-configuration-comments for details. Found in /Users/mac/Downloads/gaugyan_macos_final/mobile/metro.config.js at line 3.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+/Users/mac/Downloads/gaugyan_macos_final/backend/data/users.js
+  1:7  error  'bcrypt' is assigned a value but never used. Allowed unused vars must match /^[A-Z_]/u  no-unused-vars
+
+/Users/mac/Downloads/gaugyan_macos_final/backend/production_seeder.js
+  1:9  error  'sequelize' is assigned a value but never used. Allowed unused vars must match /^[A-Z_]/u  no-unused-vars
+
+/Users/mac/Downloads/gaugyan_macos_final/backend/scripts/parse_sql.js
+   14:7  error  'parseValues' is assigned a value but never used. Allowed unused vars must match /^[A-Z_]/u       no-unused-vars
+   66:7  error  'extractTableData' is assigned a value but never used. Allowed unused vars must match /^[A-Z_]/u  no-unused-vars
+  119:7  error  'tables' is assigned a value but never used. Allowed unused vars must match /^[A-Z_]/u            no-unused-vars
+
+/Users/mac/Downloads/gaugyan_macos_final/backend/seedAdmin.js
+   2:7   error  'bcrypt' is assigned a value but never used. Allowed unused vars must match /^[A-Z_]/u  no-unused-vars
+  21:15  error  'admin' is assigned a value but never used. Allowed unused vars must match /^[A-Z_]/u   no-unused-vars
+
+/Users/mac/Downloads/gaugyan_macos_final/backend/seeder_sql.js
+  27:7   error  'musicData' is assigned a value but never used. Allowed unused vars must match /^[A-Z_]/u          no-unused-vars
+  28:7   error  'podcastData' is assigned a value but never used. Allowed unused vars must match /^[A-Z_]/u        no-unused-vars
+  29:7   error  'meditationData' is assigned a value but never used. Allowed unused vars must match /^[A-Z_]/u     no-unused-vars
+  30:7   error  'newsData' is assigned a value but never used. Allowed unused vars must match /^[A-Z_]/u           no-unused-vars
+  31:7   error  'knowledgebaseData' is assigned a value but never used. Allowed unused vars must match /^[A-Z_]/u  no-unused-vars
+  32:7   error  'gaushalaData' is assigned a value but never used. Allowed unused vars must match /^[A-Z_]/u       no-unused-vars
+  33:7   error  'examData' is assigned a value but never used. Allowed unused vars must match /^[A-Z_]/u           no-unused-vars
+  34:7   error  'quizData' is assigned a value but never used. Allowed unused vars must match /^[A-Z_]/u           no-unused-vars
+  39:7   error  'getPlaceholder' is assigned a value but never used. Allowed unused vars must match /^[A-Z_]/u     no-unused-vars
+  41:7   error  'importData' is assigned a value but never used. Allowed unused vars must match /^[A-Z_]/u         no-unused-vars
+  55:15  error  'users' is assigned a value but never used. Allowed unused vars must match /^[A-Z_]/u              no-unused-vars
+
+/Users/mac/Downloads/gaugyan_macos_final/backend/server.js
+  137:15  error  'pluginManager' is assigned a value but never used. Allowed unused vars must match /^[A-Z_]/u  no-unused-vars
+
+/Users/mac/Downloads/gaugyan_macos_final/backend/src/modules/content/services/panchangService.js
+  11:11  error  'day' is assigned a value but never used. Allowed unused vars must match /^[A-Z_]/u  no-unused-vars
+
+/Users/mac/Downloads/gaugyan_macos_final/backend/src/modules/entertainment/astrology.routes.js
+  24:17  error  'specialization' is assigned a value but never used. Allowed unused vars must match /^[A-Z_]/u  no-unused-vars
+
+/Users/mac/Downloads/gaugyan_macos_final/backend/src/modules/identity/users.routes.js
+  324:15  error  'bcrypt' is assigned a value but never used. Allowed unused vars must match /^[A-Z_]/u  no-unused-vars
+
+/Users/mac/Downloads/gaugyan_macos_final/backend/src/modules/learning/quizzes.routes.js
+  140:61  error  'e' is defined but never used  no-unused-vars
+
+/Users/mac/Downloads/gaugyan_macos_final/backend/src/plugins/system-debugger/routes.js
+  57:22  error  'e' is defined but never used  no-unused-vars
+
+/Users/mac/Downloads/gaugyan_macos_final/backend/src/shared/middleware/errorHandler.js
+  1:38  error  'next' is defined but never used  no-unused-vars
+
+/Users/mac/Downloads/gaugyan_macos_final/backend/src/shared/middleware/protect.js
+  82:14  error  'err' is defined but never used  no-unused-vars
+  87:12  error  'err' is defined but never used  no-unused-vars
+
+/Users/mac/Downloads/gaugyan_macos_final/backend/src/shared/utils/slugGenerator.js
+  7:19  error  Unnecessary escape character: \-  no-useless-escape
+  8:15  error  Unnecessary escape character: \-  no-useless-escape
+  8:17  error  Unnecessary escape character: \-  no-useless-escape
+
+/Users/mac/Downloads/gaugyan_macos_final/backend/test_results_audit.js
+  37:14  error  'e' is defined but never used  no-unused-vars
+
+/Users/mac/Downloads/gaugyan_macos_final/backend/update_schema_sqlite.js
+  3:7  error  'fs' is assigned a value but never used. Allowed unused vars must match /^[A-Z_]/u  no-unused-vars
+
+/Users/mac/Downloads/gaugyan_macos_final/mobile/babel.config.js
+  1:1  error  'module' is not defined  no-undef
+
+/Users/mac/Downloads/gaugyan_macos_final/mobile/src/components/SocialLoginButtons.js
+  15:26  error    'facebookLogin' is assigned a value but never used. Allowed unused vars must match /^[A-Z_]/u                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   no-unused-vars
+  28:13  error    Error: Cannot access variable before it is declared
+
+`handleGoogleSignIn` is accessed before it is declared, which prevents the earlier access from updating when this value changes over time.
+
+  26 |         if (response?.type === 'success') {
+  27 |             const { id_token } = response.params;
+> 28 |             handleGoogleSignIn(id_token);
+     |             ^^^^^^^^^^^^^^^^^^ `handleGoogleSignIn` accessed before it is declared
+  29 |         }
+  30 |     }, [response]);
+  31 |
+
+  30 |     }, [response]);
+  31 |
+> 32 |     const handleGoogleSignIn = async (idToken) => {
+     |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 33 |         try {
+     | ^^^^^^^^^^^^^
+> 34 |             const credential = GoogleAuthProvider.credential(idToken);
+     …
+     | ^^^^^^^^^^^^^
+> 43 |         }
+     | ^^^^^^^^^^^^^
+> 44 |     };
+     | ^^^^^^^ `handleGoogleSignIn` is declared here
+  45 |
+  46 |     const handleFacebookLogin = async () => {
+  47 |         // Facebook login requires similar setup with expo-auth-session/providers/facebook  react-hooks/immutability
+  30:8   warning  React Hook useEffect has a missing dependency: 'handleGoogleSignIn'. Either include it or remove the dependency array                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           react-hooks/exhaustive-deps
+
+/Users/mac/Downloads/gaugyan_macos_final/mobile/src/config/firebase.js
+  2:10  error  'getAuth' is defined but never used. Allowed unused vars must match /^[A-Z_]/u  no-unused-vars
+
+/Users/mac/Downloads/gaugyan_macos_final/mobile/src/navigation/AppNavigator.js
+  94:30  error  'user' is assigned a value but never used. Allowed unused vars must match /^[A-Z_]/u  no-unused-vars
+
+/Users/mac/Downloads/gaugyan_macos_final/mobile/src/navigation/TabNavigator.js
+  44:41  error  'color' is defined but never used  no-unused-vars
+  44:48  error  'size' is defined but never used   no-unused-vars
+
+/Users/mac/Downloads/gaugyan_macos_final/mobile/src/redux/slices/authSlice.js
+  8:15  error  'response' is assigned a value but never used. Allowed unused vars must match /^[A-Z_]/u  no-unused-vars
+
+/Users/mac/Downloads/gaugyan_macos_final/mobile/src/redux/slices/gaushalaSlice.js
+  7:20  error  'donationData' is defined but never used  no-unused-vars
+
+/Users/mac/Downloads/gaugyan_macos_final/mobile/src/screens/Home/HomeScreen.js
+  47:36   error  'require' is not defined   no-undef
+  47:107  error  'Platform' is not defined  no-undef
+
+/Users/mac/Downloads/gaugyan_macos_final/mobile/src/screens/HomeScreen.js
+  277:18  error  Parsing error: Unexpected token :
+
+/Users/mac/Downloads/gaugyan_macos_final/mobile/src/screens/LoginScreen.js
+  46:9   error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+  44 |     // UseEffect with correct dependencies
+  45 |     useEffect(() => {
+> 46 |         checkServer();
+     |         ^^^^^^^^^^^ Avoid calling setState() directly within an effect
+  47 |         return () => {
+  48 |             // Only clear error on unmount
+  49 |             dispatch(clearError());  react-hooks/set-state-in-effect
+  99:41  error  'require' is not defined                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  no-undef
+
+/Users/mac/Downloads/gaugyan_macos_final/mobile/src/screens/OnboardingScreen.js
+  19:16  error  'require' is not defined  no-undef
+  25:16  error  'require' is not defined  no-undef
+  31:16  error  'require' is not defined  no-undef
+  99:29  error  'require' is not defined  no-undef
+
+/Users/mac/Downloads/gaugyan_macos_final/mobile/src/screens/auth/LoginScreen.js
+  36:25  error  'require' is not defined  no-undef
+  45:36  error  'require' is not defined  no-undef
+
+/Users/mac/Downloads/gaugyan_macos_final/mobile/src/screens/auth/OnboardingScreen.js
+  14:16  error  'require' is not defined  no-undef
+  20:16  error  'require' is not defined  no-undef
+  26:16  error  'require' is not defined  no-undef
+
+/Users/mac/Downloads/gaugyan_macos_final/mobile/src/screens/auth/OtpLoginScreen.js
+  23:11  error  'recaptchaVerifier' is assigned a value but never used. Allowed unused vars must match /^[A-Z_]/u  no-unused-vars
+
+/Users/mac/Downloads/gaugyan_macos_final/mobile/src/screens/shop/CartScreen.js
+  12:38  error  'navigation' is defined but never used  no-unused-vars
+  30:60  error  'require' is not defined                no-undef
+
+/Users/mac/Downloads/gaugyan_macos_final/mobile/src/screens/shop/CheckoutScreen.js
+  6:42  error  'navigation' is defined but never used  no-unused-vars
+
+/Users/mac/Downloads/gaugyan_macos_final/mobile/src/screens/shop/ProductDetailScreen.js
+   6:54  error  'navigation' is defined but never used  no-unused-vars
+  18:64  error  'require' is not defined                no-undef
+
+/Users/mac/Downloads/gaugyan_macos_final/mobile/src/screens/shop/WishlistScreen.js
+   6:42  error  'navigation' is defined but never used  no-unused-vars
+  15:60  error  'require' is not defined                no-undef
+
+/Users/mac/Downloads/gaugyan_macos_final/scripts/ai_diagnosis.js
+  112:22  error  'e' is defined but never used  no-unused-vars
+
+/Users/mac/Downloads/gaugyan_macos_final/src/components/Chatbot.jsx
+  83:17  error  Error: Cannot call impure function during render
+
+`Date.now` is an impure function. Calling an impure function can produce unstable results that update unpredictably when the component happens to re-render. (https://react.dev/reference/rules/components-and-hooks-must-be-pure#components-and-hooks-must-be-idempotent).
+
+  81 |
+  82 |         const userMsg = {
+> 83 |             id: Date.now(),
+     |                 ^^^^^^^^^^ Cannot call impure function
+  84 |             text: text,
+  85 |             sender: 'user',
+  86 |             time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })  react-hooks/purity
+
+/Users/mac/Downloads/gaugyan_macos_final/src/components/ErrorBoundary.jsx
+  9:37  error  'error' is defined but never used  no-unused-vars
+
+/Users/mac/Downloads/gaugyan_macos_final/src/components/FileUploader.jsx
+  60:22  error  'url' is defined but never used  no-unused-vars
+
+/Users/mac/Downloads/gaugyan_macos_final/src/components/Footer.jsx
+   6:12  error  'socialLinks' is assigned a value but never used. Allowed unused vars must match /^[A-Z_]/u    no-unused-vars
+  41:11  error  'getSocialIcon' is assigned a value but never used. Allowed unused vars must match /^[A-Z_]/u  no-unused-vars
+
+/Users/mac/Downloads/gaugyan_macos_final/src/components/FormModal.jsx
+  20:13  error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+  18 |     useEffect(() => {
+  19 |         if (isOpen) {
+> 20 |             setFormData(initialData || {});
+     |             ^^^^^^^^^^^ Avoid calling setState() directly within an effect
+  21 |         }
+  22 |     }, [initialData, isOpen]);
+  23 |  react-hooks/set-state-in-effect
+
+/Users/mac/Downloads/gaugyan_macos_final/src/components/GlobalErrorBoundary.jsx
+  10:37  error  'error' is defined but never used  no-unused-vars
+
+/Users/mac/Downloads/gaugyan_macos_final/src/components/LastViewedProducts.jsx
+  15:13  error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+  13 |         // We'll just take the first 4 for now to populate the UI
+  14 |         if (products && products.length > 0) {
+> 15 |             setViewedProducts(products.slice(0, 4));
+     |             ^^^^^^^^^^^^^^^^^ Avoid calling setState() directly within an effect
+  16 |         }
+  17 |     }, [products]);
+  18 |  react-hooks/set-state-in-effect
+
+/Users/mac/Downloads/gaugyan_macos_final/src/components/LazyImage.jsx
+  1:38  error  'useRef' is defined but never used. Allowed unused vars must match /^[A-Z_]/u  no-unused-vars
+
+/Users/mac/Downloads/gaugyan_macos_final/src/components/ModernBannerSlider.jsx
+  2:10  error  'motion' is defined but never used. Allowed unused vars must match /^[A-Z_]/u  no-unused-vars
+
+/Users/mac/Downloads/gaugyan_macos_final/src/components/Navbar.jsx
+  27:11  error  'navigate' is assigned a value but never used. Allowed unused vars must match /^[A-Z_]/u  no-unused-vars
+
+/Users/mac/Downloads/gaugyan_macos_final/src/components/PasswordStrengthMeter.jsx
+  1:17  error  'useState' is defined but never used. Allowed unused vars must match /^[A-Z_]/u  no-unused-vars
+
+/Users/mac/Downloads/gaugyan_macos_final/src/components/RichTextEditor.jsx
+  58:27  error  'newContent' is defined but never used  no-unused-vars
+
+/Users/mac/Downloads/gaugyan_macos_final/src/components/SpotifyCard.jsx
+  2:10  error  'motion' is defined but never used. Allowed unused vars must match /^[A-Z_]/u  no-unused-vars
+
+/Users/mac/Downloads/gaugyan_macos_final/src/components/admin/AdvancedSearch.jsx
+  162:13  error    Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+  160 |     useEffect(() => {
+  161 |         if (searchTerm.trim() || activeFilters.length > 0) {
+> 162 |             handleSearch();
+      |             ^^^^^^^^^^^^ Avoid calling setState() directly within an effect
+  163 |         } else {
+  164 |             setSearchResults([]);
+  165 |         }  react-hooks/set-state-in-effect
+  166:8   warning  React Hook useEffect has missing dependencies: 'activeFilters.length' and 'handleSearch'. Either include them or remove the dependency array                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        react-hooks/exhaustive-deps
+
+/Users/mac/Downloads/gaugyan_macos_final/src/components/admin/Analytics.jsx
+   1:27  error  'useEffect' is defined but never used. Allowed unused vars must match /^[A-Z_]/u             no-unused-vars
+  47:11  error  'topProducts' is assigned a value but never used. Allowed unused vars must match /^[A-Z_]/u  no-unused-vars
+
+/Users/mac/Downloads/gaugyan_macos_final/src/components/admin/CourseManagement.jsx
+  24:12  error  'searchTerm' is assigned a value but never used. Allowed unused vars must match /^[A-Z_]/u     no-unused-vars
+  24:24  error  'setSearchTerm' is assigned a value but never used. Allowed unused vars must match /^[A-Z_]/u  no-unused-vars
+
+/Users/mac/Downloads/gaugyan_macos_final/src/components/admin/CowManagement.jsx
+  10:12  error  'adoptions' is assigned a value but never used. Allowed unused vars must match /^[A-Z_]/u     no-unused-vars
+  10:23  error  'setAdoptions' is assigned a value but never used. Allowed unused vars must match /^[A-Z_]/u  no-unused-vars
+
+/Users/mac/Downloads/gaugyan_macos_final/src/components/admin/DonationTracking.jsx
+    3:10  error  'contentService' is defined but never used. Allowed unused vars must match /^[A-Z_]/u  no-unused-vars
+  154:33  error  'id' is defined but never used                                                         no-unused-vars
+
+/Users/mac/Downloads/gaugyan_macos_final/src/components/admin/ExamManagement.jsx
+  132:29  error  'examId' is defined but never used  no-unused-vars
+
+/Users/mac/Downloads/gaugyan_macos_final/src/components/admin/HeaderCustomizer.jsx
+  32:9  error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+  30 |
+  31 |     useEffect(() => {
+> 32 |         loadSettings();
+     |         ^^^^^^^^^^^^ Avoid calling setState() directly within an effect
+  33 |     }, []);
+  34 |
+  35 |     const handleSave = async () => {  react-hooks/set-state-in-effect
+
+/Users/mac/Downloads/gaugyan_macos_final/src/components/admin/HealthRecordManagement.jsx
+  62:25  error  Error: Cannot call impure function during render
+
+`Date.now` is an impure function. Calling an impure function can produce unstable results that update unpredictably when the component happens to re-render. (https://react.dev/reference/rules/components-and-hooks-must-be-pure#components-and-hooks-must-be-idempotent).
+
+  60 |                 const recordToAdd = {
+  61 |                     ...newRecord,
+> 62 |                     id: Date.now().toString() // Simple ID for new records
+     |                         ^^^^^^^^^^ Cannot call impure function
+  63 |                 };
+  64 |                 updatedHealthRecords.push(recordToAdd);
+  65 |             }  react-hooks/purity
+
+/Users/mac/Downloads/gaugyan_macos_final/src/components/admin/KnowledgebaseFeedback.jsx
+  61:9   error    Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+  59 |     useEffect(() => {
+  60 |         // In a real implementation, fetch feedback from API
+> 61 |         setFeedback(mockFeedback);
+     |         ^^^^^^^^^^^ Avoid calling setState() directly within an effect
+  62 |     }, []);
+  63 |
+  64 |     const handleFeedbackAction = async (feedbackId, action) => {  react-hooks/set-state-in-effect
+  62:8   warning  React Hook useEffect has a missing dependency: 'mockFeedback'. Either include it or remove the dependency array                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                react-hooks/exhaustive-deps
+  99:11  error    'notHelpfulFeedback' is assigned a value but never used. Allowed unused vars must match /^[A-Z_]/u                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             no-unused-vars
+
+/Users/mac/Downloads/gaugyan_macos_final/src/components/admin/MusicManagement.jsx
+  21:12  error  'searchQuery' is assigned a value but never used. Allowed unused vars must match /^[A-Z_]/u  no-unused-vars
+
+/Users/mac/Downloads/gaugyan_macos_final/src/components/admin/PodcastManagement.jsx
+  20:12  error  'searchQuery' is assigned a value but never used. Allowed unused vars must match /^[A-Z_]/u  no-unused-vars
+
+/Users/mac/Downloads/gaugyan_macos_final/src/components/admin/QuizManagement.jsx
+  102:13  error  'questionId' is assigned a value but never used. Allowed unused vars must match /^[A-Z_]/u  no-unused-vars
+  146:29  error  'quizId' is defined but never used                                                          no-unused-vars
+
+/Users/mac/Downloads/gaugyan_macos_final/src/components/admin/Sidebar.jsx
+  42:27  error  'Icon' is defined but never used                                                               no-unused-vars
+  93:12  error  'expandedMenus' is assigned a value but never used. Allowed unused vars must match /^[A-Z_]/u  no-unused-vars
+  99:11  error  'toggleSubmenu' is assigned a value but never used. Allowed unused vars must match /^[A-Z_]/u  no-unused-vars
+
+/Users/mac/Downloads/gaugyan_macos_final/src/components/admin/StatsCard.jsx
+  4:42  error  'Icon' is defined but never used  no-unused-vars
+
+/Users/mac/Downloads/gaugyan_macos_final/src/components/admin/ecommerce/ProductForm.jsx
+  45:22  error  'err' is defined but never used                                                                      no-unused-vars
+  72:11  error  'handleVariantChange' is assigned a value but never used. Allowed unused vars must match /^[A-Z_]/u  no-unused-vars
+  78:11  error  'addVariant' is assigned a value but never used. Allowed unused vars must match /^[A-Z_]/u           no-unused-vars
+  82:11  error  'removeVariant' is assigned a value but never used. Allowed unused vars must match /^[A-Z_]/u        no-unused-vars
+
+/Users/mac/Downloads/gaugyan_macos_final/src/components/admin/forms/ExamQuestionForm.jsx
+  20:13  error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+  18 |     useEffect(() => {
+  19 |         if (initialData) {
+> 20 |             setFormData({
+     |             ^^^^^^^^^^^ Avoid calling setState() directly within an effect
+  21 |                 ...initialData,
+  22 |                 tags: initialData.tags?.join(', ') || ''
+  23 |             });  react-hooks/set-state-in-effect
+
+/Users/mac/Downloads/gaugyan_macos_final/src/components/admin/forms/QuizQuestionForm.jsx
+  18:13  error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+  16 |     useEffect(() => {
+  17 |         if (initialData) {
+> 18 |             setFormData({
+     |             ^^^^^^^^^^^ Avoid calling setState() directly within an effect
+  19 |                 ...initialData,
+  20 |                 tags: initialData.tags?.join(', ') || ''
+  21 |             });  react-hooks/set-state-in-effect
+
+/Users/mac/Downloads/gaugyan_macos_final/src/components/admin/shared/StatCard.jsx
+  3:41  error  'Icon' is defined but never used  no-unused-vars
+
+/Users/mac/Downloads/gaugyan_macos_final/src/components/common/InvoiceGenerator.jsx
+   13:7   error  'numberToWords' is assigned a value but never used. Allowed unused vars must match /^[A-Z_]/u                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          no-unused-vars
+  165:13  error  Error: Cannot create components during render
+
+Components created during render will reset their state each time they are created. Declare components outside of render.
+
+  163 |     }
+  164 |
+> 165 |     return <InvoiceLayout />;
+      |             ^^^^^^^^^^^^^ This component is created during render
+  166 | };
+  167 |
+  168 | export default InvoiceGenerator;
+
+   32 |     const taxBreakup = calculateTax(order.totalPrice || 0);
+   33 |
+>  34 |     const InvoiceLayout = () => (
+      |                           ^^^^^^^
+>  35 |         <div id="printable-invoice" className="bg-white p-8 max-w-4xl mx-auto border shadow-sm print:shadow-none print:border-none text-black">
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+>  36 |             {/* Header */}
+      …
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 143 |         </div>
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 144 |     );
+      | ^^^^^^ The component is created during render here
+  145 |
+  146 |     const handlePrint = () => {
+  147 |         const printContent = document.getElementById('printable-invoice').innerHTML;  react-hooks/static-components
+
+/Users/mac/Downloads/gaugyan_macos_final/src/components/dashboard/CommunityFeed.jsx
+  16:25  error    'setCommunities' is assigned a value but never used. Allowed unused vars must match /^[A-Z_]/u                 no-unused-vars
+  20:11  error    'getIcon' is assigned a value but never used. Allowed unused vars must match /^[A-Z_]/u                        no-unused-vars
+  21:50  error    'MusicIcon' is not defined                                                                                     no-undef
+  21:90  error    'ShoppingBagIcon' is not defined                                                                               no-undef
+  26:11  error    'allCategory' is assigned a value but never used. Allowed unused vars must match /^[A-Z_]/u                    no-unused-vars
+  45:8   warning  React Hook useEffect has a missing dependency: 'fetchPosts'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+/Users/mac/Downloads/gaugyan_macos_final/src/components/dashboard/NotificationCenter.jsx
+  1:27  error  'useEffect' is defined but never used. Allowed unused vars must match /^[A-Z_]/u  no-unused-vars
+
+/Users/mac/Downloads/gaugyan_macos_final/src/components/dashboard/OnboardingWidget.jsx
+  3:10  error  'motion' is defined but never used. Allowed unused vars must match /^[A-Z_]/u  no-unused-vars
+
+/Users/mac/Downloads/gaugyan_macos_final/src/components/engagement/EngagementBar.jsx
+  7:5  error  'bookmarks' is assigned a value but never used  no-unused-vars
+
+/Users/mac/Downloads/gaugyan_macos_final/src/context/AuthContext.jsx
+  301:26  error  'response' is defined but never used  no-unused-vars
+
+/Users/mac/Downloads/gaugyan_macos_final/src/context/CartContext.jsx
+  5:14  error  Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components  react-refresh/only-export-components
+
+/Users/mac/Downloads/gaugyan_macos_final/src/context/DataContext.jsx
+  2:14  error  Fast refresh only works when a file only exports components. Move your React context(s) to a separate file                      react-refresh/only-export-components
+  3:14  error  Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components  react-refresh/only-export-components
+
+/Users/mac/Downloads/gaugyan_macos_final/src/context/PluginContext.jsx
+  6:14  error  Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components  react-refresh/only-export-components
+
+/Users/mac/Downloads/gaugyan_macos_final/src/context/ThemeContext.jsx
+  30:14  error  Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components  react-refresh/only-export-components
+
+/Users/mac/Downloads/gaugyan_macos_final/src/firebase/config.js
+   2:25  error  'getApps' is defined but never used. Allowed unused vars must match /^[A-Z_]/u  no-unused-vars
+  23:10  error  'e' is defined but never used                                                   no-unused-vars
+
+/Users/mac/Downloads/gaugyan_macos_final/src/pages/AdminDashboard.jsx
+  1:27  error  'useEffect' is defined but never used. Allowed unused vars must match /^[A-Z_]/u  no-unused-vars
+  4:10  error  'useData' is defined but never used. Allowed unused vars must match /^[A-Z_]/u    no-unused-vars
+
+/Users/mac/Downloads/gaugyan_macos_final/src/pages/ArtistDashboard.jsx
+   21:35  error  React Hook "useState" is called conditionally. React Hooks must be called in the exact same order in every component render   react-hooks/rules-of-hooks
+   22:12  error  'loading' is assigned a value but never used. Allowed unused vars must match /^[A-Z_]/u                                       no-unused-vars
+   22:35  error  React Hook "useState" is called conditionally. React Hooks must be called in the exact same order in every component render   react-hooks/rules-of-hooks
+   23:51  error  React Hook "useState" is called conditionally. React Hooks must be called in the exact same order in every component render   react-hooks/rules-of-hooks
+   24:12  error  'uploadType' is assigned a value but never used. Allowed unused vars must match /^[A-Z_]/u                                    no-unused-vars
+   24:24  error  'setUploadType' is assigned a value but never used. Allowed unused vars must match /^[A-Z_]/u                                 no-unused-vars
+   24:41  error  React Hook "useState" is called conditionally. React Hooks must be called in the exact same order in every component render   react-hooks/rules-of-hooks
+   27:47  error  React Hook "useState" is called conditionally. React Hooks must be called in the exact same order in every component render   react-hooks/rules-of-hooks
+   35:37  error  React Hook "useState" is called conditionally. React Hooks must be called in the exact same order in every component render   react-hooks/rules-of-hooks
+   38:5   error  React Hook "useEffect" is called conditionally. React Hooks must be called in the exact same order in every component render  react-hooks/rules-of-hooks
+   88:23  error  React Hook "useMemo" is called conditionally. React Hooks must be called in the exact same order in every component render    react-hooks/rules-of-hooks
+  115:18  error  'err' is defined but never used                                                                                               no-unused-vars
+
+/Users/mac/Downloads/gaugyan_macos_final/src/pages/CourseCheckout.jsx
+  26:8  warning  React Hook useEffect has missing dependencies: 'course' and 'loading'. Either include them or remove the dependency array  react-hooks/exhaustive-deps
+
+/Users/mac/Downloads/gaugyan_macos_final/src/pages/CourseDetail.jsx
+  59:38  error  'e' is defined but never used  no-unused-vars
+
+/Users/mac/Downloads/gaugyan_macos_final/src/pages/EditorDashboard.jsx
+   9:8   error  'api' is defined but never used. Allowed unused vars must match /^[A-Z_]/u                      no-unused-vars
+  16:12  error  'pendingReviews' is assigned a value but never used. Allowed unused vars must match /^[A-Z_]/u  no-unused-vars
+  17:12  error  'loading' is assigned a value but never used. Allowed unused vars must match /^[A-Z_]/u         no-unused-vars
+
+/Users/mac/Downloads/gaugyan_macos_final/src/pages/ExamRunner.jsx
+  41:8  warning  React Hook useEffect has a missing dependency: 'handleSubmit'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+/Users/mac/Downloads/gaugyan_macos_final/src/pages/ExamSingle.jsx
+  39:38  error  'e' is defined but never used  no-unused-vars
+
+/Users/mac/Downloads/gaugyan_macos_final/src/pages/GaushalaOwnerDashboard.jsx
+   20:12  error  'donations' is assigned a value but never used. Allowed unused vars must match /^[A-Z_]/u           no-unused-vars
+   20:23  error  'setDonations' is assigned a value but never used. Allowed unused vars must match /^[A-Z_]/u        no-unused-vars
+   26:12  error  'loadingProducts' is assigned a value but never used. Allowed unused vars must match /^[A-Z_]/u     no-unused-vars
+   26:29  error  'setLoadingProducts' is assigned a value but never used. Allowed unused vars must match /^[A-Z_]/u  no-unused-vars
+  100:18  error  'err' is defined but never used                                                                     no-unused-vars
+
+/Users/mac/Downloads/gaugyan_macos_final/src/pages/GaushalaSingle.jsx
+  74:8  warning  React Hook useEffect has a missing dependency: 'trackEngagement'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+/Users/mac/Downloads/gaugyan_macos_final/src/pages/InstructorDashboard.jsx
+   4:10  error  'useData' is defined but never used. Allowed unused vars must match /^[A-Z_]/u           no-unused-vars
+  19:12  error  'loading' is assigned a value but never used. Allowed unused vars must match /^[A-Z_]/u  no-unused-vars
+  79:19  error  'newMsg' is assigned a value but never used. Allowed unused vars must match /^[A-Z_]/u   no-unused-vars
+  83:18  error  'err' is defined but never used                                                          no-unused-vars
+
+/Users/mac/Downloads/gaugyan_macos_final/src/pages/KnowledgebaseSingle.jsx
+  72:11  error  'handleLike' is assigned a value but never used. Allowed unused vars must match /^[A-Z_]/u  no-unused-vars
+
+/Users/mac/Downloads/gaugyan_macos_final/src/pages/Login.jsx
+   94:8   warning  React Hook useEffect has a missing dependency: 'searchParams'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+  102:26  error    'e' is defined but never used                                                                                    no-unused-vars
+
+/Users/mac/Downloads/gaugyan_macos_final/src/pages/MeditationSingle.jsx
+  18:12  error    'isLiked' is assigned a value but never used. Allowed unused vars must match /^[A-Z_]/u                             no-unused-vars
+  18:21  error    'setIsLiked' is assigned a value but never used. Allowed unused vars must match /^[A-Z_]/u                          no-unused-vars
+  49:8   warning  React Hook useEffect has a missing dependency: 'trackEngagement'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+/Users/mac/Downloads/gaugyan_macos_final/src/pages/MusicSingle.jsx
+  13:12  error    'isLiked' is assigned a value but never used. Allowed unused vars must match /^[A-Z_]/u                             no-unused-vars
+  13:21  error    'setIsLiked' is assigned a value but never used. Allowed unused vars must match /^[A-Z_]/u                          no-unused-vars
+  45:8   warning  React Hook useEffect has a missing dependency: 'trackEngagement'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+/Users/mac/Downloads/gaugyan_macos_final/src/pages/MyCourses.jsx
+  2:10  error  'useData' is defined but never used. Allowed unused vars must match /^[A-Z_]/u  no-unused-vars
+
+/Users/mac/Downloads/gaugyan_macos_final/src/pages/News.jsx
+   6:10  error    'useData' is defined but never used. Allowed unused vars must match /^[A-Z_]/u                                                     no-unused-vars
+  85:8   warning  React Hook React.useEffect has a missing dependency: 'fetchInternalPredictions'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+/Users/mac/Downloads/gaugyan_macos_final/src/pages/Panchang.jsx
+   13:8   warning  React Hook useEffect has a missing dependency: 'fetchPanchang'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+  153:31  error    'Icon' is defined but never used                                                                                  no-unused-vars
+
+/Users/mac/Downloads/gaugyan_macos_final/src/pages/PodcastDetail.jsx
+  48:8  warning  React Hook useEffect has a missing dependency: 'trackEngagement'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+/Users/mac/Downloads/gaugyan_macos_final/src/pages/PodcastSearch.jsx
+  43:46  error  'podcast' is defined but never used  no-unused-vars
+
+/Users/mac/Downloads/gaugyan_macos_final/src/pages/ProductDetail.jsx
+  85:8  warning  React Hook useEffect has a missing dependency: 'trackEngagement'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+/Users/mac/Downloads/gaugyan_macos_final/src/pages/QuizRunner.jsx
+  24:17  error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+  22 |             const foundQuiz = quizzes.find(q => q.id === parseInt(id) || q.id === id);
+  23 |             if (foundQuiz) {
+> 24 |                 setQuiz(foundQuiz);
+     |                 ^^^^^^^ Avoid calling setState() directly within an effect
+  25 |             }
+  26 |         }
+  27 |     }, [id, quizzes]);  react-hooks/set-state-in-effect
+
+/Users/mac/Downloads/gaugyan_macos_final/src/pages/QuizSingle.jsx
+   34:38  error  'e' is defined but never used                                                              no-unused-vars
+  110:11  error  'startDate' is assigned a value but never used. Allowed unused vars must match /^[A-Z_]/u  no-unused-vars
+  111:11  error  'endDate' is assigned a value but never used. Allowed unused vars must match /^[A-Z_]/u    no-unused-vars
+
+/Users/mac/Downloads/gaugyan_macos_final/src/pages/UserDashboard.jsx
+  13:27  error  'IconComp' is defined but never used                                                       no-unused-vars
+  51:12  error  'isLoading' is assigned a value but never used. Allowed unused vars must match /^[A-Z_]/u  no-unused-vars
+
+/Users/mac/Downloads/gaugyan_macos_final/src/pages/VendorDashboard.jsx
+   15:10  error  'useData' is defined but never used. Allowed unused vars must match /^[A-Z_]/u                                                                                                               no-unused-vars
+   44:57  error  React Hook "useState" is called conditionally. React Hooks must be called in the exact same order in every component render. Did you accidentally call a React Hook after an early return?   react-hooks/rules-of-hooks
+   45:53  error  React Hook "useState" is called conditionally. React Hooks must be called in the exact same order in every component render. Did you accidentally call a React Hook after an early return?   react-hooks/rules-of-hooks
+   51:5   error  React Hook "useEffect" is called conditionally. React Hooks must be called in the exact same order in every component render. Did you accidentally call a React Hook after an early return?  react-hooks/rules-of-hooks
+   63:18  error  'error' is defined but never used                                                                                                                                                            no-unused-vars
+  104:35  error  React Hook "useState" is called conditionally. React Hooks must be called in the exact same order in every component render. Did you accidentally call a React Hook after an early return?   react-hooks/rules-of-hooks
+  105:12  error  'showAiModal' is assigned a value but never used. Allowed unused vars must match /^[A-Z_]/u                                                                                                  no-unused-vars
+  105:43  error  React Hook "useState" is called conditionally. React Hooks must be called in the exact same order in every component render. Did you accidentally call a React Hook after an early return?   react-hooks/rules-of-hooks
+  106:24  error  'setAiFormData' is assigned a value but never used. Allowed unused vars must match /^[A-Z_]/u                                                                                                no-unused-vars
+  106:41  error  React Hook "useState" is called conditionally. React Hooks must be called in the exact same order in every component render. Did you accidentally call a React Hook after an early return?   react-hooks/rules-of-hooks
+  107:12  error  'aiResult' is assigned a value but never used. Allowed unused vars must match /^[A-Z_]/u                                                                                                     no-unused-vars
+  107:37  error  React Hook "useState" is called conditionally. React Hooks must be called in the exact same order in every component render. Did you accidentally call a React Hook after an early return?   react-hooks/rules-of-hooks
+  108:12  error  'aiLoading' is assigned a value but never used. Allowed unused vars must match /^[A-Z_]/u                                                                                                    no-unused-vars
+  108:39  error  React Hook "useState" is called conditionally. React Hooks must be called in the exact same order in every component render. Did you accidentally call a React Hook after an early return?   react-hooks/rules-of-hooks
+  110:5   error  React Hook "useEffect" is called conditionally. React Hooks must be called in the exact same order in every component render. Did you accidentally call a React Hook after an early return?  react-hooks/rules-of-hooks
+  125:11  error  'handleAiGenerate' is assigned a value but never used. Allowed unused vars must match /^[A-Z_]/u                                                                                             no-unused-vars
+  138:39  error  'newCoupon' is defined but never used                                                                                                                                                        no-unused-vars
+  154:18  error  'e' is defined but never used                                                                                                                                                                no-unused-vars
+  173:41  error  React Hook "useState" is called conditionally. React Hooks must be called in the exact same order in every component render. Did you accidentally call a React Hook after an early return?   react-hooks/rules-of-hooks
+  174:12  error  'loadingProducts' is assigned a value but never used. Allowed unused vars must match /^[A-Z_]/u                                                                                              no-unused-vars
+  174:51  error  React Hook "useState" is called conditionally. React Hooks must be called in the exact same order in every component render. Did you accidentally call a React Hook after an early return?   react-hooks/rules-of-hooks
+  175:45  error  React Hook "useState" is called conditionally. React Hooks must be called in the exact same order in every component render. Did you accidentally call a React Hook after an early return?   react-hooks/rules-of-hooks
+  176:47  error  React Hook "useState" is called conditionally. React Hooks must be called in the exact same order in every component render. Did you accidentally call a React Hook after an early return?   react-hooks/rules-of-hooks
+  179:41  error  React Hook "useState" is called conditionally. React Hooks must be called in the exact same order in every component render. Did you accidentally call a React Hook after an early return?   react-hooks/rules-of-hooks
+  250:5   error  React Hook "useEffect" is called conditionally. React Hooks must be called in the exact same order in every component render. Did you accidentally call a React Hook after an early return?  react-hooks/rules-of-hooks
+  273:5   error  React Hook "useEffect" is called conditionally. React Hooks must be called in the exact same order in every component render. Did you accidentally call a React Hook after an early return?  react-hooks/rules-of-hooks
+  297:23  error  React Hook "useMemo" is called conditionally. React Hooks must be called in the exact same order in every component render. Did you accidentally call a React Hook after an early return?    react-hooks/rules-of-hooks
+  314:47  error  React Hook "useState" is called conditionally. React Hooks must be called in the exact same order in every component render. Did you accidentally call a React Hook after an early return?   react-hooks/rules-of-hooks
+  325:47  error  React Hook "useState" is called conditionally. React Hooks must be called in the exact same order in every component render. Did you accidentally call a React Hook after an early return?   react-hooks/rules-of-hooks
+  335:5   error  React Hook "useEffect" is called conditionally. React Hooks must be called in the exact same order in every component render. Did you accidentally call a React Hook after an early return?  react-hooks/rules-of-hooks
+  425:41  error  React Hook "useState" is called conditionally. React Hooks must be called in the exact same order in every component render. Did you accidentally call a React Hook after an early return?   react-hooks/rules-of-hooks
+  426:45  error  React Hook "useState" is called conditionally. React Hooks must be called in the exact same order in every component render. Did you accidentally call a React Hook after an early return?   react-hooks/rules-of-hooks
+  427:39  error  React Hook "useState" is called conditionally. React Hooks must be called in the exact same order in every component render. Did you accidentally call a React Hook after an early return?   react-hooks/rules-of-hooks
+  430:5   error  React Hook "useEffect" is called conditionally. React Hooks must be called in the exact same order in every component render. Did you accidentally call a React Hook after an early return?  react-hooks/rules-of-hooks
+  467:19  error  'res' is assigned a value but never used. Allowed unused vars must match /^[A-Z_]/u                                                                                                          no-unused-vars
+
+/Users/mac/Downloads/gaugyan_macos_final/src/pages/admin-new/ECommerce/Categories.jsx
+   12:5   error  Error: Cannot access variable before it is declared
+
+`fetchCategories` is accessed before it is declared, which prevents the earlier access from updating when this value changes over time.
+
+  10 |
+  11 |   useEffect(() => {
+> 12 |     fetchCategories();
+     |     ^^^^^^^^^^^^^^^ `fetchCategories` accessed before it is declared
+  13 |   }, []);
+  14 |
+  15 |   const fetchCategories = async () => {
+
+  13 |   }, []);
+  14 |
+> 15 |   const fetchCategories = async () => {
+     |   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 16 |     try {
+     | ^^^^^^^^^
+> 17 |       const response = await contentService.getProductCategories();
+     …
+     | ^^^^^^^^^
+> 30 |     }
+     | ^^^^^^^^^
+> 31 |   };
+     | ^^^^^ `fetchCategories` is declared here
+  32 |
+  33 |   // Add/Edit
+  34 |   const [modalOpen, setModalOpen] = useState(false);  react-hooks/immutability
+  195:28  error  'error' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               no-unused-vars
+
+/Users/mac/Downloads/gaugyan_macos_final/src/pages/admin-new/ECommerce/Orders.jsx
+  74:9  error  'handlePrint' is assigned a value but never used. Allowed unused vars must match /^[A-Z_]/u  no-unused-vars
+
+/Users/mac/Downloads/gaugyan_macos_final/src/pages/admin-new/ECommerce/Payouts.jsx
+   2:38  error  'useRef' is defined but never used. Allowed unused vars must match /^[A-Z_]/u            no-unused-vars
+  16:12  error  'loading' is assigned a value but never used. Allowed unused vars must match /^[A-Z_]/u  no-unused-vars
+  77:22  error  'error' is defined but never used                                                        no-unused-vars
+  89:22  error  'error' is defined but never used                                                        no-unused-vars
+
+/Users/mac/Downloads/gaugyan_macos_final/src/pages/admin-new/ECommerce/Refunds.jsx
+  14:9   error  Error: Cannot access variable before it is declared
+
+`fetchRefunds` is accessed before it is declared, which prevents the earlier access from updating when this value changes over time.
+
+  12 |
+  13 |     useEffect(() => {
+> 14 |         fetchRefunds();
+     |         ^^^^^^^^^^^^ `fetchRefunds` accessed before it is declared
+  15 |     }, []);
+  16 |
+  17 |     const fetchRefunds = async () => {
+
+  15 |     }, []);
+  16 |
+> 17 |     const fetchRefunds = async () => {
+     |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 18 |         try {
+     | ^^^^^^^^^^^^^
+> 19 |             const response = await contentService.getRefunds();
+     …
+     | ^^^^^^^^^^^^^
+> 29 |         }
+     | ^^^^^^^^^^^^^
+> 30 |     };
+     | ^^^^^^^ `fetchRefunds` is declared here
+  31 |
+  32 |     // Refund Reasons Management
+  33 |     const [refundReasons, setRefundReasons] = useState([  react-hooks/immutability
+  79:18  error  'error' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      no-unused-vars
+
+/Users/mac/Downloads/gaugyan_macos_final/src/pages/admin-new/ECommerce/Vendors.jsx
+  11:12  error  'loading' is assigned a value but never used. Allowed unused vars must match /^[A-Z_]/u  no-unused-vars
+  53:18  error  'error' is defined but never used                                                        no-unused-vars
+
+/Users/mac/Downloads/gaugyan_macos_final/src/pages/admin-new/Education/AllCourses.jsx
+  857:51  error  'mediaService' is not defined  no-undef
+
+/Users/mac/Downloads/gaugyan_macos_final/src/pages/admin-new/Education/CourseCategories.jsx
+  23:10  error  'loading' is assigned a value but never used. Allowed unused vars must match /^[A-Z_]/u  no-unused-vars
+  77:16  error  'error' is defined but never used                                                        no-unused-vars
+
+/Users/mac/Downloads/gaugyan_macos_final/src/pages/admin-new/Education/Exams.jsx
+   17:154  error  'refreshExams' is assigned a value but never used. Allowed unused vars must match /^[A-Z_]/u      no-unused-vars
+   84:54   error  Unexpected constant binary expression. Compares constantly with the right-hand side of the `===`  no-constant-binary-expression
+  120:22   error  'e' is defined but never used                                                                     no-unused-vars
+
+/Users/mac/Downloads/gaugyan_macos_final/src/pages/admin-new/Education/Meetings.jsx
+   17:9   error  'setMeetings' is not defined       no-undef
+   73:16  error  'error' is defined but never used  no-unused-vars
+  130:14  error  'meetings' is not defined          no-undef
+  199:25  error  'meetings' is not defined          no-undef
+  199:46  error  'meetings' is not defined          no-undef
+
+/Users/mac/Downloads/gaugyan_macos_final/src/pages/admin-new/Education/Quizzes.jsx
+  114:22  error  'e' is defined but never used  no-unused-vars
+
+/Users/mac/Downloads/gaugyan_macos_final/src/pages/admin-new/Management/Coupons.jsx
+    9:12  error  'loading' is assigned a value but never used. Allowed unused vars must match /^[A-Z_]/u  no-unused-vars
+   98:22  error  'error' is defined but never used                                                        no-unused-vars
+  110:18  error  'error' is defined but never used                                                        no-unused-vars
+
+/Users/mac/Downloads/gaugyan_macos_final/src/pages/admin-new/Moderation/Approvals.jsx
+  143:52  error  Error: Cannot call impure function during render
+
+`Math.random` is an impure function. Calling an impure function can produce unstable results that update unpredictably when the component happens to re-render. (https://react.dev/reference/rules/components-and-hooks-must-be-pure#components-and-hooks-must-be-idempotent).
+
+  141 |                     {filteredItems.map((item) => {
+  142 |                         // Mock AI Scoring Logic
+> 143 |                         const aiScore = Math.floor(Math.random() * (99 - 80) + 80);
+      |                                                    ^^^^^^^^^^^^^ Cannot call impure function
+  144 |                         const isHighConfidence = aiScore > 90;
+  145 |
+  146 |                         return (  react-hooks/purity
+
+/Users/mac/Downloads/gaugyan_macos_final/src/pages/admin-new/Moderation/Reviews.jsx
+   9:12  error  'loading' is assigned a value but never used. Allowed unused vars must match /^[A-Z_]/u  no-unused-vars
+  37:18  error  'e' is defined but never used                                                            no-unused-vars
+  64:22  error  'e' is defined but never used                                                            no-unused-vars
+
+/Users/mac/Downloads/gaugyan_macos_final/src/pages/admin-new/Musics/Meditations.jsx
+  80:11  error  'stats' is assigned a value but never used. Allowed unused vars must match /^[A-Z_]/u  no-unused-vars
+
+/Users/mac/Downloads/gaugyan_macos_final/src/pages/admin-new/Musics/MusicMoods.jsx
+  8:31  error  Parsing error: Unexpected token "
+icon = { Music }
+apiEndpoint = "
+
+/Users/mac/Downloads/gaugyan_macos_final/src/pages/admin-new/News/NewsPage.jsx
+  31:6  warning  React Hook useEffect has missing dependencies: 'getModuleAnalytics' and 'getTrendingContent'. Either include them or remove the dependency array  react-hooks/exhaustive-deps
+
+/Users/mac/Downloads/gaugyan_macos_final/src/pages/admin-new/Settings/SettingsAds.jsx
+  248:1  error  Parsing error: Unexpected token }
+
+/Users/mac/Downloads/gaugyan_macos_final/src/pages/admin-new/Settings/SettingsRoles.jsx
+  60:8  warning  React Hook useEffect has a missing dependency: 'fetchRoles'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+/Users/mac/Downloads/gaugyan_macos_final/src/pages/admin/AdminCertificateSettings.jsx
+  49:25  error  'setPreviewData' is assigned a value but never used. Allowed unused vars must match /^[A-Z_]/u  no-unused-vars
+
+/Users/mac/Downloads/gaugyan_macos_final/src/pages/admin/AdminContactMessages.jsx
+  7:11  error  'navigate' is assigned a value but never used. Allowed unused vars must match /^[A-Z_]/u  no-unused-vars
+
+/Users/mac/Downloads/gaugyan_macos_final/src/pages/admin/AdminCouponManagement.jsx
+  74:56  error  Error: Cannot call impure function during render
+
+`Date.now` is an impure function. Calling an impure function can produce unstable results that update unpredictably when the component happens to re-render. (https://react.dev/reference/rules/components-and-hooks-must-be-pure#components-and-hooks-must-be-idempotent).
+
+  72 |             setCoupons(coupons.map(c => c.id === editingCoupon.id ? { ...formData, id: c.id, usedCount: c.usedCount, status: c.status } : c));
+  73 |         } else {
+> 74 |             setCoupons([...coupons, { ...formData, id: Date.now(), usedCount: 0, status: 'active' }]);
+     |                                                        ^^^^^^^^^^ Cannot call impure function
+  75 |         }
+  76 |         resetForm();
+  77 |     };  react-hooks/purity
+
+/Users/mac/Downloads/gaugyan_macos_final/src/pages/admin/AdminOrderManagement.jsx
+   6:12  error  'orders' is assigned a value but never used. Allowed unused vars must match /^[A-Z_]/u      no-unused-vars
+  11:12  error  'totalPages' is assigned a value but never used. Allowed unused vars must match /^[A-Z_]/u  no-unused-vars
+
+/Users/mac/Downloads/gaugyan_macos_final/src/pages/admin/AdminPayoutManagement.jsx
+  6:13  error  'users' is assigned a value but never used. Allowed unused vars must match /^[A-Z_]/u  no-unused-vars
+
+/Users/mac/Downloads/gaugyan_macos_final/src/pages/admin/AdminSettings.jsx
+    1:27  error  'useEffect' is defined but never used. Allowed unused vars must match /^[A-Z_]/u                        no-unused-vars
+    8:12  error  'activeTab' is assigned a value but never used. Allowed unused vars must match /^[A-Z_]/u               no-unused-vars
+    8:23  error  'setActiveTab' is assigned a value but never used. Allowed unused vars must match /^[A-Z_]/u            no-unused-vars
+    9:12  error  'saving' is assigned a value but never used. Allowed unused vars must match /^[A-Z_]/u                  no-unused-vars
+    9:20  error  'setSaving' is assigned a value but never used. Allowed unused vars must match /^[A-Z_]/u               no-unused-vars
+   10:12  error  'hasChanges' is assigned a value but never used. Allowed unused vars must match /^[A-Z_]/u              no-unused-vars
+   10:24  error  'setHasChanges' is assigned a value but never used. Allowed unused vars must match /^[A-Z_]/u           no-unused-vars
+   12:12  error  'settings' is assigned a value but never used. Allowed unused vars must match /^[A-Z_]/u                no-unused-vars
+   12:22  error  'setSettings' is assigned a value but never used. Allowed unused vars must match /^[A-Z_]/u             no-unused-vars
+   58:12  error  'showPermissionModal' is assigned a value but never used. Allowed unused vars must match /^[A-Z_]/u     no-unused-vars
+   58:33  error  'setShowPermissionModal' is assigned a value but never used. Allowed unused vars must match /^[A-Z_]/u  no-unused-vars
+   59:12  error  'editingRole' is assigned a value but never used. Allowed unused vars must match /^[A-Z_]/u             no-unused-vars
+   59:25  error  'setEditingRole' is assigned a value but never used. Allowed unused vars must match /^[A-Z_]/u          no-unused-vars
+   60:12  error  'rolePermissions' is assigned a value but never used. Allowed unused vars must match /^[A-Z_]/u         no-unused-vars
+   60:29  error  'setRolePermissions' is assigned a value but never used. Allowed unused vars must match /^[A-Z_]/u      no-unused-vars
+  126:22  error  'e' is defined but never used                                                                           no-unused-vars
+  138:22  error  'e' is defined but never used                                                                           no-unused-vars
+
+/Users/mac/Downloads/gaugyan_macos_final/src/pages/admin/ecommerce/OrderManagement.jsx
+  11:18  error  'setPage' is assigned a value but never used. Allowed unused vars must match /^[A-Z_]/u     no-unused-vars
+  12:12  error  'totalPages' is assigned a value but never used. Allowed unused vars must match /^[A-Z_]/u  no-unused-vars
+  50:18  error  'error' is defined but never used                                                           no-unused-vars
+
+/Users/mac/Downloads/gaugyan_macos_final/src/services/api.js
+  101:5  error  Duplicate key 'createVendor'        no-dupe-keys
+  102:5  error  Duplicate key 'updateVendorStatus'  no-dupe-keys
+  130:5  error  Duplicate key 'getVendors'          no-dupe-keys
+  131:5  error  Duplicate key 'updateVendorStatus'  no-dupe-keys
+
+/Users/mac/Downloads/gaugyan_macos_final/src/utils/imageHelper.js
+  13:18  error  'e' is defined but never used  no-unused-vars
+
+/Users/mac/Downloads/gaugyan_macos_final/src/utils/sanitization.js
+  92:20  error  Unnecessary escape character: \/  no-useless-escape
+
+✖ 285 problems (269 errors, 16 warnings)
+

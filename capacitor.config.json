@@ -1,0 +1,9 @@
+{
+  "appId": "com.gaugyan.app",
+  "appName": "Gaugyan",
+  "webDir": "dist",
+  "server": {
+    "url": "https://gaugyanworld.org",
+    "cleartext": false
+  }
+}
