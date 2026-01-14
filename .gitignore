@@ -23,3 +23,29 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Build artifacts and deployment files
+build/
+*.zip
+cpanel_*.zip
+gaugyan_cpanel_*.zip
+
+# Debug and test scripts
+debug_*.js
+test_*.js
+audit_*.js
+verify_*.js
+check_*.js
+seed_*.js
+import_*.js
+
+# Screenshots and reports
+ai_diagnosis_screenshots/
+ai_report.json
+
+# Deployment documentation (keep in repo but could be excluded if needed)
+# *.md
+
+# Environment files (keep .env.example)
+.env.local
+.env.*.local
