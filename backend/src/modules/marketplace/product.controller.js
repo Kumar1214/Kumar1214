@@ -6,82 +6,83 @@ const { notifyAdmins } = require('../../shared/utils/notificationService');
 // @desc    Get all products
 // @route   GET /api/products
 // @access  Public
+// Helper: Build Search Filter
+const buildSearchQuery = (search) => {
+    if (!search) return {};
+    return {
+        [Op.or]: [
+            { name: { [Op.like]: `%${search}%` } },
+            { description: { [Op.like]: `%${search}%` } }
+        ]
+    };
+};
+
+// Helper: Build Price Filter
+const buildPriceQuery = (minPrice, maxPrice) => {
+    if (!minPrice && !maxPrice) return {};
+    const priceQuery = {};
+    if (minPrice) priceQuery[Op.gte] = Number(minPrice);
+    if (maxPrice) priceQuery[Op.lte] = Number(maxPrice);
+    return { price: priceQuery };
+};
+
+// Helper: Determine Status Filter
+const buildStatusQuery = (status, user, vendor, role) => {
+    if (status) return { status };
+
+    // Default visibility rules
+    const requestingOwnProducts = user && vendor && String(vendor) === String(user.id);
+    const isAdmin = role === 'admin';
+
+    if (isAdmin || requestingOwnProducts) {
+        return {}; // Show all
+    }
+    return { status: 'active' }; // Public/Active only
+};
+
+// Helper: Build Sort Order
+const buildSortOrder = (sort) => {
+    switch (sort) {
+        case 'price_asc': return [['price', 'ASC']];
+        case 'price_desc': return [['price', 'DESC']];
+        case 'rating': return [['rating', 'DESC']];
+        case 'popular': return [['soldCount', 'DESC']];
+        default: return [['createdAt', 'DESC']];
+    }
+};
+
 exports.getProducts = async (req, res) => {
     try {
         const { search, category, minPrice, maxPrice, vendor, status, sort, page = 1, limit = 10, userRole } = req.query;
 
-        // Build where clause
-        let where = {};
+        const effectiveRole = (req.user?.accountType || req.user?.role || userRole || '').toLowerCase();
 
-        // Search functionality (Using simple LIKE on name/description/tags)
-        // Note: JSON search (tags) in MySQL/SQLite varies. simple LIKE '%term%' works for stringified JSON often.
-        if (search) {
-            where[Op.or] = [
-                { name: { [Op.like]: `%${search}%` } },
-                { description: { [Op.like]: `%${search}%` } }
-                // { tags: { [Op.like]: `%${search}%` } } // Optional: might need JSON_EXTRACT in real MySQL
-            ];
-        }
+        // Compose Where Clause
+        const where = {
+            ...buildSearchQuery(search),
+            ...buildPriceQuery(minPrice, maxPrice),
+            ...(category && { category }),
+            ...(vendor && { vendorId: vendor }),
+            ...buildStatusQuery(status, req.user, vendor, effectiveRole)
+        };
 
-        // Filters
-        if (category) where.category = category;
-
-        if (minPrice || maxPrice) {
-            where.price = {};
-            if (minPrice) where.price[Op.gte] = Number(minPrice);
-            if (maxPrice) where.price[Op.lte] = Number(maxPrice);
-        }
-
-        if (vendor) where.vendorId = vendor;
-
-        // Determine user role from authenticated user (preferred) or query param
-        const authenticatedRole = req.user?.accountType || req.user?.role;
-        const effectiveRole = (authenticatedRole || userRole || '').toLowerCase();
-
-        // Status filter logic
-        if (status) {
-            where.status = status;
-        } else {
-            // Default visibility rules
-
-            // If requesting specific vendor's products
-            const requestingOwnProducts = req.user && vendor && String(vendor) === String(req.user.id);
-            const isAdmin = effectiveRole === 'admin';
-
-            if (isAdmin || requestingOwnProducts) {
-                // Admins or vendors viewing their own store can see all statuses (unless filtered above)
-                // No default status constraint added, effectively showing all
-            } else {
-                // Everyone else (public, customers, other vendors) sees ONLY active
-                where.status = 'active';
-            }
-        }
-
-        // Variable Sorting
-        let order = [['createdAt', 'DESC']];
-        if (sort) {
-            if (sort === 'price_asc') order = [['price', 'ASC']];
-            if (sort === 'price_desc') order = [['price', 'DESC']];
-            if (sort === 'rating') order = [['rating', 'DESC']];
-            if (sort === 'popular') order = [['soldCount', 'DESC']];
-        }
-
-        // Pagination
-        const pageNum = parseInt(page);
-        const limitNum = parseInt(limit);
+        // Pagination & Sort
+        const pageNum = Number.parseInt(page);
+        const limitNum = Number.parseInt(limit);
         const offset = (pageNum - 1) * limitNum;
+        const order = buildSortOrder(sort);
 
         const { count, rows } = await Product.findAndCountAll({
             where,
             include: [{
                 model: User,
                 as: 'vendor',
-                attributes: ['name', 'email'] // 'displayName' not in User model, checking User.js... it has 'name'.
+                attributes: ['name', 'email']
             }],
             order,
             offset,
             limit: limitNum,
-            distinct: true // Important for count when including
+            distinct: true
         });
 
         res.status(200).json({
@@ -227,7 +228,7 @@ exports.deleteProduct = async (req, res) => {
 
         res.status(200).json({ success: true, message: 'Product deleted successfully' });
 
-        res.status(200).json({ success: true, message: 'Product deleted successfully' });
+
     } catch (error) {
         console.error("Error deleting product:", error);
         res.status(500).json({ success: false, message: 'Server Error', error: error.message });

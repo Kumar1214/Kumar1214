@@ -88,7 +88,7 @@ const extractTableData = (tableName, columns) => {
             // For this specific task, let's try to be robust enough.
 
             // Regex to match values: 'string' or number or NULL
-            const valRegex = /'([^']*(?:\\.[^']*)*)'|NULL|(\d+(\.\d+)?)/g;
+            const valRegex = /'([^'\\]*(?:\\.[^'\\]*)*)'|NULL|(\d+(\.\d+)?)/g;
             let valMatch;
             const rowValues = [];
 

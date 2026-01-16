@@ -49,3 +49,8 @@ ai_report.json
 # Environment files (keep .env.example)
 .env.local
 .env.*.local
+_archive_legacy/
+
+# SonarQube Local
+sonarqube_server/
+.scannerwork/

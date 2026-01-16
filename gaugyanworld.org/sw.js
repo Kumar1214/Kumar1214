@@ -1,13 +1,13 @@
 // Minimal Service Worker to satisfy PWA requirements
-self.addEventListener('install', () => {
-    self.skipWaiting();
+globalThis.addEventListener('install', () => {
+    globalThis.skipWaiting();
 });
 
-self.addEventListener('activate', (event) => {
-    event.waitUntil(self.clients.claim());
+globalThis.addEventListener('activate', (event) => {
+    event.waitUntil(globalThis.clients.claim());
 });
 
-self.addEventListener('fetch', (event) => {
+globalThis.addEventListener('fetch', (event) => {
     // Basic pass-through fetch
     event.respondWith(fetch(event.request));
 });

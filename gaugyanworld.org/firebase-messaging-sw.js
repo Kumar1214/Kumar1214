@@ -1,6 +1,9 @@
 /* eslint-disable no-undef */
-importScripts('https://www.gstatic.com/firebasejs/9.x.x/firebase-app-compat.js');
-importScripts('https://www.gstatic.com/firebasejs/9.x.x/firebase-messaging-compat.js');
+try {
+    importScripts('https://www.gstatic.com/firebasejs/9.x.x/firebase-app-compat.js', 'https://www.gstatic.com/firebasejs/9.x.x/firebase-messaging-compat.js');
+} catch (e) {
+    console.error('Failed to import Firebase scripts', e);
+}
 
 const firebaseConfig = {
     apiKey: "AIzaSyDJDiERqq6bzMT2TFJjq6gHarNDQr391Dk",
@@ -25,5 +28,5 @@ messaging.onBackgroundMessage((payload) => {
         icon: '/gaugyan-logo.png' // Ensure this exists in public folder
     };
 
-    self.registration.showNotification(notificationTitle, notificationOptions);
+    globalThis.registration.showNotification(notificationTitle, notificationOptions);
 });

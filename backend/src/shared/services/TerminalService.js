@@ -1,5 +1,5 @@
-const { exec } = require('child_process');
-const path = require('path');
+const { exec } = require('node:child_process');
+const path = require('node:path');
 
 /**
  * TerminalService
@@ -7,10 +7,8 @@ const path = require('path');
  * CRITICAL: This grants partial shell access.
  */
 class TerminalService {
-    constructor() {
-        // Base command to ensure we are in the correct environment
-        this.baseEnv = 'source /home/gaugyanc/nodevenv/gaugyan-api/20/bin/activate && cd /home/gaugyanc/gaugyan-api';
-    }
+    // Base command to ensure we are in the correct environment
+    baseEnv = 'source /home/gaugyanc/nodevenv/gaugyan-api/20/bin/activate && cd /home/gaugyanc/gaugyan-api';
 
     /**
      * Execute a shell command within the application environment
@@ -19,10 +17,23 @@ class TerminalService {
      */
     async execute(command) {
         return new Promise((resolve, reject) => {
-            // Sanitize common dangerous characters to prevent trivial injection if exposed
-            // (Note: This is an internal admin tool, but basic safety is good)
-            if (command.includes('rm -rf /') || command.includes(':(){:|:&};:')) {
-                return reject(new Error('Command blocked by safety protocol.'));
+            // STRICT SECURITY PROTOCOL: White-list only specific maintenance commands
+            // Arbitrary execution is blocked.
+            const ALLOWED_COMMANDS = [
+                /^node -v$/,
+                /^npm list$/,
+                /^git status$/,
+                /^git log -n \d+$/,
+                /^df -h \.$/,
+                /^whoami$/,
+                /^npm run build$/
+            ];
+
+            const isAllowed = ALLOWED_COMMANDS.some(pattern => pattern.test(command.trim()));
+
+            if (!isAllowed) {
+                console.warn(`[Terminal] SECURITY ALERT: Blocked unauthorized command execution: "${command}"`);
+                return reject(new Error('Security Block: Command not authorized for execution.'));
             }
 
             const fullCommand = `${this.baseEnv} && ${command}`;
