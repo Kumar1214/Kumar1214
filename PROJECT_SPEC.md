@@ -10,10 +10,10 @@
 
 **Authentication (API Tokens):**
 - cPanel UAPI Token: 7NJOXAN8GHFTBWL4NBT7E91D06H6NO3Q
-- Sonar Token: sqp_efc5a763755b85ba892c78a34d5496e207dd2a5e
+- Sonar Token: YOUR_SONAR_TOKEN
 
 **Firebase:**
-- apiKey: "AIzaSyDJDiERqq6bzMT2TFJjq6gHarNDQr391Dk"
+- apiKey: "YOUR_FIREBASE_API_KEY"
 - authDomain: "gaugyan-2f059.firebaseapp.com"
 - projectId: "gaugyan-2f059"
 - storageBucket: "gaugyan-2f059.firebasestorage.app"
@@ -23,10 +23,10 @@
 
 **Facebook:**
 - Appid: 1014311170752989
-- App secret: 57171f54e04d20c1744ec332b585d56f
+- App secret: YOUR_APP_SECRET
 
 **Google Map API Key:**
-- AIzaSyBfdb4fxvQPnkAbr_qEnOE2TgGKEjYHTI4
+- YOUR_GOOGLE_MAPS_API_KEY
 
 ## 2. Production Paths (cPanel)
 - Backend Root: /home/gaugyanc/gaugyan-api

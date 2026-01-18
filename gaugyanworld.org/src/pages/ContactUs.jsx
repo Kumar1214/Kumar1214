@@ -254,7 +254,7 @@ const ContactUs = () => {
                             height="100%"
                             frameBorder="0"
                             style={{ border: 0, borderRadius: 'var(--radius-lg)' }}
-                            src={`https://www.google.com/maps/embed/v1/place?key=AIzaSyBfdb4fxvQPnkAbr_qEnOE2TgGKEjYHTI4&q=Gaugyan+Productions+LLP,Jaipur,India`}
+                            src={`https://www.google.com/maps/embed/v1/place?key=${import.meta.env.VITE_GOOGLE_MAPS_API_KEY}&q=Gaugyan+Productions+LLP,Jaipur,India`}
                             allowFullScreen
                         ></iframe>
                     </div>

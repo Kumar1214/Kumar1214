@@ -47,8 +47,10 @@ ai_report.json
 # *.md
 
 # Environment files (keep .env.example)
+.env
 .env.local
 .env.*.local
+
 
 # Mobile app folders (removed - will rebuild after web audit)
 mobile-v2/

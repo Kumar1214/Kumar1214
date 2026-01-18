@@ -49,7 +49,8 @@ rsync -av --progress backend/ staging_backend/gaugyan-api/ \
     --exclude "*.sqlite" \
     --exclude "*.zip" \
     --exclude "coverage" \
-    --exclude "tests"
+    --exclude "tests" \
+    --exclude "node_modules"
 
 # Handle .env - Prefer root .env.production if backend one missing
 echo "Configuring backend .env..."

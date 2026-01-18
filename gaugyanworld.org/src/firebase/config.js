@@ -1,12 +1,12 @@
 // Import the functions you need from the SDKs you need
-import { initializeApp, getApps, getApp } from "firebase/app";
+import { initializeApp, getApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyDJDiERqq6bzMT2TFJjq6gHarNDQr391Dk",
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
   authDomain: "gaugyan-2f059.firebaseapp.com",
   projectId: "gaugyan-2f059",
   storageBucket: "gaugyan-2f059.firebasestorage.app",
@@ -20,7 +20,7 @@ const firebaseConfig = {
 let app;
 try {
   app = getApp();
-} catch (e) {
+} catch {
   app = initializeApp(firebaseConfig);
 }
 export const auth = getAuth(app);

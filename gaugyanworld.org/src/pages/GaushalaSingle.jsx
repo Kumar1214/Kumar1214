@@ -341,7 +341,7 @@ const GaushalaSingle = () => {
                                     height="100%"
                                     frameBorder="0"
                                     style={{ border: 0 }}
-                                    src={`https://www.google.com/maps/embed/v1/place?key=AIzaSyBfdb4fxvQPnkAbr_qEnOE2TgGKEjYHTI4&q=${encodeURIComponent(locationString)}`}
+                                    src={`https://www.google.com/maps/embed/v1/place?key=${import.meta.env.VITE_GOOGLE_MAPS_API_KEY}&q=${encodeURIComponent(locationString)}`}
                                     allowFullScreen
                                 ></iframe>
                             </div>

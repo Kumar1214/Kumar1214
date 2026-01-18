@@ -6,7 +6,7 @@ try {
 }
 
 const firebaseConfig = {
-    apiKey: "AIzaSyDJDiERqq6bzMT2TFJjq6gHarNDQr391Dk",
+    apiKey: "YOUR_FIREBASE_API_KEY_HERE",
     authDomain: "gaugyan-2f059.firebaseapp.com",
     projectId: "gaugyan-2f059",
     storageBucket: "gaugyan-2f059.firebasestorage.app",
