@@ -1,0 +1,17 @@
+{
+    "compilerOptions": {
+        "module": "commonjs",
+        "target": "es2020",
+        "lib": [
+            "es2020"
+        ],
+        "allowJs": true,
+        "moduleResolution": "node",
+        "esModuleInterop": true,
+        "skipLibCheck": true,
+        "outDir": "./dist"
+    },
+    "ts-node": {
+        "esm": true
+    }
+}

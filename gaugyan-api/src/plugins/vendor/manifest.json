@@ -1,9 +1,0 @@
-{
-    "name": "Gaugyan Vendor Marketplace",
-    "slug": "vendor",
-    "version": "1.0.0",
-    "author": "Shunya Systems",
-    "description": "Multi-vendor marketplace functionality, including vendor profiles and dashboards.",
-    "active": true,
-    "mountPath": "/vendor"
-}

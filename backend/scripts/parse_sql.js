@@ -11,53 +11,21 @@ if (!fs.existsSync(outputDir)) {
 const sqlContent = fs.readFileSync(sqlFilePath, 'utf8');
 
 // Helper to parse values from SQL INSERT statement
+// Helper to parse values from SQL INSERT statement
 const parseValues = (valuesStr) => {
+    // This is a simplified parser for specific SQL dump format.
+    // It assumes values are comma-separated and strings are single-quoted.
+    // Complex nested quotes might need a full SQL parser library.
     const rows = [];
-    let currentRow = [];
-    let currentVal = '';
-    let inQuote = false;
-    let escape = false;
+    if (!valuesStr) return rows;
 
-    for (let i = 0; i < valuesStr.length; i++) {
-        const char = valuesStr[i];
+    // Split by tuple separator "), ("
+    const rawRows = valuesStr.split(/\),\s*\(/);
 
-        if (escape) {
-            currentVal += char;
-            escape = false;
-            continue;
-        }
-
-        if (char === '\\') {
-            escape = true;
-            continue;
-        }
-
-        if (char === "'" && !escape) {
-            inQuote = !inQuote;
-            continue;
-        }
-
-        if (char === ',' && !inQuote) {
-            currentRow.push(currentVal.trim());
-            currentVal = '';
-            continue;
-        }
-
-        if (char === '(' && !inQuote) {
-            currentRow = [];
-            currentVal = '';
-            continue;
-        }
-
-        if (char === ')' && !inQuote) {
-            currentRow.push(currentVal.trim());
-            rows.push(currentRow);
-            currentRow = [];
-            currentVal = '';
-            continue;
-        }
-
-        currentVal += char;
+    for (const row of rawRows) {
+        // Clean start/end and split
+        const cleanRow = row.replace(/^\(/, '').replace(/\)$/, '');
+        rows.push(cleanRow);
     }
     return rows;
 };

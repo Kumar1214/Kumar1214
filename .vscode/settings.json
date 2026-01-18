@@ -1,3 +1,16 @@
 {
-    "css.lint.unknownAtRules": "ignore"
+    "css.lint.unknownAtRules": "ignore",
+    "java.compile.nullAnalysis.mode": "automatic",
+    "java.configuration.updateBuildConfiguration": "automatic",
+    "git.ignoreLimitWarning": true,
+    "files.exclude": {
+        "**/_archive_legacy": true
+    },
+    "search.exclude": {
+        "**/_archive_legacy": true
+    },
+    "sonarlint.connectedMode.project": {
+        "connectionId": "http://localhost:9000/sessions/new?return_to=%2Fsonarlint%2Fauth%3FideName%3DVisual%2BStudio%2BCode%26port%3D64120",
+        "projectKey": "gaugyan_ecosystem"
+    }
 }

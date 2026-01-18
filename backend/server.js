@@ -1,43 +1,28 @@
 const fs = require('fs');
 const path = require('path');
-
-// DEBUG LOGGING SETUP
-const logFile = path.join(__dirname, 'server_debug.log');
-const log = (message) => {
-    const timestamp = new Date().toISOString();
-    const msg = `[${timestamp}] ${message}\n`;
-    try {
-        console.log(message);
-    } catch (e) {
-        // EPIPE or other console errors should not crash the app
-    }
-    try {
-        fs.appendFileSync(logFile, msg);
-    } catch {
-        // failed to write log
-    }
-};
+const logger = require('./src/shared/config/logger');
 
 // Initialize app variable for export
 let app;
 
 // Catch init errors
 try {
-    log('--- Server Startup Initiated [FORCE RESTART CHECK - V2.1 FIXED] ---');
-    log(`Node Version: ${process.version}`);
-    log(`Environment: ${process.env.NODE_ENV}`);
+    logger.info('--- Server Startup Initiated [FORCE RESTART CHECK - V2.2 FIXED] ---');
+    logger.info(`Node Version: ${process.version}`);
+    logger.info(`Environment: ${process.env.NODE_ENV}`);
+
     const express = require('express');
     const dotenv = require('dotenv');
     const cors = require('cors');
     const helmet = require('helmet');
     const { connectDB } = require('./src/shared/config/database');
     const { sanitizeData } = require('./src/shared/middleware/security');
-    const logger = require('./src/shared/middleware/logger');
+    const requestLogger = require('./src/shared/middleware/logger'); // Renamed to avoid conflict
     const errorHandler = require('./src/shared/middleware/errorHandler');
 
     // Load env vars
     dotenv.config();
-    log('Environment variables loaded');
+    logger.info('Environment variables loaded');
 
     // Initialize Express App
     app = express();
@@ -45,17 +30,19 @@ try {
     // Connect to database
     const startServer = async () => {
         try {
-            log('Initializing DB Connection...');
+            logger.info('Initializing DB Connection...');
             connectDB();
-            log('Database connection initiated');
+            logger.info('Database connection initiated');
         } catch (err) {
-            log(`CRITICAL: Database connection failed: ${err.message}`);
-            log(err.stack);
+            logger.error(`CRITICAL: Database connection failed: ${err.message}`);
+            logger.error(err.stack);
         }
     };
 
-    // Logger Middleware
-    app.use(logger);
+    // Logger Middleware (Morgan/Request Logger)
+    if (requestLogger) {
+        app.use(requestLogger);
+    }
 
     // Security Middleware
     app.set('trust proxy', true); // Trust all proxies (needed for cPanel/Passenger)
@@ -64,8 +51,12 @@ try {
     app.use(...sanitizeData());
 
     // Initialize Cron Jobs
-    const startNewsCron = require('./src/shared/services/cron');
-    startNewsCron();
+    try {
+        const startNewsCron = require('./src/shared/services/cron');
+        startNewsCron();
+    } catch (cronErr) {
+        logger.error(`Cron Job Init Warning: ${cronErr.message}`);
+    }
 
     // CORS setup
     const clientUrl = process.env.CLIENT_URL || '*';
@@ -83,7 +74,7 @@ try {
     // Remove duplicates
     const uniqueOrigins = [...new Set(validOrigins)];
 
-    console.log('Allowed Origins (Fixed):', uniqueOrigins);
+    logger.info(`Allowed Origins (Fixed): ${JSON.stringify(uniqueOrigins)}`);
 
     app.use(cors({
         origin: uniqueOrigins,
@@ -117,12 +108,16 @@ try {
 
     // Serve static files
     const uploadPath = process.env.FILE_UPLOAD_PATH || './uploads';
-    app.use('/uploads', express.static(uploadPath));
-    if (uploadPath !== './public/uploads') {
-        app.use('/uploads', express.static('./public/uploads'));
-    }
-    if (uploadPath !== './uploads') {
-        app.use('/uploads', express.static('./uploads'));
+    try {
+        app.use('/uploads', express.static(uploadPath));
+        if (uploadPath !== './public/uploads') {
+            app.use('/uploads', express.static('./public/uploads'));
+        }
+        if (uploadPath !== './uploads') {
+            app.use('/uploads', express.static('./uploads'));
+        }
+    } catch (staticErr) {
+        logger.warn(`Static file serving warning: ${staticErr.message}`);
     }
 
     // Serve public directory
@@ -130,8 +125,7 @@ try {
 
     // Load Routes
     try {
-        const PluginManager = require('./src/shared/services/PluginManager');
-        const { sequelize } = require('./src/shared/config/database');
+        // Plugin Manager init kept in initApp for proper loading sequence
 
         // ... Plugin Manager init wrapped in initApp ...
 
@@ -196,10 +190,10 @@ try {
         app.use('/api/settings', require('./src/modules/core/settings.routes'));
         app.use('/api/health', require('./src/modules/core/health.routes'));
 
-        log('Routes loaded successfully');
+        logger.info('Routes loaded successfully');
     } catch (err) {
-        log(`CRITICAL: Error loading routes: ${err.message}`);
-        log(err.stack);
+        logger.error(`CRITICAL: Error loading routes: ${err.message}`);
+        logger.error(err.stack);
     }
 
     // Plugin Placeholder Router
@@ -215,22 +209,22 @@ try {
 
         // Initialize Plugins (Async)
         try {
-            log('Starting Plugin Manager Initialization...');
+            logger.info('Starting Plugin Manager Initialization...');
             const PluginManager = require('./src/shared/services/PluginManager');
             const { sequelize } = require('./src/shared/config/database');
             const pluginManager = new PluginManager(app, sequelize);
-            log('PluginManager instance created.');
+            logger.info('PluginManager instance created.');
 
             // System endpoint: List all plugins
             pluginRouter.get('/system/plugins', (req, res) => {
-                log('GET /system/plugins called');
+                logger.info('GET /system/plugins called');
                 try {
                     res.json({ success: true, data: pluginManager.getAllPlugins() });
                 } catch (e) {
                     res.status(500).json({ success: false, message: e.message });
                 }
             });
-            log('Registered GET /system/plugins');
+            logger.info('Registered GET /system/plugins');
 
             // System endpoint: Toggle plugin
             pluginRouter.put('/system/plugins/:slug/toggle', async (req, res) => {
@@ -242,17 +236,17 @@ try {
                     res.status(500).json({ success: false, message: err.message });
                 }
             });
-            log('Registered PUT /system/plugins/:slug/toggle');
+            logger.info('Registered PUT /system/plugins/:slug/toggle');
 
             const pluginRoutes = await pluginManager.initialize();
 
             // Mount routes dynamically
             pluginRouter.use(pluginRoutes);
-            log('Plugin Routes Mounted Successfully to Placeholder.');
+            logger.info('Plugin Routes Mounted Successfully to Placeholder.');
 
         } catch (err) {
-            log(`Plugin System Error: ${err.message}`);
-            log(err.stack);
+            logger.error(`Plugin System Error: ${err.message}`);
+            logger.error(err.stack);
         }
 
         // Initialize Notification Service on Startup
@@ -264,37 +258,39 @@ try {
                 'GauGyan AI Backend (Autonomous v1) has started successfully.',
                 'success'
             );
-            log('Startup notification sent to admins.');
+            logger.info('Startup notification sent to admins.');
         } catch (noteErr) {
-            log(`Notification Init Error: ${noteErr.message}`);
+            logger.error(`Notification Init Error: ${noteErr.message}`);
         }
 
         const PORT = process.env.PORT || 5001;
-        log(`Attempting to listen on port ${PORT}...`);
+        logger.info(`Attempting to listen on port ${PORT}...`);
 
-        const _server = app.listen(PORT, () => {
-            log(`Server listening on port ${PORT}. Ready to accept connections.`);
+        app.listen(PORT, '0.0.0.0', () => {
+            logger.info(`Server listening on port ${PORT}. Ready to accept connections.`);
         });
     };
 
     initApp();
 
     process.on('unhandledRejection', (err) => {
-        log(`Unhandled Rejection: ${err.message}`);
-        log(err.stack);
+        logger.error(`Unhandled Rejection: ${err.message}`);
+        logger.error(err.stack);
+        // Do not crash, but log
     });
 
     process.on('uncaughtException', (err) => {
-        log(`Uncaught Exception: ${err.message}`);
-        log(err.stack);
+        logger.error(`Uncaught Exception: ${err.message}`);
+        logger.error(err.stack);
+        // Optional: process.exit(1) if necessary, but request was to keep it alive if possible or self-heal
     });
 
 } catch (e) {
-    if (log) {
-        log(`Startup Crash: ${e.message}`);
-        log(e.stack);
+    if (logger) {
+        logger.error(`Startup Crash: ${e.message}`);
+        logger.error(e.stack);
     } else {
-        console.error(e);
+        console.error('Fatal startup error before logger init:', e);
     }
 }
 

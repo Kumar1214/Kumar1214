@@ -9,7 +9,7 @@ export class FinanceController {
 
             // Create Payout Record in DB
             const payout = await Payout.create({
-                id: `PAY-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
+                id: `PAY-${Date.now()}-${Math.random().toString(36).substring(2, 11)}`,
                 vendorId,
                 amount,
                 status: 'PENDING_APPROVAL',

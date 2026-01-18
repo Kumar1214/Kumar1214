@@ -42,7 +42,7 @@ class TerminalService {
             exec(fullCommand, { shell: '/bin/bash' }, (error, stdout, stderr) => {
                 if (error) {
                     console.error(`[Terminal] Error: ${error.message}`);
-                    return reject({ message: error.message, stderr: stderr || error.message });
+                    return reject(new Error(`${error.message}: ${stderr || error.message}`));
                 }
                 if (stderr) {
                     console.warn(`[Terminal] Stderr: ${stderr}`);

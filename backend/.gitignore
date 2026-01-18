@@ -1,0 +1,45 @@
+# Dependencies
+node_modules/
+package-lock.json
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+
+# Database
+*.sqlite
+*.db
+database.sqlite
+
+# Uploads
+uploads/temp/*
+!uploads/temp/.gitkeep
+
+# Build artifacts
+dist/
+build/
+
+# Deployment files
+*.zip
+cpanel_*.zip
+
+# Test files
+test_*.js
+debug_*.js
+audit_*.js
+verify_*.js
+check_*.js

@@ -3,7 +3,7 @@ import fs from 'fs';
 import path from 'path';
 
 const CONFIG = {
-    baseUrl: 'http://localhost:5173',
+    baseUrl: process.env.VITE_API_URL || 'http://localhost:5173',
     adminEmail: 'admin@gaugyan.com',
     adminPassword: 'admin123',
     headless: true, // Set to false to see it running
@@ -96,7 +96,7 @@ async function main() {
             // Using a simple text check on the body
             const bodyText = await page.evaluate(() => document.body.innerText);
             if (!bodyText.includes('Dashboard') && !bodyText.includes('Overview')) {
-                // throw new Error('Dashboard text not found');
+                // Dashboard text not found check removed
                 console.warn('Dashboard text lookup weak, verify screenshot.');
             }
             await page.screenshot({ path: path.join(CONFIG.screenshotDir, '3_dashboard.png') });
@@ -109,7 +109,7 @@ async function main() {
             // Wait for content (plugin cards)
             try {
                 await page.waitForSelector('h3', { timeout: 5000 }); // Assuming plugin names are in h3
-            } catch (e) {
+            } catch {
                 // Check if empty state
             }
 

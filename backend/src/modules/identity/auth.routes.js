@@ -97,7 +97,8 @@ router.post('/register', [
         else if (accountType === 'Vendor') role = 'vendor';
         else if (accountType === 'GaushalaOwner') role = 'gaushala_owner';
         else if (accountType === 'Artist') role = 'artist';
-        else if (accountType === 'Admin') role = 'admin';
+        // SECURITY FIX: Prevent public registration as Admin
+        // else if (accountType === 'Admin') role = 'admin';
 
         user = await User.create({
             name: `${firstName} ${lastName}`.trim(),
@@ -134,20 +135,30 @@ router.post('/register', [
 // @desc    Login with Firebase (Google/Facebook)
 // @access  Public
 router.post('/firebase-login', async (req, res) => {
-    const { idToken } = req.body;
+    const { idToken, provider } = req.body;
 
     try {
-        // Decode without verification (same as before logic)
-        const jwtDecode = require('jsonwebtoken').decode;
-        const decoded = jwtDecode(idToken);
+        // SECURE VERIFICATION
+        const admin = require('../../shared/config/firebaseAdmin');
+        let decodedToken;
 
-        if (!decoded || !decoded.email) {
-            return res.status(400).json({ message: 'Invalid token' });
+        try {
+            decodedToken = await admin.auth().verifyIdToken(idToken);
+            console.log('[Auth] Firebase Token Verified for:', decodedToken.email);
+        } catch (verifyErr) {
+            console.error('[Auth] Token Verification Failed:', verifyErr.message);
+            // CRITICAL: Fail if verification fails
+            return res.status(401).json({ message: 'Invalid or expired token', error: verifyErr.message });
         }
 
-        const email = decoded.email;
-        const name = decoded.name || email.split('@')[0];
-        const picture = decoded.picture;
+        const email = decodedToken.email;
+        const name = decodedToken.name || email.split('@')[0];
+        const picture = decodedToken.picture;
+        const uid = decodedToken.uid;
+
+        if (!email) {
+            return res.status(400).json({ message: 'Token missing email claim' });
+        }
 
         let user = await User.findOne({ where: { email } });
 
@@ -156,10 +167,25 @@ router.post('/firebase-login', async (req, res) => {
             user = await User.create({
                 name,
                 email,
-                password: Math.random().toString(36).slice(-8) + 'Aa1!', // Random secure-ish password
+                password: Math.random().toString(36).slice(-16) + 'Aa1!', // Longer random password
                 profilePicture: picture,
                 role: 'user',
+                isVerified: decodedToken.email_verified || false,
+                googleId: provider === 'google' ? uid : null,
+                facebookId: provider === 'facebook' ? uid : null
             });
+
+            // Notify Admins of new user via social
+            await notifyAdmins(
+                `New Social User: ${user.name}`,
+                'info',
+                { userId: user.id, email: user.email, provider }
+            );
+        } else if (picture && user.profilePicture !== picture) {
+            // Update existing user with latest info if needed
+            // e.g., if profile pic changed
+            user.profilePicture = picture;
+            await user.save();
         }
 
         const token = generateToken(user.id);
@@ -188,21 +214,28 @@ router.post('/mobile-login', async (req, res) => {
     const { idToken, phoneNumber } = req.body;
 
     try {
-        // Decode firebase token
-        const jwtDecode = require('jsonwebtoken').decode;
-        const decoded = jwtDecode(idToken);
+        // SECURE VERIFICATION
+        const admin = require('../../shared/config/firebaseAdmin');
+        let decodedToken;
 
-        if (!decoded || !decoded.phone_number) {
-            console.log('[Mobile Auth] Invalid token or missing phone number');
-            // For testing/dev without strict firebase verification, we might fallback to trusting the phone sent
-            // But securely, we should rely on decoded token.
-            // If local emulator or test, allow.
+        try {
+            decodedToken = await admin.auth().verifyIdToken(idToken);
+        } catch (verifyErr) {
+            console.error('[Auth] Mobile Token Verification Failed:', verifyErr.message);
+            return res.status(401).json({ message: 'Invalid token' });
         }
 
-        const phone = decoded?.phone_number || phoneNumber;
+        const phone = decodedToken.phone_number || phoneNumber;
 
         if (!phone) {
+            console.log('[Mobile Auth] Token missing phone_number claim');
             return res.status(400).json({ message: 'Phone number required' });
+        }
+
+        // Ensure the token actually belongs to the phone number claimed (if passed in body)
+        if (phoneNumber && decodedToken.phone_number && phoneNumber !== decodedToken.phone_number) {
+            console.warn('[Security] Phone mismatch:', phoneNumber, 'vs', decodedToken.phone_number);
+            return res.status(403).json({ message: 'Phone number verification mismatch' });
         }
 
         // Check user by mobile field logic
@@ -221,7 +254,7 @@ router.post('/mobile-login', async (req, res) => {
                 name: 'Mobile User',
                 email: emailPlaceholder,
                 mobile: phone,
-                password: Math.random().toString(36).slice(-8) + 'Aa1!',
+                password: Math.random().toString(36).slice(-16) + 'Aa1!',
                 role: 'user',
                 isVerified: true // Phone verified by Firebase
             });

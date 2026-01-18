@@ -1,9 +1,0 @@
-{
-    "name": "Gaugyan Sample Plugin",
-    "slug": "sample-plugin",
-    "version": "1.0.0",
-    "author": "Shunya Systems",
-    "description": "A test plugin to verify the architecture.",
-    "active": true,
-    "mountPath": "/sample"
-}

@@ -49,7 +49,15 @@ ai_report.json
 # Environment files (keep .env.example)
 .env.local
 .env.*.local
+
+# Mobile app folders (removed - will rebuild after web audit)
+mobile-v2/
 _archive_legacy/
+android/
+ios/
+*.apk
+*.aab
+*.ipa
 
 # SonarQube Local
 sonarqube_server/

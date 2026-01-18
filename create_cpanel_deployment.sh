@@ -6,8 +6,8 @@ echo "Starting cPanel Deployment Build..."
 
 # 1. Frontend Build
 echo "Building Frontend..."
+cd gaugyanworld.org
 rm -rf dist
-rm -rf staging_frontend
 # Ensure deps are installed (fast if already present)
 npm install --legacy-peer-deps
 
@@ -22,8 +22,10 @@ fi
 
 # Staging Frontend
 echo "Staging Frontend..."
+cd ..
+rm -rf staging_frontend
 mkdir -p staging_frontend/gaugyanworld.org
-cp -a dist/. staging_frontend/gaugyanworld.org/
+cp -a gaugyanworld.org/dist/. staging_frontend/gaugyanworld.org/
 
 # Zip Frontend
 echo "Zipping Frontend..."

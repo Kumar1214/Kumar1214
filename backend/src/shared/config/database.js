@@ -1,48 +1,47 @@
 const { Sequelize } = require('sequelize');
 require('dotenv').config();
 
-// Determine dialect and storage
-const isSqlite = process.env.DB_DIALECT === 'sqlite';
+console.log(`[DB] Using Dialect: PostgreSQL`);
 
-console.log(`[DB] Using Dialect: ${isSqlite ? 'sqlite' : 'mysql'}`);
-
-const sequelize = isSqlite
-    ? new Sequelize({
-        dialect: 'sqlite',
-        storage: './database.sqlite',
-        logging: console.log
-    })
-    : new Sequelize(
-        process.env.DB_NAME || 'gaugyanc_gaugyanworld',
-        process.env.DB_USER || 'gaugyanc_gaugyanworld',
-        process.env.DB_PASS || 'Password@2025_GG_SK',
-        {
-            host: process.env.DB_HOST || 'localhost',
-            dialect: 'mysql',
-            logging: false,
-            pool: {
-                max: 5,
-                min: 0,
-                acquire: 30000,
-                idle: 10000
-            },
-            define: {
-                timestamps: true,
-                paranoid: false
+const sequelize = new Sequelize(
+    process.env.DB_NAME || 'gaugyanc_gaugyanworld',
+    process.env.DB_USER || 'gaugyanc_gaugyanw',
+    process.env.DB_PASS || 'Password@2026_GG_',
+    {
+        host: process.env.DB_HOST || 'localhost',
+        port: 5432,
+        dialect: 'postgres',
+        logging: false,
+        pool: {
+            max: 10,
+            min: 0,
+            acquire: 30000,
+            idle: 10000
+        },
+        dialectOptions: process.env.NODE_ENV === 'production' ? {
+            ssl: {
+                require: true,
+                rejectUnauthorized: false
             }
+        } : {},
+        define: {
+            timestamps: true,
+            paranoid: false
         }
-    );
+    }
+);
 
 const connectDB = async () => {
     try {
         await sequelize.authenticate();
-        console.log(`[DB] ✅ ${isSqlite ? 'SQLite' : 'MySQL'} Connected Successfully`);
+        console.log(`[DB] ✅ PostgreSQL Connected Successfully`);
 
         // Load all models before syncing
-        require('./models')();
+        require('../models')();
 
         // Sync models with database
-        // WARNING: alter:true caused crash on live DB due to "Too many keys specified"
+        // WARNING: alter:true caused crash on live DB due to "Too many keys specified", but needed for local dev
+        // WARNING: alter:true caused crash on live DB. Disabled to prevent "UNIQUE" syntax error.
         await sequelize.sync({ alter: false });
         console.log('[DB] ✅ Models Synced');
     } catch (error) {
