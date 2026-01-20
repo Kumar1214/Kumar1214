@@ -1,4 +1,4 @@
-const AWS = require('aws-sdk');
+const AWS = require('aws-sdk'); // NOTE: Plan migration to AWS SDK v3 in future
 const { Storage } = require('@google-cloud/storage');
 const fs = require('fs').promises;
 const path = require('path');

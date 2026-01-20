@@ -25,7 +25,11 @@ const MusicSingle = () => {
 
                 // Track view
                 if (trackData) {
-                    trackEngagement('music', id, 'view');
+                    if (trackEngagement) {
+                        trackEngagement('music', id, 'view').catch(err =>
+                            console.warn('Failed to track music view:', err)
+                        );
+                    }
                 }
 
                 // Fetch related tracks (e.g. same genre)
@@ -51,19 +55,31 @@ const MusicSingle = () => {
                 text: track.description,
                 url: window.location.href,
             }).then(() => {
-                trackEngagement('music', id, 'share', 'web-native');
+                if (trackEngagement) {
+                    trackEngagement('music', id, 'share', 'web-native').catch(err =>
+                        console.warn('Failed to track share:', err)
+                    );
+                }
             }).catch(console.error);
         } else {
             // Fallback
             const url = window.location.href;
             navigator.clipboard.writeText(url);
             alert('Link copied to clipboard!');
-            trackEngagement('music', id, 'share', 'copy-link');
+            if (trackEngagement) {
+                trackEngagement('music', id, 'share', 'copy-link').catch(err =>
+                    console.warn('Failed to track share:', err)
+                );
+            }
         }
     };
 
     const handleBookmark = () => {
-        trackEngagement('music', id, 'bookmark');
+        if (trackEngagement) {
+            trackEngagement('music', id, 'bookmark').catch(err =>
+                console.warn('Failed to track bookmark:', err)
+            );
+        }
     };
 
     if (loading) {

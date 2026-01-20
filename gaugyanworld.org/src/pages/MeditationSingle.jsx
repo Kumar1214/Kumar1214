@@ -29,7 +29,11 @@ const MeditationSingle = () => {
 
                 // Track view
                 if (data) {
-                    trackEngagement('meditations', id, 'view');
+                    if (trackEngagement) {
+                        trackEngagement('meditations', id, 'view').catch(err =>
+                            console.warn('Failed to track meditation view:', err)
+                        );
+                    }
                 }
 
                 // Fetch random/related sessions (e.g. same type)
@@ -55,18 +59,30 @@ const MeditationSingle = () => {
                 text: meditation.description,
                 url: window.location.href,
             }).then(() => {
-                trackEngagement('meditations', id, 'share', 'web-native');
+                if (trackEngagement) {
+                    trackEngagement('meditations', id, 'share', 'web-native').catch(err =>
+                        console.warn('Failed to track share:', err)
+                    );
+                }
             }).catch(console.error);
         } else {
             const url = window.location.href;
             navigator.clipboard.writeText(url);
             alert('Link copied to clipboard!');
-            trackEngagement('meditations', id, 'share', 'copy-link');
+            if (trackEngagement) {
+                trackEngagement('meditations', id, 'share', 'copy-link').catch(err =>
+                    console.warn('Failed to track share:', err)
+                );
+            }
         }
     };
 
     const handleBookmark = () => {
-        trackEngagement('meditations', id, 'bookmark');
+        if (trackEngagement) {
+            trackEngagement('meditations', id, 'bookmark').catch(err =>
+                console.warn('Failed to track bookmark:', err)
+            );
+        }
     };
 
     // Helper function to convert YouTube URL to embed URL

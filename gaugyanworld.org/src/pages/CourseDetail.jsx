@@ -43,6 +43,11 @@ const CourseDetail = () => {
     const [hasTrackedView, setHasTrackedView] = useState(false);
 
     useEffect(() => {
+        if (!id || id === 'undefined' || id === 'null') {
+            navigate('/404');
+            return;
+        }
+
         const fetchCourse = async () => {
             setLoading(true);
             try {
@@ -85,8 +90,12 @@ const CourseDetail = () => {
                     setCourse(data);
 
                     // Track view once course is loaded
-                    if (!hasTrackedView && data) {
-                        trackEngagement('course', id, 'view');
+                    if (!hasTrackedView && data && trackEngagement) {
+                        try {
+                            await trackEngagement('course', id, 'view');
+                        } catch (err) {
+                            console.warn('Failed to track view:', err);
+                        }
                         setHasTrackedView(true);
                     }
                 } else {
@@ -106,7 +115,9 @@ const CourseDetail = () => {
 
     const handleShare = async () => {
         try {
-            await trackEngagement('course', id, 'share');
+            if (trackEngagement) {
+                await trackEngagement('course', id, 'share').catch(err => console.warn('Failed to track share:', err));
+            }
             if (navigator.share) {
                 await navigator.share({
                     title: course.title,
@@ -124,7 +135,9 @@ const CourseDetail = () => {
 
     const handleBookmark = async () => {
         try {
-            await trackEngagement('course', id, 'bookmark');
+            if (trackEngagement) {
+                await trackEngagement('course', id, 'bookmark').catch(err => console.warn('Failed to track bookmark:', err));
+            }
             // Additional bookmark logic can be added here
         } catch (err) {
             console.error("Failed to bookmark course:", err);
@@ -156,6 +169,13 @@ const CourseDetail = () => {
 
     return (
         <div className="container mt-lg">
+            {/*             <SEO
+                title={course.title}
+                description={course.description}
+                image={course.image}
+                url={`/courses/${course.id}`}
+                type="article"
+            /> */}
             <SEO
                 title={course.title}
                 description={course.description}
@@ -163,8 +183,8 @@ const CourseDetail = () => {
                 url={`/courses/${course.id}`}
                 type="article"
             />
-            <div className="single-listing-grid-right">
 
+            <div className="single-listing-grid-right">
                 {/* Main Content */}
                 <div>
                     <h1 style={{ fontSize: '2.5rem', marginBottom: 'var(--spacing-md)', color: 'var(--color-text-main)' }}>{course.title}</h1>
@@ -278,11 +298,11 @@ const CourseDetail = () => {
                         </div>
 
                         {userIsEnrolled ? (
-                            <Button fullWidth style={{ marginBottom: 'var(--spacing-2xl)', backgroundColor: '#10B981' }} onClick={handleStartLearning}>
+                            <Button fullWidth className="mb-6 lg:mb-10" style={{ backgroundColor: '#10B981' }} onClick={handleStartLearning}>
                                 Start Learning
                             </Button>
                         ) : (
-                            <Button fullWidth style={{ marginBottom: 'var(--spacing-2xl)' }} onClick={handleEnroll}>
+                            <Button fullWidth className="mb-6 lg:mb-10" onClick={handleEnroll}>
                                 {course.price === 0 ? 'Enroll for Free' : 'Enroll Now'}
                             </Button>
                         )}
@@ -316,71 +336,71 @@ const CourseDetail = () => {
                         )}
                     </div>
                 </div>
+            </div>
 
-                {/* Video Preview Modal */}
-                {showPreview && course.previewVideo && (
+            {/* Video Preview Modal */}
+            {showPreview && course.previewVideo && (
+                <div
+                    onClick={() => setShowPreview(false)}
+                    style={{
+                        position: 'fixed',
+                        top: 0,
+                        left: 0,
+                        right: 0,
+                        bottom: 0,
+                        backgroundColor: 'rgba(0,0,0,0.9)',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        zIndex: 1000,
+                        padding: '20px'
+                    }}
+                >
                     <div
-                        onClick={() => setShowPreview(false)}
+                        onClick={(e) => e.stopPropagation()}
                         style={{
-                            position: 'fixed',
-                            top: 0,
-                            left: 0,
-                            right: 0,
-                            bottom: 0,
-                            backgroundColor: 'rgba(0,0,0,0.9)',
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            zIndex: 1000,
-                            padding: '20px'
+                            width: '100%',
+                            maxWidth: '900px',
+                            backgroundColor: '#000',
+                            borderRadius: '8px',
+                            overflow: 'hidden',
+                            position: 'relative'
                         }}
                     >
-                        <div
-                            onClick={(e) => e.stopPropagation()}
+                        <button
+                            onClick={() => setShowPreview(false)}
                             style={{
-                                width: '100%',
-                                maxWidth: '900px',
-                                backgroundColor: '#000',
-                                borderRadius: '8px',
-                                overflow: 'hidden',
-                                position: 'relative'
+                                position: 'absolute',
+                                top: '10px',
+                                right: '10px',
+                                backgroundColor: 'rgba(0,0,0,0.7)',
+                                color: 'white',
+                                border: 'none',
+                                borderRadius: '50%',
+                                width: '40px',
+                                height: '40px',
+                                fontSize: '24px',
+                                cursor: 'pointer',
+                                zIndex: 10,
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center'
                             }}
                         >
-                            <button
-                                onClick={() => setShowPreview(false)}
-                                style={{
-                                    position: 'absolute',
-                                    top: '10px',
-                                    right: '10px',
-                                    backgroundColor: 'rgba(0,0,0,0.7)',
-                                    color: 'white',
-                                    border: 'none',
-                                    borderRadius: '50%',
-                                    width: '40px',
-                                    height: '40px',
-                                    fontSize: '24px',
-                                    cursor: 'pointer',
-                                    zIndex: 10,
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                    justifyContent: 'center'
-                                }}
-                            >
-                                ×
-                            </button>
-                            <iframe
-                                width="100%"
-                                height="500px"
-                                src={course.previewVideo}
-                                title="Course Preview"
-                                frameBorder="0"
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                allowFullScreen
-                            />
-                        </div>
+                            ×
+                        </button>
+                        <iframe
+                            width="100%"
+                            height="500px"
+                            src={course.previewVideo}
+                            title="Course Preview"
+                            frameBorder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowFullScreen
+                        />
                     </div>
-                )}
-            </div>
+                </div>
+            )}
         </div>
     );
 };

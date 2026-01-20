@@ -64,3 +64,5 @@ ios/
 # SonarQube Local
 sonarqube_server/
 .scannerwork/
+
+*.tar.gz

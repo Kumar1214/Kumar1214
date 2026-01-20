@@ -12,9 +12,13 @@ export const ThemeProvider = ({ children }) => {
     useEffect(() => {
         localStorage.setItem('darkMode', darkMode);
         if (darkMode) {
-            document.documentElement.classList.add('dark');
+            if (document.documentElement && document.documentElement.classList) {
+                document.documentElement.classList.add('dark');
+            }
         } else {
-            document.documentElement.classList.remove('dark');
+            if (document.documentElement && document.documentElement.classList) {
+                document.documentElement.classList.remove('dark');
+            }
         }
     }, [darkMode]);
 

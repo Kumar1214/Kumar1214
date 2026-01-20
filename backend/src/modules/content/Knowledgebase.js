@@ -39,7 +39,7 @@ const Knowledgebase = sequelize.define('Knowledgebase', {
         }
     },
     status: {
-        type: DataTypes.ENUM('active', 'inactive', 'draft', 'pending'),
+        type: DataTypes.ENUM('active', 'inactive', 'draft', 'pending', 'published'),
         defaultValue: 'pending'
     },
     views: {

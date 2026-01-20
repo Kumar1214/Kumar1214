@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { ArrowLeft, MapPin, Heart, Users, Phone, Mail, Globe, Share2, Award } from 'lucide-react';
+import { ArrowLeft, MapPin, Heart, Users, Phone, Mail, Globe, Share2, Award, UserCheck, UserPlus } from 'lucide-react';
 import Button from '../components/Button';
 import { contentService } from '../services/api';
 import { useData } from '../context/DataContext';
@@ -27,8 +27,10 @@ const GaushalaSingle = () => {
                 }
 
                 // Track view
-                if (gaushalaData) {
-                    trackEngagement('gaushalas', id, 'view');
+                if (gaushalaData && trackEngagement) {
+                    trackEngagement('gaushalas', id, 'view').catch(err =>
+                        console.warn('Failed to track gaushala view:', err)
+                    );
                 }
 
                 // Mock data fallback or ensure structure...
@@ -80,18 +82,46 @@ const GaushalaSingle = () => {
                 text: gaushala.description,
                 url: window.location.href,
             }).then(() => {
-                trackEngagement('gaushalas', id, 'share', 'web-native');
+                if (trackEngagement) {
+                    trackEngagement('gaushalas', id, 'share', 'web-native').catch(err =>
+                        console.warn('Failed to track share:', err)
+                    );
+                }
             }).catch(console.error);
         } else {
             const url = window.location.href;
             navigator.clipboard.writeText(url);
             alert('Link copied to clipboard!');
-            trackEngagement('gaushalas', id, 'share', 'copy-link');
+            if (trackEngagement) {
+                trackEngagement('gaushalas', id, 'share', 'copy-link').catch(err =>
+                    console.warn('Failed to track share:', err)
+                );
+            }
         }
     };
 
+
+
     const handleBookmark = () => {
-        trackEngagement('gaushalas', id, 'bookmark');
+        if (trackEngagement) {
+            trackEngagement('gaushalas', id, 'bookmark').catch(err =>
+                console.warn('Failed to track bookmark:', err)
+            );
+        }
+    };
+
+    // Follow Logic
+    const [isFollowing, setIsFollowing] = useState(false);
+    useEffect(() => {
+        const stored = localStorage.getItem(`follow-gaushala-${id}`);
+        if (stored) setIsFollowing(JSON.parse(stored));
+    }, [id]);
+
+    const handleFollow = () => {
+        const newState = !isFollowing;
+        setIsFollowing(newState);
+        localStorage.setItem(`follow-gaushala-${id}`, JSON.stringify(newState));
+        if (newState && trackEngagement) trackEngagement('gaushalas', id, 'follow');
     };
 
     if (loading) return (
@@ -178,6 +208,23 @@ const GaushalaSingle = () => {
                                         Est. {gaushala.established}
                                     </span>
                                 )}
+                                <button
+                                    onClick={handleFollow}
+                                    style={{
+                                        marginLeft: 'auto',
+                                        backgroundColor: isFollowing ? 'white' : '#059669',
+                                        color: isFollowing ? '#059669' : 'white',
+                                        border: 'none',
+                                        padding: '8px 24px',
+                                        borderRadius: 'var(--radius-full)',
+                                        fontWeight: 600,
+                                        cursor: 'pointer',
+                                        display: 'flex', alignItems: 'center', gap: '8px',
+                                        transition: 'all 0.2s'
+                                    }}
+                                >
+                                    {isFollowing ? <><UserCheck size={18} /> Following</> : <><UserPlus size={18} /> Follow</>}
+                                </button>
                             </div>
                             <h1 style={{ fontSize: '3rem', fontWeight: 800, marginBottom: '16px', lineHeight: 1.1 }}>{gaushala.name}</h1>
                             <p style={{ fontSize: '1.2rem', display: 'flex', alignItems: 'center', gap: '8px', opacity: 0.9 }}>

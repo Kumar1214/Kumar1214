@@ -53,6 +53,30 @@ const MusicPlayer = () => {
         fetchTrack();
     }, [id]);
 
+    // Persistence Logic
+    useEffect(() => {
+        const savedTime = localStorage.getItem(`music-progress-${id}`);
+        if (savedTime && audioRef.current) {
+            // Small timeout to ensure metadata loaded or just set it
+            const time = parseFloat(savedTime);
+            if (!isNaN(time)) {
+                // We set it but audio might not be ready. 
+                // It's better to set it in 'loadedmetadata' event but we can try here or update state
+                setCurrentTime(time);
+                // Actual audio seek happens when metadata loads if we store it in ref or state to be used then
+                // For now, let's try direct assignment if element exists, though it might reset if src changes
+            }
+        }
+    }, [id]);
+
+    useEffect(() => {
+        return () => {
+            if (audioRef.current) {
+                localStorage.setItem(`music-progress-${id}`, audioRef.current.currentTime);
+            }
+        };
+    }, [id]);
+
     // Audio Event Listeners
     useEffect(() => {
         const audio = audioRef.current;
@@ -61,14 +85,22 @@ const MusicPlayer = () => {
         const updateTime = () => setCurrentTime(audio.currentTime);
         const updateDuration = () => setDuration(audio.duration);
         const onEnded = () => setIsPlaying(false);
+        const onMetadataLoaded = () => {
+            setDuration(audio.duration);
+            const savedTime = localStorage.getItem(`music-progress-${id}`);
+            if (savedTime) {
+                audio.currentTime = parseFloat(savedTime);
+                setCurrentTime(parseFloat(savedTime));
+            }
+        };
 
         audio.addEventListener('timeupdate', updateTime);
-        audio.addEventListener('loadedmetadata', updateDuration);
+        audio.addEventListener('loadedmetadata', onMetadataLoaded);
         audio.addEventListener('ended', onEnded);
 
         return () => {
             audio.removeEventListener('timeupdate', updateTime);
-            audio.removeEventListener('loadedmetadata', updateDuration);
+            audio.removeEventListener('loadedmetadata', onMetadataLoaded);
             audio.removeEventListener('ended', onEnded);
         };
     }, [track]); // Re-attach when track changes (and audio element re-renders)

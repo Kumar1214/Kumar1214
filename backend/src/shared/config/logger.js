@@ -8,7 +8,7 @@ const logDir = path.join(process.cwd(), 'logs');
 // Define log format
 const logFormat = winston.format.printf(({ level, message, timestamp }) => {
     const msg = typeof message === 'object' ? JSON.stringify(message) : message;
-    return `[${timestamp}] ${level.toUpperCase()}: ${msg}`;
+    return `[${String(timestamp)}] ${level.toUpperCase()}: ${msg}`;
 });
 
 // Configure Winston Logger

@@ -1,0 +1,8 @@
+{
+  "dependencies": {
+    "basic-ftp": "^5.1.0"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.46.1"
+  }
+}

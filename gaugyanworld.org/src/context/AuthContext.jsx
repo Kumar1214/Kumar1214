@@ -378,13 +378,42 @@ export const AuthProvider = ({ children }) => {
         auth
     };
 
+    // Provide a visible loading state to prevent blank screens
     if (loading) {
-        return <div className="min-h-screen flex items-center justify-center bg-gray-50 text-[#1F5B6B] font-medium">Loading Application...</div>;
+        return (
+            <div style={{
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                height: '100vh',
+                width: '100vw',
+                backgroundColor: '#fff',
+                color: '#333',
+                flexDirection: 'column',
+                gap: '20px'
+            }}>
+                <div style={{
+                    width: '50px',
+                    height: '50px',
+                    border: '5px solid #f3f3f3',
+                    borderTop: '5px solid #FFB347',
+                    borderRadius: '50%',
+                    animation: 'spin 1s linear infinite'
+                }}></div>
+                <h2>Initializing Application...</h2>
+                <style>{`
+          @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+          }
+        `}</style>
+            </div>
+        );
     }
 
     return (
         <AuthContext.Provider value={value}>
-            {children}
+            {!loading && children}
         </AuthContext.Provider>
     );
 };

@@ -1,34 +1,30 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-import { BrowserRouter } from 'react-router-dom'
-import App from './App.jsx'
-import './index.css'
-import { CurrencyProvider } from './context/CurrencyContext.jsx'
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import App from './App.jsx';
+import './index.css';
+import { AuthProvider } from './context/AuthContext';
+import { DataProvider } from './context/DataContext';
+import { PluginProvider } from './context/PluginContext';
+import { CurrencyProvider } from './context/CurrencyContext.jsx';
+import { BrowserRouter } from 'react-router-dom';
+import ErrorBoundary from './components/ErrorBoundary';
 
-import ErrorBoundary from './components/ErrorBoundary.jsx'
+console.log('Rendering App component...');
 
-import { HelmetProvider } from 'react-helmet-async';
-
-// ...
-
-console.log("main.jsx: Initializing React App...");
-console.log("DEBUG: main.jsx - Starting...");
-console.log("DEBUG: main.jsx - Root element:", document.getElementById('root'));
-
-try {
-  ReactDOM.createRoot(document.getElementById('root')).render(
-    <React.StrictMode>
-      <HelmetProvider>
-        <ErrorBoundary>
-          <BrowserRouter>
-            <CurrencyProvider>
-              <App />
-            </CurrencyProvider>
-          </BrowserRouter>
-        </ErrorBoundary>
-      </HelmetProvider>
-    </React.StrictMode>,
-  )
-} catch (error) {
-  console.error("CRITICAL: React Mount Failed", error);
-}
+ReactDOM.createRoot(document.getElementById('root')).render(
+  <React.StrictMode>
+    <ErrorBoundary>
+      <BrowserRouter basename="/">
+        <AuthProvider>
+          <DataProvider>
+            <PluginProvider>
+              <CurrencyProvider>
+                <App />
+              </CurrencyProvider>
+            </PluginProvider>
+          </DataProvider>
+        </AuthProvider>
+      </BrowserRouter>
+    </ErrorBoundary>
+  </React.StrictMode>,
+);

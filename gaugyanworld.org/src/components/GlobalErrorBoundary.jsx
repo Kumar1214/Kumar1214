@@ -15,6 +15,11 @@ class GlobalErrorBoundary extends React.Component {
         this.setState({ error, errorInfo });
         // Log error to backend service or analytics here
         console.error("Uncaught Error:", error, errorInfo);
+
+        // Shunya Sentinel Log
+        import('../services/SentinelService').then(module => {
+            module.default.logEvent('error', error.message || 'Unknown Error', errorInfo?.componentStack || 'No stack', 'ErrorBoundary');
+        }).catch(e => console.error("Failed to log to Sentinel", e));
     }
 
     handleReload = () => {
@@ -38,6 +43,10 @@ class GlobalErrorBoundary extends React.Component {
                         {this.props.showDetails && this.state.error && (
                             <div className="text-left bg-gray-900 text-red-300 p-4 rounded-lg text-xs font-mono overflow-auto max-h-48 mb-6">
                                 {this.state.error.toString()}
+                                <br />
+                                <pre className="mt-2 text-[10px] opacity-75 whitespace-pre-wrap">
+                                    {this.state.errorInfo?.componentStack || this.state.error?.stack}
+                                </pre>
                             </div>
                         )}
 

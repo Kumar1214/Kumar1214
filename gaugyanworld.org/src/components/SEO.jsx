@@ -1,5 +1,4 @@
 import React from 'react';
-import { Helmet } from 'react-helmet-async';
 
 const SEO = ({ title, description, keywords, image, url, type = 'website' }) => {
     const siteTitle = 'Gaugyan - Ancient Wisdom for Modern Living';
@@ -9,7 +8,7 @@ const SEO = ({ title, description, keywords, image, url, type = 'website' }) => 
     const finalUrl = url ? (url.startsWith('http') ? url : `https://gaugyanworld.org${url}`) : 'https://gaugyanworld.org';
 
     return (
-        <Helmet>
+        <>
             {/* Standard metadata tags */}
             <title>{finalTitle}</title>
             <meta name='description' content={finalDesc} />
@@ -27,7 +26,7 @@ const SEO = ({ title, description, keywords, image, url, type = 'website' }) => 
             <meta name="twitter:title" content={finalTitle} />
             <meta name="twitter:description" content={finalDesc} />
             <meta name="twitter:image" content={finalImage} />
-        </Helmet>
+        </>
     );
 };
 

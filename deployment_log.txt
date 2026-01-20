@@ -1,0 +1,119 @@
+🔱 GauGyan World - E2E Deployment Protocol Initiated
+==================================================
+
+📡 STEP 1: Shunya Sentinel Handshake
+-----------------------------------
+📍 Running on local development machine
+🎯 Preparing deployment package for cPanel upload
+
+🏗️  STEP 2: Building Frontend (CourseDetail Fix Included)
+--------------------------------------------------------
+✅ Vite base path correctly set to './'
+🔨 Running npm run build...
+
+> gaugyan-dev@0.0.0 build
+> vite build
+
+vite v7.3.0 building client environment for production...
+transforming...
+✓ 3031 modules transformed.
+rendering chunks...
+[plugin vite:reporter] 
+(!) /Users/mac/Downloads/gaugyan_macos_final/gaugyanworld.org/src/services/api.js is dynamically imported by /Users/mac/Downloads/gaugyan_macos_final/gaugyanworld.org/src/components/Footer.jsx, /Users/mac/Downloads/gaugyan_macos_final/gaugyanworld.org/src/components/Navbar.jsx, /Users/mac/Downloads/gaugyan_macos_final/gaugyanworld.org/src/pages/ExamListing.jsx, /Users/mac/Downloads/gaugyan_macos_final/gaugyanworld.org/src/pages/ExamSingle.jsx, /Users/mac/Downloads/gaugyan_macos_final/gaugyanworld.org/src/pages/QuizSingle.jsx, /Users/mac/Downloads/gaugyan_macos_final/gaugyanworld.org/src/pages/UserDashboard.jsx, /Users/mac/Downloads/gaugyan_macos_final/gaugyanworld.org/src/pages/admin-new/Management/Wallet.jsx but also statically imported by /Users/mac/Downloads/gaugyan_macos_final/gaugyanworld.org/src/App.jsx, /Users/mac/Downloads/gaugyan_macos_final/gaugyanworld.org/src/components/Chatbot.jsx, /Users/mac/Downloads/gaugyan_macos_final/gaugyanworld.org/src/components/FileUploader.jsx, /Users/mac/Downloads/gaugyan_macos_final/gaugyanworld.org/src/components/ImageUploader.jsx, /Users/mac/Downloads/gaugyan_macos_final/gaugyanworld.org/src/components/ModernBannerSlider.jsx, /Users/mac/Downloads/gaugyan_macos_final/gaugyanworld.org/src/components/admin-new/NotificationDropdown.jsx, /Users/mac/Downloads/gaugyan_macos_final/gaugyanworld.org/src/components/admin/CourseManagement.jsx, /Users/mac/Downloads/gaugyan_macos_final/gaugyanworld.org/src/components/admin/FooterCustomizer.jsx, /Users/mac/Downloads/gaugyan_macos_final/gaugyanworld.org/src/components/admin/HeaderCustomizer.jsx, /Users/mac/Downloads/gaugyan_macos_final/gaugyanworld.org/src/components/admin/ecommerce/ProductForm.jsx, /Users/mac/Downloads/gaugyan_macos_final/gaugyanworld.org/src/components/admin/shared/FileUploader.jsx, /Users/mac/Downloads/gaugyan_macos_final/gaugyanworld.org/src/components/dashboard/WalletSection.jsx, /Users/mac/Downloads/gaugyan_macos_final/gaugyanworld.org/src/context/AuthContext.jsx, /Users/mac/Downloads/gaugyan_macos_final/gaugyanworld.org/src/context/DataContext.jsx, /Users/mac/Downloads/gaugyan_macos_final/gaugyanworld.org/src/context/PluginContext.jsx, /Users/mac/Downloads/gaugyan_macos_final/gaugyanworld.org/src/context/WishlistContext.jsx, /Users/mac/Downloads/gaugyan_macos_final/gaugyanworld.org/src/pages/CertificateVerification.jsx, /Users/mac/Downloads/gaugyan_macos_final/gaugyanworld.org/src/pages/Checkout.jsx, /Users/mac/Downloads/gaugyan_macos_final/gaugyanworld.org/src/pages/CourseDetail.jsx, /Users/mac/Downloads/gaugyan_macos_final/gaugyanworld.org/src/pages/Courses.jsx, /Users/mac/Downloads/gaugyan_macos_final/gaugyanworld.org/src/pages/Feedback.jsx, /Users/mac/Downloads/gaugyan_macos_final/gaugyanworld.org/src/pages/GaushalaListing.jsx, /Users/mac/Downloads/gaugyan_macos_final/gaugyanworld.org/src/pages/GaushalaSingle.jsx, /Users/mac/Downloads/gaugyan_macos_final/gaugyanworld.org/src/pages/Home.jsx, /Users/mac/Downloads/gaugyan_macos_final/gaugyanworld.org/src/pages/KnowledgebaseListing.jsx, /Users/mac/Downloads/gaugyan_macos_final/gaugyanworld.org/src/pages/KnowledgebaseSearch.jsx, /Users/mac/Downloads/gaugyan_macos_final/gaugyanworld.org/src/pages/KnowledgebaseSingle.jsx, /Users/mac/Downloads/gaugyan_macos_final/gaugyanworld.org/src/pages/MeditationListing.jsx, /Users/mac/Downloads/gaugyan_macos_final/gaugyanworld.org/src/pages/MeditationSearch.jsx, /Users/mac/Downloads/gaugyan_macos_final/gaugyanworld.org/src/pages/MeditationSingle.jsx, /Users/mac/Downloads/gaugyan_macos_final/gaugyanworld.org/src/pages/MusicListing.jsx, /Users/mac/Downloads/gaugyan_macos_final/gaugyanworld.org/src/pages/MusicPlayer.jsx, /Users/mac/Downloads/gaugyan_macos_final/gaugyanworld.org/src/pages/MusicSearch.jsx, /Users/mac/Downloads/gaugyan_macos_final/gaugyanworld.org/src/pages/MusicSingle.jsx, /Users/mac/Downloads/gaugyan_macos_final/gaugyanworld.org/src/pages/NewsDetail.jsx, /Users/mac/Downloads/gaugyan_macos_final/gaugyanworld.org/src/pages/NewsListing.jsx, /Users/mac/Downloads/gaugyan_macos_final/gaugyanworld.org/src/pages/PodcastDetail.jsx, /Users/mac/Downloads/gaugyan_macos_final/gaugyanworld.org/src/pages/PodcastListing.jsx, /Users/mac/Downloads/gaugyan_macos_final/gaugyanworld.org/src/pages/PodcastSearch.jsx, /Users/mac/Downloads/gaugyan_macos_final/gaugyanworld.org/src/pages/ProductDetail.jsx, /Users/mac/Downloads/gaugyan_macos_final/gaugyanworld.org/src/pages/QuizListing.jsx, /Users/mac/Downloads/gaugyan_macos_final/gaugyanworld.org/src/pages/Shop.jsx, /Users/mac/Downloads/gaugyan_macos_final/gaugyanworld.org/src/pages/UserCertificates.jsx, /Users/mac/Downloads/gaugyan_macos_final/gaugyanworld.org/src/pages/UserDashboard.jsx, /Users/mac/Downloads/gaugyan_macos_final/gaugyanworld.org/src/pages/admin-new/AddUser.jsx, /Users/mac/Downloads/gaugyan_macos_final/gaugyanworld.org/src/pages/admin-new/AllUsers.jsx, /Users/mac/Downloads/gaugyan_macos_final/gaugyanworld.org/src/pages/admin-new/Communication/Feedback.jsx, /Users/mac/Downloads/gaugyan_macos_final/gaugyanworld.org/src/pages/admin-new/Communication/Notifications.jsx, /Users/mac/Downloads/gaugyan_macos_final/gaugyanworld.org/src/pages/admin-new/ECommerce/AllProducts.jsx, /Users/mac/Downloads/gaugyan_macos_final/gaugyanworld.org/src/pages/admin-new/ECommerce/Categories.jsx, /Users/mac/Downloads/gaugyan_macos_final/gaugyanworld.org/src/pages/admin-new/ECommerce/Commissions.jsx, /Users/mac/Downloads/gaugyan_macos_final/gaugyanworld.org/src/pages/admin-new/ECommerce/Orders.jsx, /Users/mac/Downloads/gaugyan_macos_final/gaugyanworld.org/src/pages/admin-new/ECommerce/Payouts.jsx, /Users/mac/Downloads/gaugyan_macos_final/gaugyanworld.org/src/pages/admin-new/ECommerce/Refunds.jsx, /Users/mac/Downloads/gaugyan_macos_final/gaugyanworld.org/src/pages/admin-new/ECommerce/Vendors.jsx, /Users/mac/Downloads/gaugyan_macos_final/gaugyanworld.org/src/pages/admin-new/Education/AllCourses.jsx, /Users/mac/Downloads/gaugyan_macos_final/gaugyanworld.org/src/pages/admin-new/Education/CourseCategories.jsx, /Users/mac/Downloads/gaugyan_macos_final/gaugyanworld.org/src/pages/admin-new/Education/Exams.jsx, /Users/mac/Downloads/gaugyan_macos_final/gaugyanworld.org/src/pages/admin-new/Education/Meetings.jsx, /Users/mac/Downloads/gaugyan_macos_final/gaugyanworld.org/src/pages/admin-new/Education/Quizzes.jsx, /Users/mac/Downloads/gaugyan_macos_final/gaugyanworld.org/src/pages/admin-new/Education/RolesAndPermission.jsx, /Users/mac/Downloads/gaugyan_macos_final/gaugyanworld.org/src/pages/admin-new/Education/VerifyUsers.jsx, /Users/mac/Downloads/gaugyan_macos_final/gaugyanworld.org/src/pages/admin-new/FileManager.jsx, /Users/mac/Downloads/gaugyan_macos_final/gaugyanworld.org/src/pages/admin-new/GaugyanAI/Dashboard.jsx, /Users/mac/Downloads/gaugyan_macos_final/gaugyanworld.org/src/pages/admin-new/Management/Coupons.jsx, /Users/mac/Downloads/gaugyan_macos_final/gaugyanworld.org/src/pages/admin-new/Management/Wallet.jsx, /Users/mac/Downloads/gaugyan_macos_final/gaugyanworld.org/src/pages/admin-new/Marketing/Banners.jsx, /Users/mac/Downloads/gaugyan_macos_final/gaugyanworld.org/src/pages/admin-new/Moderation/Advertisements.jsx, /Users/mac/Downloads/gaugyan_macos_final/gaugyanworld.org/src/pages/admin-new/Moderation/Reviews.jsx, /Users/mac/Downloads/gaugyan_macos_final/gaugyanworld.org/src/pages/admin-new/Musics/MusicCategories.jsx, /Users/mac/Downloads/gaugyan_macos_final/gaugyanworld.org/src/pages/admin-new/Musics/Musics.jsx, /Users/mac/Downloads/gaugyan_macos_final/gaugyanworld.org/src/pages/admin-new/Settings/SettingsApp.jsx, /Users/mac/Downloads/gaugyan_macos_final/gaugyanworld.org/src/pages/admin-new/Settings/SettingsCertificates.jsx, /Users/mac/Downloads/gaugyan_macos_final/gaugyanworld.org/src/pages/admin-new/Settings/SettingsGeneral.jsx, /Users/mac/Downloads/gaugyan_macos_final/gaugyanworld.org/src/pages/admin-new/Settings/SettingsHeaderFooter.jsx, /Users/mac/Downloads/gaugyan_macos_final/gaugyanworld.org/src/pages/admin-new/Settings/SettingsPayment.jsx, /Users/mac/Downloads/gaugyan_macos_final/gaugyanworld.org/src/pages/admin/AdminMediaLibrary.jsx, /Users/mac/Downloads/gaugyan_macos_final/gaugyanworld.org/src/pages/admin/ecommerce/OrderManagement.jsx, /Users/mac/Downloads/gaugyan_macos_final/gaugyanworld.org/src/pages/admin/ecommerce/ProductManagement.jsx, /Users/mac/Downloads/gaugyan_macos_final/gaugyanworld.org/src/pages/admin/ecommerce/VendorManagement.jsx, dynamic import will not move module into another chunk.
+
+computing gzip size...
+dist/index.html                              1.26 kB │ gzip:   0.61 kB
+dist/assets/logo-lABpv4Up.png              162.36 kB
+dist/assets/index-NI2gBFqt.css              89.53 kB │ gzip:  14.50 kB
+dist/assets/ui-vendor-t-0-LTZB.js           30.35 kB │ gzip:  10.12 kB
+dist/assets/react-vendor-CGfj4L5C.js        47.69 kB │ gzip:  16.59 kB
+dist/assets/firebase-vendor-BT2kp55R.js    115.40 kB │ gzip:  34.16 kB
+dist/assets/index-B_Zmca7_.js            3,316.87 kB │ gzip: 770.22 kB
+
+(!) Some chunks are larger than 500 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rollupOptions.output.manualChunks to improve chunking: https://rollupjs.org/configuration-options/#output-manualchunks
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+✓ built in 32.02s
+✅ Frontend build completed successfully
+📦 Build output in: dist/
+total 3368
+drwxr-xr-x@ 8 mac  staff   256B Jan 19 21:25 assets
+-rw-rw-rw-@ 1 mac  staff   831K Jan 19 21:25 favicon.png
+-rw-rw-rw-@ 1 mac  staff   1.1K Jan 19 21:25 firebase-messaging-sw.js
+-rw-rw-rw-@ 1 mac  staff   831K Jan 19 21:25 gaugyan-logo.png
+-rw-r--r--@ 1 mac  staff   1.2K Jan 19 21:25 index.html
+-rw-rw-rw-@ 1 mac  staff   555B Jan 19 21:25 manifest.webmanifest
+-rw-rw-rw-@ 1 mac  staff   357B Jan 19 21:25 sw.js
+-rw-rw-rw-@ 1 mac  staff   1.5K Jan 19 21:25 vite.svg
+
+📝 STEP 3: Generating Optimized .htaccess
+----------------------------------------
+✅ Optimized .htaccess created in dist/
+
+📦 STEP 4: Creating Deployment Package
+-------------------------------------
+✅ Deployment package created: frontend-deploy-20260119_212547.tar.gz
+📊 Package size: 2.6M
+
+🚀 STEP 5: cPanel Deployment Commands
+------------------------------------
+✅ cPanel deployment script created: deploy_to_cpanel.sh
+
+✅ STEP 6: Deployment Verification Checklist
+-------------------------------------------
+
+📋 Post-Deployment Verification:
+
+1. Frontend Accessibility:
+   ✓ https://gaugyanworld.org (Landing page)
+   ✓ https://gaugyanworld.org/courses (Course listing)
+   ✓ https://gaugyanworld.org/courses/2 (Course detail - FIXED)
+   ✓ https://gaugyanworld.org/products (Product listing)
+   ✓ https://gaugyanworld.org/login (Login page)
+
+2. API Endpoints:
+   ✓ https://api.gaugyanworld.org/health
+   ✓ https://api.gaugyanworld.org/api/courses
+   ✓ https://api.gaugyanworld.org/api/products
+
+3. User Dashboard Tests (Password: Password@123):
+   ✓ admin@gaugyan.com → /admin
+   ✓ instructor@gaugyan.com → /instructor
+   ✓ vendor@gaugyan.com → /vendor
+   ✓ artist@gaugyan.com → /artist
+   ✓ astrologer@gaugyan.com → /astrologer
+   ✓ owner@gaugyan.com → /gaushala
+   ✓ author@gaugyan.com → /author
+   ✓ user@gaugyan.com → /dashboard
+
+4. Astrology Module:
+   ✓ Login as astrologer@gaugyan.com
+   ✓ Verify chat console loads
+   ✓ Test appointment scheduling
+
+5. Browser Console:
+   ✓ No 404 errors for assets
+   ✓ No MIME type errors
+   ✓ No CORS errors
+   ✓ Analytics warnings only (non-critical)
+
+
+📝 STEP 7: Updating Context Memory
+---------------------------------
+✅ Memory Synced.
+✅ Context memory updated
+
+🎯 DEPLOYMENT PROTOCOL COMPLETE
+==============================
+
+📦 Deployment Package: frontend-deploy-20260119_212547.tar.gz
+📍 Location: /Users/mac/Downloads/gaugyan_macos_final/
+
+🚀 Next Steps:
+1. Upload frontend-deploy-20260119_212547.tar.gz to /home/gaugyanc/ via FTP/cPanel File Manager
+2. SSH to cPanel and run: bash deploy_to_cpanel.sh
+3. Verify all URLs in checklist above
+4. Test all 8 user dashboards
+
+✅ All systems ready for production deployment

@@ -1055,11 +1055,21 @@ export const DataProvider = ({ children }) => {
 
     // Analytics & Engagement
     const trackEngagement = async (module, id, action, platform = null) => {
+        // Defensive null checks to prevent TypeError
+        if (!module || !id || !action) {
+            console.warn('trackEngagement called with invalid parameters:', { module, id, action });
+            return { success: false, error: 'Invalid parameters' };
+        }
+
         try {
             const body = platform ? { platform } : null;
             const response = await api.post(`/analytics/${module}/${id}/${action}`, body);
             return response.data;
-        } catch (error) { console.error(`Error tracking ${action} for ${module}:`, error); }
+        } catch (error) {
+            console.error(`Error tracking ${action} for ${module}:`, error);
+            // Return graceful failure instead of undefined
+            return { success: false, error: error.message };
+        }
     };
 
     const getModuleAnalytics = async (module) => {

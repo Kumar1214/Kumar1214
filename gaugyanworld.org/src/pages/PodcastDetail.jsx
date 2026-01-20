@@ -26,7 +26,11 @@ const PodcastDetail = () => {
 
                 // Track view
                 if (data) {
-                    trackEngagement('podcasts', id, 'view');
+                    if (trackEngagement) {
+                        trackEngagement('podcasts', id, 'view').catch(err =>
+                            console.warn('Failed to track podcast view:', err)
+                        );
+                    }
                 }
 
                 // If podcast has a series, fetch other episodes
@@ -54,18 +58,30 @@ const PodcastDetail = () => {
                 text: podcast.description,
                 url: window.location.href,
             }).then(() => {
-                trackEngagement('podcasts', id, 'share', 'web-native');
+                if (trackEngagement) {
+                    trackEngagement('podcasts', id, 'share', 'web-native').catch(err =>
+                        console.warn('Failed to track share:', err)
+                    );
+                }
             }).catch(console.error);
         } else {
             const url = window.location.href;
             navigator.clipboard.writeText(url);
             alert('Link copied to clipboard!');
-            trackEngagement('podcasts', id, 'share', 'copy-link');
+            if (trackEngagement) {
+                trackEngagement('podcasts', id, 'share', 'copy-link').catch(err =>
+                    console.warn('Failed to track share:', err)
+                );
+            }
         }
     };
 
     const handleBookmark = () => {
-        trackEngagement('podcasts', id, 'bookmark');
+        if (trackEngagement) {
+            trackEngagement('podcasts', id, 'bookmark').catch(err =>
+                console.warn('Failed to track bookmark:', err)
+            );
+        }
     };
 
     if (loading) return <LoadingScreen />;

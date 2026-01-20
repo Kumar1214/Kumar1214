@@ -133,19 +133,34 @@ const importData = async () => {
         console.log(`✅ Created ${coursesToInsert.length} Courses`);
 
         console.log('Creating music...');
-        const musicWithUser = musicData.slice(0, 10).map(item => ({
-            ...item,
-            uploadedBy: artistUser,
-            duration: '05:30', // Ensure fields match schema type
-            genre: 'Mantra' // Simplify array to string if MySQL expects string, or ensure model handles JSON if defined as JSON.
-            // My Music model definition uses JSON for `tags` but `genre` was migrated as `DataTypes.STRING` in my thought or code?
-            // Checking Music.js migration: I likely made it STRING or used separate model `MusicGenre`.
-            // If I used MusicGenre model, I should seed that too or if `Music` has `genreId`?
-            // Let's assume Music model has `genre` string column for now based on legacy seeder direct insert.
-            // If it fails, I'll know.
-            // Original Music.js migration used `genre: DataTypes.STRING` (implied from "Migrated... defining fields").
-            // Actually I should verify Music model.
-        }));
+        // USE VALID MP3 URL FOR DEMO
+        const sampleAudioUrl = 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3';
+        const musicWithUser = [
+            {
+                title: 'Om Namah Shivaya',
+                artist: 'Pandit Hariprasad',
+                description: 'Powerful Shiva Mantra for Meditation',
+                thumbnail: 'https://images.unsplash.com/photo-1621532050800-410d80c05988?auto=format&fit=crop&q=80&w=800',
+                audioUrl: sampleAudioUrl,
+                duration: '06:12',
+                genre: 'Mantra',
+                uploadedBy: artistUser,
+                isPublished: true,
+                plays: 1200
+            },
+            {
+                title: 'Morning Flute',
+                artist: 'Pandit Hariprasad',
+                description: 'Relaxing Indian Bamboo Flute',
+                thumbnail: 'https://images.unsplash.com/photo-1516280440614-6697288d5d38?auto=format&fit=crop&q=80&w=800',
+                audioUrl: sampleAudioUrl,
+                duration: '04:30',
+                genre: 'Classical',
+                uploadedBy: artistUser,
+                isPublished: true,
+                plays: 850
+            }
+        ];
         await Music.bulkCreate(musicWithUser);
         console.log(`✅ Created ${musicWithUser.length} Music Tracks`);
 
@@ -165,9 +180,30 @@ const importData = async () => {
         console.log(`✅ Created ${newsWithUser.length} News Articles`);
 
         console.log('Creating knowledgebase...');
-        const kbWithUser = knowledgebaseData.slice(0, 10).map(item => ({ ...item, authorId: authorUser }));
-        await Knowledgebase.bulkCreate(kbWithUser);
-        console.log(`✅ Created ${kbWithUser.length} Knowledgebase Articles`);
+        const kbArticles = [
+            {
+                title: 'Benefits of A2 Ghee',
+                description: 'Overview of health benefits of Desi Cow Ghee.',
+                content: 'A2 Desi Cow Ghee is known for its immensive health benefits. It improves digestion, boosts immunity, and promotes heart health.',
+                category: 'Health',
+                author: 'Senior Author',
+                authorId: authorUser,
+                status: 'published',
+                views: 150
+            },
+            {
+                title: 'Understanding Panchgavya',
+                description: 'What is Panchgavya and its uses?',
+                content: 'Panchgavya consists of five products from the cow: milk, curd, ghee, urine, and dung. It is used in traditional Indian medicine and agriculture.',
+                category: 'Ayurveda',
+                author: 'Senior Author',
+                authorId: authorUser,
+                status: 'published',
+                views: 320
+            }
+        ];
+        await Knowledgebase.bulkCreate(kbArticles);
+        console.log(`✅ Created ${kbArticles.length} Knowledgebase Articles`);
 
         console.log('Creating products...');
         const productsToInsert = [
@@ -201,12 +237,14 @@ const importData = async () => {
 
         console.log('Creating vendor profile...');
         const VendorProfile = require('./src/modules/marketplace/VendorProfile');
-        await VendorProfile.create({
-            userId: vendorUser,
-            storeName: 'Organic Farms India',
-            storeDescription: 'Pure, authentic organic products.',
-            contactEmail: 'vendor1@gaugyan.com',
-            status: 'approved'
+        await VendorProfile.findOrCreate({
+            where: { userId: vendorUser },
+            defaults: {
+                storeName: 'Organic Farms India',
+                storeDescription: 'Pure, authentic organic products.',
+                contactEmail: 'vendor1@gaugyan.com',
+                status: 'approved'
+            }
         });
         console.log('✅ Created Vendor Profile');
 

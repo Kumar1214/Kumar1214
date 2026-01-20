@@ -9,7 +9,7 @@ const ThankYou = () => {
     const [orderId, setOrderId] = React.useState('...');
 
     React.useEffect(() => {
-        setOrderId(Math.floor(100000 + Math.random() * 900000));
+        setOrderId(String(Math.floor(100000 + Math.random() * 900000)));
     }, []);
 
     return (
@@ -31,6 +31,28 @@ const ThankYou = () => {
                 <p style={{ fontSize: '0.9rem', color: 'var(--color-text-muted)' }}>
                     Order ID: #{orderId}
                 </p>
+            </div>
+
+            {/* Upsell Section */}
+            <div className="card" style={{ padding: 'var(--spacing-xl)', marginBottom: 'var(--spacing-xl)', border: '2px solid #F59E0B', backgroundColor: '#FFFBEB' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginBottom: '16px' }}>
+                    <div style={{ padding: '10px', backgroundColor: '#F59E0B', borderRadius: '50%', color: 'white' }}>
+                        <CheckCircle size={24} />
+                    </div>
+                    <div style={{ textAlign: 'left' }}>
+                        <h3 style={{ fontSize: '1.2rem', fontWeight: 700, color: '#92400E' }}>Unlock Your Potential!</h3>
+                        <p style={{ color: '#B45309' }}>Based on your interest, we recommend this course.</p>
+                    </div>
+                </div>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', backgroundColor: 'white', padding: '16px', borderRadius: '8px' }}>
+                    <div style={{ textAlign: 'left' }}>
+                        <h4 style={{ fontWeight: 600 }}>Ayurveda & Holistic Living</h4>
+                        <p style={{ fontSize: '0.9rem', color: '#6B7280' }}>Master the art of healthy living.</p>
+                    </div>
+                    <Link to="/courses/1">
+                        <Button style={{ backgroundColor: '#F59E0B' }}>View Course</Button>
+                    </Link>
+                </div>
             </div>
 
             <div style={{ display: 'flex', gap: 'var(--spacing-md)', justifyContent: 'center' }}>

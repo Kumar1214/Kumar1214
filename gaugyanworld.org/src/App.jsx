@@ -9,7 +9,7 @@ import { ThemeProvider } from './context/ThemeContext';
 import { PluginProvider } from './context/PluginContext';
 import MainLayout from './layout/MainLayout';
 import Home from './pages/Home';
-import LoadingScreen from './components/LoadingScreen';
+
 import ScrollToTop from './components/ScrollToTop';
 import NotificationListener from './components/NotificationListener';
 import GlobalErrorBoundary from './components/GlobalErrorBoundary';
@@ -34,9 +34,11 @@ import MusicReview from './pages/MusicReview';
 import MeditationListing from './pages/MeditationListing';
 import MeditationSearch from './pages/MeditationSearch';
 import MeditationSingle from './pages/MeditationSingle';
+
 import ExamListing from './pages/ExamListing';
 import ExamSearch from './pages/ExamSearch';
 import ExamSingle from './pages/ExamSingle';
+import ExamCheckout from './pages/ExamCheckout';
 import QuizListing from './pages/QuizListing';
 import QuizSearch from './pages/QuizSearch';
 import QuizSingle from './pages/QuizSingle';
@@ -46,6 +48,7 @@ import KnowledgebaseSingle from './pages/KnowledgebaseSingle';
 import GaushalaListing from './pages/GaushalaListing';
 import GaushalaSingle from './pages/GaushalaSingle';
 import Community from './pages/Community';
+import Chat from './pages/Chat';
 import ProductDetail from './pages/ProductDetail';
 import Wishlist from './pages/Wishlist';
 import Cart from './pages/Cart';
@@ -82,6 +85,7 @@ import AdminDashboard from './pages/AdminDashboard';
 import EditorDashboard from './pages/EditorDashboard';
 import CertificateVerification from './pages/CertificateVerification';
 import ShopPreview from './pages/ShopPreview';
+import NotFound from './pages/NotFound';
 
 // New Admin Dashboard
 import DashboardLayout from './components/admin-new/DashboardLayout';
@@ -140,10 +144,6 @@ import FileManager from './pages/admin-new/FileManager';
 import GaugyanAIDashboard from './pages/admin-new/GaugyanAI/Dashboard';
 
 // Legacy Admin Components (Preserved for functionality)
-import UserManagement from './components/admin/UserManagement'; // Fallback
-import QuestionBankManagement from './components/admin/QuestionBankManagement';
-import MusicManagement from './components/admin/MusicManagement'; // Fallback
-import PodcastManagement from './components/admin/PodcastManagement'; // Fallback
 import AdminContactMessages from './pages/admin/AdminContactMessages';
 import SettingsCertificates from './pages/admin-new/Settings/SettingsCertificates';
 import AdminAdvertisement from './pages/admin/AdminAdvertisement';
@@ -193,6 +193,12 @@ const AppContent = () => {
 
   // Logic: Calculate visibility based on settings
   const shouldSkipPreScreen = (() => {
+    // 1. Session Reload Check (Immediate skip)
+    if (sessionStorage.getItem('session_active')) return true;
+
+    // 2. Returning User Check (Skip if 2nd timer)
+    if (localStorage.getItem('has_visited_before')) return true;
+
     if (!appSettings) return false;
     if (appSettings.preloaderEnabled === false) return true;
     if (appSettings.preloaderOnce && sessionStorage.getItem('preloader_seen')) return true;
@@ -203,6 +209,13 @@ const AppContent = () => {
 
   const handlePreScreenComplete = () => {
     setShowPreScreen(false);
+
+    // Mark session as active (for reloads)
+    sessionStorage.setItem('session_active', 'true');
+
+    // Mark user as visited (for returning users)
+    localStorage.setItem('has_visited_before', 'true');
+
     if (appSettings?.preloaderOnce) {
       sessionStorage.setItem('preloader_seen', 'true');
     }
@@ -342,7 +355,8 @@ const AppContent = () => {
           <Route path="astrology" element={<Astrologers />} />
 
           {/* Community Routes */}
-          <Route path="community" element={<Community />} />
+          <Route path="community" element={<ProtectedRoute><Community /></ProtectedRoute>} />
+          <Route path="chat" element={<ProtectedRoute><Chat /></ProtectedRoute>} />
 
           {/* User Dashboard */}
           <Route path="/dashboard" element={<ProtectedRoute><UserDashboard /></ProtectedRoute>} />
@@ -356,6 +370,7 @@ const AppContent = () => {
           <Route path="exams" element={<ExamListing />} />
           <Route path="exams/search" element={<ExamSearch />} />
           <Route path="exams/:id" element={<ExamSingle />} />
+          <Route path="checkout/exam/:id" element={<ProtectedRoute><ExamCheckout /></ProtectedRoute>} />
           <Route path="exam/:id/start" element={<ExamRunner />} />
           <Route path="quizzes" element={<QuizListing />} />
           <Route path="quizzes/search" element={<QuizSearch />} />
@@ -396,7 +411,7 @@ const AppContent = () => {
           <Route path="thank-you" element={<ThankYou />} />
           <Route path="profile" element={<ProtectedRoute><UserProfile /></ProtectedRoute>} />
 
-          <Route path="*" element={<div className="container mt-lg"><h2>404: Page Not Found</h2></div>} />
+          <Route path="*" element={<NotFound />} />
         </Route>
 
         {/* Public Verification Route */}

@@ -6,7 +6,7 @@ import { getAuth } from "firebase/auth";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  apiKey: "AIzaSyDJDiERqq6bzMT2TFJjq6gHarNDQr391Dk", // Fixed: Hardcoded for production
   authDomain: "gaugyan-2f059.firebaseapp.com",
   projectId: "gaugyan-2f059",
   storageBucket: "gaugyan-2f059.firebasestorage.app",

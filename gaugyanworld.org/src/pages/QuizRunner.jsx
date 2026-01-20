@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { useData } from '../context/useData';
+
+import { useData } from '../context/DataContext';
+import useLocalStorage from '../hooks/useLocalStorage';
 import { CheckCircle, XCircle, Award, ArrowRight } from 'lucide-react';
 import Button from '../components/Button';
 import logo from '../assets/logo.png';
@@ -11,9 +13,10 @@ const QuizRunner = () => {
     const { quizzes, submitResult, loading: dataLoading } = useData();
 
     const [quiz, setQuiz] = useState(null);
-    const [currentQuestion, setCurrentQuestion] = useState(0);
-    const [score, setScore] = useState(0);
-    const [showResult, setShowResult] = useState(false);
+
+    const [currentQuestion, setCurrentQuestion] = useLocalStorage(`quiz-pos-${id}`, 0);
+    const [score, setScore] = useLocalStorage(`quiz-score-${id}`, 0);
+    const [showResult, setShowResult] = useLocalStorage(`quiz-done-${id}`, false);
     const [selectedOption, setSelectedOption] = useState(null);
     const [isAnswered, setIsAnswered] = useState(false);
 
@@ -232,7 +235,12 @@ const QuizRunner = () => {
                             Download Certificate
                         </Button>
                     )}
-                    <Button onClick={() => window.location.reload()}>Play Again</Button>
+                    <Button onClick={() => {
+                        setCurrentQuestion(0);
+                        setScore(0);
+                        setShowResult(false);
+                        window.location.reload();
+                    }}>Play Again</Button>
                 </div>
             </div>
         );

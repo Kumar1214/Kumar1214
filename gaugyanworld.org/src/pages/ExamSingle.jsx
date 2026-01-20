@@ -20,7 +20,13 @@ const ExamSingle = () => {
     const [loading, setLoading] = useState(true);
     const [hasTrackedView, setHasTrackedView] = useState(false);
 
+
     useEffect(() => {
+        if (!id || id === 'undefined' || id === 'null') {
+            navigate('/404');
+            return;
+        }
+
         const fetchExam = async () => {
             try {
                 // Dynamic import to avoid circular dep issues if any, or just standard import
@@ -146,7 +152,7 @@ const ExamSingle = () => {
                     </div>
 
                     {!isEnded ? (
-                        <Button fullWidth onClick={() => navigate(`/exam/${id}/start`)}>
+                        <Button fullWidth onClick={() => navigate(`/checkout/exam/${id}`)}>
                             Pay ₹{exam.price} to Register
                         </Button>
                     ) : (
